@@ -20,19 +20,21 @@
 #include <cutils/log.h>
 
 #define QEMU_HARDWARE
-#include <qemu.h>
+#include <hardware/qemu.h>
 #include <hardware/hardware.h>
 #include <hardware/vibrator.h>
 
 static int sendit(unsigned int timeout_ms)
 {
+    //@commit 2020.8.19
+#if 0
     if (qemu_check()) {
         if (qemu_control_command("vibrator:%u", timeout_ms) < 0) {
             return -errno;
         }
         return 0;
     }
-
+#endif
     return -ENOSYS;
 }
 

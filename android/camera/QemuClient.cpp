@@ -32,6 +32,10 @@
 #define LOGQ(...)   (void(0))
 
 #endif  // LOG_QUERIES
+
+#define qemud_fd_read   ReadFully
+#define qemud_fd_write  WriteFully
+
 namespace android {
 
 /****************************************************************************

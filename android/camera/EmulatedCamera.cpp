@@ -762,6 +762,27 @@ void EmulatedCamera::stop_preview(struct camera_device* dev)
     ec->stopPreview();
 }
 
+int EmulatedCamera::enable_preview(struct camera_device* dev)
+{
+    EmulatedCamera* ec = reinterpret_cast<EmulatedCamera*>(dev->priv);
+    if (ec == NULL) {
+        ALOGE("%s: Unexpected NULL camera device", __FUNCTION__);
+        return -EINVAL;
+    }
+    return ec->isPreviewEnabled();
+}
+
+int EmulatedCamera::disable_preview(struct camera_device* dev)
+{
+    EmulatedCamera* ec = reinterpret_cast<EmulatedCamera*>(dev->priv);
+    if (ec == NULL) {
+        ALOGE("%s: Unexpected NULL camera device", __FUNCTION__);
+        return -EINVAL;
+    }
+    return !ec->isPreviewEnabled();
+}
+
+
 int EmulatedCamera::preview_enabled(struct camera_device* dev)
 {
     EmulatedCamera* ec = reinterpret_cast<EmulatedCamera*>(dev->priv);
@@ -927,6 +948,16 @@ int EmulatedCamera::dump(struct camera_device* dev, int fd)
     return ec->dumpCamera(fd);
 }
 
+int EmulatedCamera::set_fd(struct camera_device* dev, int fd)
+{
+    EmulatedCamera* ec = reinterpret_cast<EmulatedCamera*>(dev->priv);
+    if (ec == NULL) {
+        ALOGE("%s: Unexpected NULL camera device", __FUNCTION__);
+        return -EINVAL;
+    }
+    return ec->dumpCamera(fd);
+}
+
 int EmulatedCamera::close(struct hw_device_t* device)
 {
     EmulatedCamera* ec =
@@ -943,29 +974,32 @@ int EmulatedCamera::close(struct hw_device_t* device)
  ****************************************************************************/
 
 camera_device_ops_t EmulatedCamera::mDeviceOps = {
-    EmulatedCamera::set_preview_window,
-    EmulatedCamera::set_callbacks,
-    EmulatedCamera::enable_msg_type,
-    EmulatedCamera::disable_msg_type,
-    EmulatedCamera::msg_type_enabled,
-    EmulatedCamera::start_preview,
-    EmulatedCamera::stop_preview,
-    EmulatedCamera::preview_enabled,
-    EmulatedCamera::store_meta_data_in_buffers,
-    EmulatedCamera::start_recording,
-    EmulatedCamera::stop_recording,
-    EmulatedCamera::recording_enabled,
-    EmulatedCamera::release_recording_frame,
-    EmulatedCamera::auto_focus,
-    EmulatedCamera::cancel_auto_focus,
-    EmulatedCamera::take_picture,
-    EmulatedCamera::cancel_picture,
-    EmulatedCamera::set_parameters,
-    EmulatedCamera::get_parameters,
-    EmulatedCamera::put_parameters,
-    EmulatedCamera::send_command,
-    EmulatedCamera::release,
-    EmulatedCamera::dump
+    EmulatedCamera::set_preview_window,         //1
+    EmulatedCamera::set_callbacks,              //2
+    EmulatedCamera::enable_msg_type,            //3
+    EmulatedCamera::disable_msg_type,           //4
+    EmulatedCamera::msg_type_enabled,           //5
+    EmulatedCamera::start_preview,              //6
+    EmulatedCamera::stop_preview,               //7
+    EmulatedCamera::preview_enabled,            //8
+    EmulatedCamera::enable_preview,             //9
+    EmulatedCamera::disable_preview,            //10
+    EmulatedCamera::store_meta_data_in_buffers, //11
+    EmulatedCamera::start_recording,            //12
+    EmulatedCamera::stop_recording,             //13
+    EmulatedCamera::recording_enabled,          //14
+    EmulatedCamera::release_recording_frame,    //15
+    EmulatedCamera::auto_focus,                 //16
+    EmulatedCamera::cancel_auto_focus,          //17
+    EmulatedCamera::take_picture,               //18
+    EmulatedCamera::cancel_picture,             //19
+    EmulatedCamera::set_parameters,             //20
+    EmulatedCamera::get_parameters,             //21
+    EmulatedCamera::put_parameters,             //22
+    EmulatedCamera::send_command,               //23
+    EmulatedCamera::release,                    //24
+    EmulatedCamera::dump,                       //25
+    EmulatedCamera::set_fd//26
 };
 
 /****************************************************************************

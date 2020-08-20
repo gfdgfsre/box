@@ -21,6 +21,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE_RELATIVE_PATH := hw
 LOCAL_SHARED_LIBRARIES := liblog libcutils
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../include
 LOCAL_SRC_FILES := sensors_qemu.c
 ifeq ($(TARGET_PRODUCT),vbox_x86)
 LOCAL_MODULE := sensors.vbox_x86
@@ -34,6 +35,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE_RELATIVE_PATH := hw
 LOCAL_SHARED_LIBRARIES := liblog libcutils
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../include
 LOCAL_SRC_FILES := sensors_qemu.c
 LOCAL_MODULE := sensors.ranchu
 

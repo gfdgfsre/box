@@ -20,6 +20,7 @@
 #include <EGL/eglext.h>
 #include <GLES/gl.h>
 #include <system/window.h>
+//libnativewindow
 
 struct EGLImage_t
 {

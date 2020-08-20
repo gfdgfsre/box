@@ -32,9 +32,9 @@ PRODUCT_PACKAGES += \
 	lights.goldfish \
 	gps.goldfish \
 	fingerprint.goldfish \
-	sensors.goldfish \
+#	sensors.goldfish \
 	audio.primary.goldfish \
-	vibrator.goldfish \
+#	vibrator.goldfish \
 	power.goldfish \
 	fingerprintd
 
@@ -58,11 +58,11 @@ PRODUCT_AAPT_CONFIG := normal
 
 PRODUCT_COPY_FILES += \
 	vendor/anbox/scripts/anbox-init.sh:root/anbox-init.sh \
-	vendor/anbox/products/anbox.xml:system/etc/permissions/anbox.xml
+	device/anbox/anbox.xml:system/etc/permissions/anbox.xml
 
 PRODUCT_PACKAGES += \
 	anboxd \
-	hwcomposer.anbox \
+	hwcomposer.anbox.alt \
 	AnboxAppMgr
 
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -90,11 +90,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	debug.sf.nobootanimation=1
 
 DEVICE_PACKAGE_OVERLAYS += \
-	vendor/anbox/products/overlay
+	device/anbox/overlay
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
 # Extend heap size we use for dalvik/art runtime
 $(call inherit-product, frameworks/native/build/tablet-10in-xhdpi-2048-dalvik-heap.mk)
 
 PRODUCT_COPY_FILES += \
-	vendor/anbox/products/anbox.xml:system/etc/permissions/anbox.xml
+	device/anbox/anbox.xml:system/etc/permissions/anbox.xml

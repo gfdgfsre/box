@@ -32,7 +32,8 @@ emulator_camera_shared_libraries := \
     libui \
     libdl \
 	libjpeg \
-	libcamera_metadata
+	libcamera_metadata \
+	libnativewindow
 
 emulator_camera_c_includes := external/jpeg \
 	frameworks/native/include/media/hardware \
@@ -72,6 +73,7 @@ LOCAL_CLANG_CFLAGS += ${emulator_camera_clang_flags}
 
 LOCAL_SHARED_LIBRARIES := ${emulator_camera_shared_libraries}
 LOCAL_C_INCLUDES += ${emulator_camera_c_includes}
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../include
 LOCAL_SRC_FILES := ${emulator_camera_src}
 
 ifeq ($(TARGET_PRODUCT),vbox_x86)
@@ -92,6 +94,7 @@ LOCAL_CLANG_CFLAGS += ${emulator_camera_clang_flags}
 
 LOCAL_SHARED_LIBRARIES := ${emulator_camera_shared_libraries}
 LOCAL_C_INCLUDES += ${emulator_camera_c_includes}
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../include
 LOCAL_SRC_FILES := ${emulator_camera_src}
 
 LOCAL_MODULE := camera.ranchu
@@ -127,6 +130,7 @@ LOCAL_CLANG_CFLAGS += ${jpeg_clangflags}
 
 LOCAL_SHARED_LIBRARIES := ${jpeg_shared_libraries}
 LOCAL_C_INCLUDES += ${jpeg_c_includes}
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../include
 LOCAL_SRC_FILES := ${jpeg_src}
 
 LOCAL_MODULE := camera.goldfish.jpeg
@@ -145,6 +149,7 @@ LOCAL_CLANG_CFLAGS += ${jpeg_clangflags}
 
 LOCAL_SHARED_LIBRARIES := ${jpeg_shared_libraries}
 LOCAL_C_INCLUDES += ${jpeg_c_includes}
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../include
 LOCAL_SRC_FILES := ${jpeg_src}
 
 include $(BUILD_SHARED_LIBRARY)

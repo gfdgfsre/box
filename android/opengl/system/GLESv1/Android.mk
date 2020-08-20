@@ -6,6 +6,7 @@ $(call emugl-import,libOpenglSystemCommon libGLESv1_enc lib_renderControl_enc)
 
 LOCAL_CFLAGS += -DLOG_TAG=\"GLES_emulation\" -DGL_GLEXT_PROTOTYPES
 
+LOCAL_SHARED_LIBRARIES += libdl libnativewindow
 LOCAL_SRC_FILES := gl.cpp
 LOCAL_MODULE_RELATIVE_PATH := egl
 

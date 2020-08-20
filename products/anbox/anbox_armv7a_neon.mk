@@ -22,6 +22,6 @@ PRODUCT_PROPERTY_OVERRIDES += ro.config.low_ram=true
 PRODUCT_PROPERTY_OVERRIDES += dalvik.vm.jit.codecachesize=0
 
 PRODUCT_NAME := anbox_armv7a_neon
-PRODUCT_DEVICE := armv7-a-neon
+PRODUCT_DEVICE := anbox_armv7-a-neon
 PRODUCT_BRAND := Android
 PRODUCT_MODEL := Anbox

@@ -3,6 +3,8 @@ LOCAL_PATH := $(call my-dir)
 $(call emugl-begin-shared-library,libOpenglSystemCommon)
 $(call emugl-import,libGLESv1_enc libGLESv2_enc lib_renderControl_enc)
 
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../../../include
+LOCAL_SHARED_LIBRARIES += libhardware libnativewindow
 LOCAL_SRC_FILES := \
     HostConnection.cpp \
     QemuPipeStream.cpp \

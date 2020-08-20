@@ -321,6 +321,10 @@ private:
 
     static int preview_enabled(struct camera_device* dev);
 
+    static int enable_preview(struct camera_device *); //9@+2020.8.19
+
+    static int disable_preview(struct camera_device *);//10@+2020.8.19
+
     static int store_meta_data_in_buffers(struct camera_device* dev, int enable);
 
     static int start_recording(struct camera_device* dev);
@@ -356,6 +360,8 @@ private:
     static int dump(struct camera_device* dev, int fd);
 
     static int close(struct hw_device_t* device);
+
+    static int set_fd(struct camera_device *, int fd);//26@+2020.8.19
 
     /****************************************************************************
      * Data members

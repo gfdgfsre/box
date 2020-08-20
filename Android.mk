@@ -70,7 +70,7 @@ LOCAL_SHARED_LIBRARIES := \
     libOpenglSystemCommon
 LOCAL_SRC_FILES := \
     android/hwcomposer/hwcomposer.cpp
-LOCAL_MODULE := hwcomposer.anbox
+LOCAL_MODULE := hwcomposer.anbox.alt
 LOCAL_CFLAGS:= -DLOG_TAG=\"hwcomposer\"
 LOCAL_C_INCLUDES += \
     $(LOCAL_PATH)/android/opengl/host/include/libOpenglRender \
@@ -108,4 +108,4 @@ include $(TMP_PATH)/android/opengl/Android.mk
 include $(TMP_PATH)/android/gps/Android.mk
 include $(TMP_PATH)/android/lights/Android.mk
 include $(TMP_PATH)/android/camera/Android.mk
-include $(TMP_PATH)/android/vibrator/Android.mk
+#include $(TMP_PATH)/android/vibrator/Android.mk

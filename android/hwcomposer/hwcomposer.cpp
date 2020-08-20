@@ -72,8 +72,11 @@ struct HwcContext {
 };
 
 static void dump_layer(hwc_layer_1_t const* l) {
-    ALOGD("\tname='%s', type=%d, flags=%08x, handle=%p, tr=%02x, blend=%04x, {%d,%d,%d,%d}, {%d,%d,%d,%d}",
-            l->name, l->compositionType, l->flags, l->handle, l->transform, l->blending,
+
+//@2020.8.19
+#if 1
+    ALOGD("\ttype=%d, flags=%08x, handle=%p, tr=%02x, blend=%04x, {%d,%d,%d,%d}, {%d,%d,%d,%d}",
+            l->compositionType, l->flags, l->handle, l->transform, l->blending,
             l->sourceCrop.left,
             l->sourceCrop.top,
             l->sourceCrop.right,
@@ -82,6 +85,8 @@ static void dump_layer(hwc_layer_1_t const* l) {
             l->displayFrame.top,
             l->displayFrame.right,
             l->displayFrame.bottom);
+
+#endif
 }
 
 static int hwc_prepare(hwc_composer_device_1_t* dev, size_t numDisplays,
@@ -195,7 +200,11 @@ static int hwc_set(hwc_composer_device_1_t* dev, size_t numDisplays,
         }
 
         rcEnc->rcPostLayer(rcEnc,
+#if 0
                            layer->name,
+#else
+                           HWC_HARDWARE_COMPOSER,
+#endif
                            cb->hostHandle,
                            layer->planeAlpha / 255,
                            layer->sourceCrop.left,

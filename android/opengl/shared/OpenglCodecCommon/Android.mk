@@ -14,6 +14,7 @@ commonSources := \
 ### CodecCommon  guest ##############################################
 $(call emugl-begin-static-library,libOpenglCodecCommon)
 
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../../../../include
 LOCAL_SRC_FILES := $(commonSources)
 
 LOCAL_CFLAGS += -DLOG_TAG=\"eglCodecCommon\"

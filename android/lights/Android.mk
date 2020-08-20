@@ -18,6 +18,7 @@ LOCAL_PATH := $(call my-dir)
 # hw/<LIGHTS_HARDWARE_MODULE_ID>.<ro.hardware>.so
 include $(CLEAR_VARS)
 LOCAL_MODULE_RELATIVE_PATH := hw
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../include
 LOCAL_SHARED_LIBRARIES := liblog libcutils
 LOCAL_SRC_FILES := lights_qemu.c
 LOCAL_MODULE := lights.goldfish

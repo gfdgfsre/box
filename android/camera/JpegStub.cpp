@@ -48,7 +48,13 @@ extern "C" int JpegStub_compress(JpegStub* stub, const void* image,
     if (encoder->encode(stream, pY, width, height, offsets, quality)) {
         ALOGV("%s: Compressed JPEG: %d[%dx%d] -> %zu bytes",
               __FUNCTION__, (width * height * 12) / 8,
-              width, height, stream->getOffset());
+              width, height, 
+#if 0
+              stream->getOffset()
+#else       
+              stream->bytesWritten()
+#endif
+              );
         return 0;
     } else {
         ALOGE("%s: JPEG compression failed", __FUNCTION__);
@@ -65,5 +71,9 @@ extern "C" void JpegStub_getCompressedImage(JpegStub* stub, void* buff) {
 extern "C" size_t JpegStub_getCompressedSize(JpegStub* stub) {
     SkDynamicMemoryWStream* stream =
         (SkDynamicMemoryWStream*)stub->mInternalStream;
+#if 0
     return stream->getOffset();
+#else
+    return stream->bytesWritten();
+#endif
 }
