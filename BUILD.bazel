@@ -27,7 +27,7 @@ config_setting(
 
 # main common lib.
 cc_library(
-    name = "anbox_main",
+    name = "anbox_main_lib",
     srcs = glob([
         "src/main.cpp",
     ]),
@@ -43,3 +43,13 @@ cc_library(
     ],
 )
 
+cc_binary(
+    name = "anbox_main",
+    srcs = glob([
+        "src/stub.cpp",
+    ]),
+    copts = COPTS,
+    deps = [
+        ":anbox_main_lib",
+    ],
+)
