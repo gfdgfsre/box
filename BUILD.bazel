@@ -67,6 +67,6 @@ genrule(
         "//thirdparty/nsexec:nsexec",
     ],
     outs = ["anbox_pkg.out"],
-    cmd = "",
+    cmd = "echo '' > \"$@\"",
     local = 1,
 )
