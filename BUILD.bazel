@@ -55,3 +55,18 @@ cc_binary(
         "@com_google_protobuf//:protobuf",
     ],
 )
+
+
+genrule(
+    name = "anbox_pkg",
+    srcs = [
+        ":anbox_stub",
+        ":anbox_main_lib",
+        "//thirdparty/cpu_features:cpu_features",
+        "//thirdparty/process-cpp-minimal:process-cpp",
+        "//thirdparty/process-cpp-minimal:posix-process",
+        "//thirdparty/nsexec:nsexec",
+    ],
+    outs = ["anbox_pkg.out"],
+    local = 1,
+)
