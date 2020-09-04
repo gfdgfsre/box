@@ -13,11 +13,11 @@ build:linux --force_pic
 build:macos --force_pic
 build:clang-cl --compiler=clang-cl
 build:msvc --compiler=msvc-cl
-# `LC_ALL` and `LANG` is needed for cpp worker tests, because they will call "ray start".
+# `LC_ALL` and `LANG` is needed for cpp worker tests, because they will call "anbox start".
 # If we don't add them, python's `click` library will raise an error.
 test --action_env=LC_ALL
 test --action_env=LANG
-# Allow C++ worker tests to execute "ray start" with the correct version of Python.
+# Allow C++ worker tests to execute "anbox start" with the correct version of Python.
 test --action_env=VIRTUAL_ENV
 test --action_env=PYENV_VIRTUAL_ENV
 test --action_env=PYENV_VERSION
@@ -40,7 +40,8 @@ build:clang-cl --host_copt="-Wno-inconsistent-missing-override"
 build:clang-cl --host_copt="-Wno-microsoft-unqualified-friend"
 # This workaround is needed due to https://github.com/bazelbuild/bazel/issues/4341
 build --per_file_copt="-\\.(asm|S)$,external/com_github_grpc_grpc/.*@-DGRPC_BAZEL_BUILD"
-# Don't generate warnings about kernel features we don't need https://github.com/ray-project/ray/issues/6832
+
+# Don't generate warnings about kernel features we don't need https://github.com/anbox-project/xbox/issues/6832
 build:linux --per_file_copt="-\\.(asm|S)$,external/com_github_grpc_grpc/.*@-DGPR_MANYLINUX1"
 # Ignore wchar_t -> char conversion warning on MSVC
 build:msvc --per_file_copt="external/boost/libs/regex/src/wc_regex_traits\\.cpp@-wd4244"
@@ -95,9 +96,9 @@ aquery:ci --color=no
 aquery:ci --noshow_progress
 build:ci --color=yes
 build:ci --curses=no
-build:ci --disk_cache=~/ray-bazel-cache
+build:ci --disk_cache=~/anbox-bazel-cache
 build:ci --keep_going
-build:ci --remote_cache="https://storage.googleapis.com/ray-bazel-cache"
+build:ci --remote_cache="https://storage.googleapis.com/anbox-bazel-cache"
 build:ci --progress_report_interval=100
 build:ci --show_progress_rate_limit=15
 build:ci --show_task_finish
