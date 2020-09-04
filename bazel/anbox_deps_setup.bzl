@@ -78,7 +78,7 @@ def auto_http_archive(*, name=None, url=None, urls=True,
 def anbox_deps_setup():
     auto_http_archive(
         name = "com_github_antirez_redis",
-        build_file = "//bazel:BUILD.redis",
+        build_file = "//thirdparty/redis:BUILD.redis",
         url = "https://github.com/antirez/redis/archive/5.0.9.tar.gz",
         sha256 = "db9bf149e237126f9bb5f40fb72f33701819555d06f16e9a38b4949794214201",
         patches = [
@@ -88,7 +88,7 @@ def anbox_deps_setup():
 
     auto_http_archive(
         name = "com_github_redis_hiredis",
-        build_file = "//bazel:BUILD.hiredis",
+        build_file = "//thirdparty/hiredis:BUILD.hiredis",
         url = "https://github.com/redis/hiredis/archive/392de5d7f97353485df1237872cb682842e8d83f.tar.gz",
         sha256 = "2101650d39a8f13293f263e9da242d2c6dee0cda08d343b2939ffe3d95cf3b8b",
         patches = [
@@ -98,7 +98,7 @@ def anbox_deps_setup():
 
     auto_http_archive(
         name = "com_github_tporadowski_redis_bin",
-        build_file = "//bazel:BUILD.redis",
+        build_file = "//thirdparty/redis:BUILD.redis",
         strip_prefix = None,
         url = "https://github.com/tporadowski/redis/releases/download/v4.0.14.2/Redis-x64-4.0.14.2.zip",
         sha256 = "6fac443543244c803311de5883b714a7ae3c4fa0594cad51d75b24c4ef45b353",
