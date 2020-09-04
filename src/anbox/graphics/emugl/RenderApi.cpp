@@ -17,11 +17,11 @@
 #include "anbox/graphics/emugl/RenderApi.h"
 #include "anbox/graphics/emugl/DispatchTables.h"
 
-#include "external/android-emugl/host/include/OpenGLESDispatch/EGLDispatch.h"
-#include "external/android-emugl/host/include/OpenGLESDispatch/GLESv1Dispatch.h"
-#include "external/android-emugl/host/include/OpenGLESDispatch/GLESv2Dispatch.h"
+#include "thirdparty/android-emugl/host/include/OpenGLESDispatch/EGLDispatch.h"
+#include "thirdparty/android-emugl/host/include/OpenGLESDispatch/GLESv1Dispatch.h"
+#include "thirdparty/android-emugl/host/include/OpenGLESDispatch/GLESv2Dispatch.h"
 
-#include "external/android-emugl/shared/emugl/common/crash_reporter.h"
+#include "thirdparty/android-emugl/shared/emugl/common/crash_reporter.h"
 
 #include <string.h>
 

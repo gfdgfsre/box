@@ -21,7 +21,7 @@
 #include "anbox/graphics/emugl/TextureResize.h"
 #include "anbox/logger.h"
 
-#include "external/android-emugl/host/include/OpenGLESDispatch/EGLDispatch.h"
+#include "thirdparty/android-emugl/host/include/OpenGLESDispatch/EGLDispatch.h"
 
 #include <stdio.h>
 

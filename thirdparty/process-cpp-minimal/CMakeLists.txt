@@ -32,7 +32,7 @@ include(CTest)
 include_directories(
   include/
   src/
-  external/process-cpp-minimal
+  thirdparty/process-cpp-minimal
   ${Boost_INCLUDE_DIRS}
 )
 

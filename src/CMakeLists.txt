@@ -11,21 +11,21 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}/src
-  ${CMAKE_SOURCE_DIR}/external
-  ${CMAKE_SOURCE_DIR}/external/process-cpp-minimal/include
-  ${CMAKE_SOURCE_DIR}/external/android-emugl/shared
-  ${CMAKE_SOURCE_DIR}/external/android-emugl/host/include
-  ${CMAKE_BINARY_DIR}/external/android-emugl/host/include
-  ${CMAKE_SOURCE_DIR}/external/android-emugl/shared/OpenglCodecCommon
-  ${CMAKE_SOURCE_DIR}/external/android-emugl/host/libs
-  ${CMAKE_SOURCE_DIR}/external/android-emugl/host/include/libOpenglRender
-  ${CMAKE_SOURCE_DIR}/external/android-emugl/host/libs/GLESv1_dec
-  ${CMAKE_BINARY_DIR}/external/android-emugl/host/libs/GLESv1_dec
-  ${CMAKE_SOURCE_DIR}/external/android-emugl/host/libs/GLESv2_dec
-  ${CMAKE_BINARY_DIR}/external/android-emugl/host/libs/GLESv2_dec
-  ${CMAKE_SOURCE_DIR}/external/android-emugl/host/libs/renderControl_dec
-  ${CMAKE_BINARY_DIR}/external/android-emugl/host/libs/renderControl_dec
-  ${CMAKE_SOURCE_DIR}/external/cpu_features/include
+  ${CMAKE_SOURCE_DIR}/thirdparty
+  ${CMAKE_SOURCE_DIR}/thirdparty/process-cpp-minimal/include
+  ${CMAKE_SOURCE_DIR}/thirdparty/android-emugl/shared
+  ${CMAKE_SOURCE_DIR}/thirdparty/android-emugl/host/include
+  ${CMAKE_BINARY_DIR}/thirdparty/android-emugl/host/include
+  ${CMAKE_SOURCE_DIR}/thirdparty/android-emugl/shared/OpenglCodecCommon
+  ${CMAKE_SOURCE_DIR}/thirdparty/android-emugl/host/libs
+  ${CMAKE_SOURCE_DIR}/thirdparty/android-emugl/host/include/libOpenglRender
+  ${CMAKE_SOURCE_DIR}/thirdparty/android-emugl/host/libs/GLESv1_dec
+  ${CMAKE_BINARY_DIR}/thirdparty/android-emugl/host/libs/GLESv1_dec
+  ${CMAKE_SOURCE_DIR}/thirdparty/android-emugl/host/libs/GLESv2_dec
+  ${CMAKE_BINARY_DIR}/thirdparty/android-emugl/host/libs/GLESv2_dec
+  ${CMAKE_SOURCE_DIR}/thirdparty/android-emugl/host/libs/renderControl_dec
+  ${CMAKE_BINARY_DIR}/thirdparty/android-emugl/host/libs/renderControl_dec
+  ${CMAKE_SOURCE_DIR}/thirdparty/cpu_features/include
 )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBINDERFS_PATH=\"\\\"${BINDERFS_PATH}\\\"\"")

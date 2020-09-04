@@ -136,7 +136,7 @@ set(ANBOX_STATEDIR_FULL "${CMAKE_INSTALL_FULL_LOCALSTATEDIR}/lib/anbox")
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/anbox/build/config.h.in
                ${CMAKE_CURRENT_SOURCE_DIR}/src/anbox/build/config.h)
 
-add_subdirectory(external)
+add_subdirectory(thirdparty)
 add_subdirectory(src)
 add_subdirectory(tests)
 add_subdirectory(android)

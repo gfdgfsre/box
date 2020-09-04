@@ -24,7 +24,7 @@ sudo mount -o loop,ro $system $workdir/system
 sudo cp -ar $workdir/system/* $rootfs/system
 sudo umount $workdir/system
 
-gcc -o $workdir/uidmapshift external/nsexec/uidmapshift.c
+gcc -o $workdir/uidmapshift thirdparty/nsexec/uidmapshift.c
 sudo $workdir/uidmapshift -b $rootfs 0 100000 65536
 
 # FIXME

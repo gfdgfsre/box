@@ -22,10 +22,10 @@
 #include "anbox/graphics/emugl/TimeUtils.h"
 #include "anbox/logger.h"
 
-#include "external/android-emugl/shared/OpenglCodecCommon/ChecksumCalculatorThreadInfo.h"
-#include "external/android-emugl/host/include/OpenGLESDispatch/EGLDispatch.h"
-#include "external/android-emugl/host/include/OpenGLESDispatch/GLESv1Dispatch.h"
-#include "external/android-emugl/host/include/OpenGLESDispatch/GLESv2Dispatch.h"
+#include "thirdparty/android-emugl/shared/OpenglCodecCommon/ChecksumCalculatorThreadInfo.h"
+#include "thirdparty/android-emugl/host/include/OpenGLESDispatch/EGLDispatch.h"
+#include "thirdparty/android-emugl/host/include/OpenGLESDispatch/GLESv1Dispatch.h"
+#include "thirdparty/android-emugl/host/include/OpenGLESDispatch/GLESv2Dispatch.h"
 
 #define STREAM_BUFFER_SIZE 4 * 1024 * 1024
 

@@ -3,7 +3,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-sign-compare")
 include_directories(
   ${Boost_INCLUDE_DIRS}
   ${CMAKE_SOURCE_DIR}
-  ${CMAKE_SOURCE_DIR}/external/android-emugl/host/include
+  ${CMAKE_SOURCE_DIR}/thirdparty/android-emugl/host/include
   ${CMAKE_SOURCE_DIR}/src
 )
 

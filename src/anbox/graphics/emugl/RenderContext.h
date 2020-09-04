@@ -17,7 +17,7 @@
 #ifndef _LIBRENDER_RENDER_CONTEXT_H
 #define _LIBRENDER_RENDER_CONTEXT_H
 
-#include "external/android-emugl/shared/OpenglCodecCommon/GLDecoderContextData.h"
+#include "thirdparty/android-emugl/shared/OpenglCodecCommon/GLDecoderContextData.h"
 
 #include <EGL/egl.h>
 

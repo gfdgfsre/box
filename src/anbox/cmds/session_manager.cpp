@@ -46,7 +46,7 @@
 #include "anbox/wm/multi_window_manager.h"
 #include "anbox/wm/single_window_manager.h"
 
-#include "external/xdg/xdg.h"
+#include "thirdparty/xdg/xdg.h"
 
 #include <sys/prctl.h>
 

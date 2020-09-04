@@ -97,7 +97,7 @@ ANBOX_DIR=$(cd "$ANBOX_DIR" && pwd -P)
 
 # Find the sources for the encoder:
 ENCODER_TOP_DIR=$ANBOX_DIR/android/opengl/system
-DECODER_TOP_DIR=$ANBOX_DIR/external/android-emugl/host/libs
+DECODER_TOP_DIR=$ANBOX_DIR/thirdparty/android-emugl/host/libs
 
 if [ ! -d "$ENCODER_TOP_DIR" ]; then
     fatal "Missing encoder source directory: $ENCODER_TOP_DIR"

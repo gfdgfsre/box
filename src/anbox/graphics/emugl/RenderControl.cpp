@@ -23,8 +23,8 @@
 #include "anbox/graphics/layer_composer.h"
 #include "anbox/logger.h"
 
-#include "external/android-emugl/shared/OpenglCodecCommon/ChecksumCalculatorThreadInfo.h"
-#include "external/android-emugl/host/include/OpenGLESDispatch/EGLDispatch.h"
+#include "thirdparty/android-emugl/shared/OpenglCodecCommon/ChecksumCalculatorThreadInfo.h"
+#include "thirdparty/android-emugl/host/include/OpenGLESDispatch/EGLDispatch.h"
 
 #include <map>
 #include <string>

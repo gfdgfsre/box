@@ -18,7 +18,7 @@
 #ifndef ANBOX_GRAPHICS_BUFFERED_IO_STREAM_H_
 #define ANBOX_GRAPHICS_BUFFERED_IO_STREAM_H_
 
-#include "external/android-emugl/host/include/libOpenglRender/IOStream.h"
+#include "thirdparty/android-emugl/host/include/libOpenglRender/IOStream.h"
 
 #include "anbox/graphics/buffer_queue.h"
 #include "anbox/network/socket_messenger.h"

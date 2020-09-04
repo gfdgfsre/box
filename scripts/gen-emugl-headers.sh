@@ -82,8 +82,8 @@ gen_funcargs_header () {
 ##
 ## libOpenGLESDispatch headers.
 ##
-OPENGLES_DISPATCH_SRCDIR=external/android-emugl/host/libs/libOpenGLESDispatch
-OPENGLES_DISPATCH_INCLUDE=$OUTDIR/external/android-emugl/host/include/OpenGLESDispatch
+OPENGLES_DISPATCH_SRCDIR=thirdparty/android-emugl/host/libs/libOpenGLESDispatch
+OPENGLES_DISPATCH_INCLUDE=$OUTDIR/thirdparty/android-emugl/host/include/OpenGLESDispatch
 mkdir -p $OPENGLES_DISPATCH_INCLUDE
 
 gen_functions_header \

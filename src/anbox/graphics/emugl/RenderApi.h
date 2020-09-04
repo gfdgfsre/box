@@ -21,7 +21,7 @@
 
 #include <boost/filesystem/path.hpp>
 
-#include "external/android-emugl/shared/emugl/common/logging.h"
+#include "thirdparty/android-emugl/shared/emugl/common/logging.h"
 
 typedef struct {
   logger_t coarse;

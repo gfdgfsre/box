@@ -20,7 +20,7 @@
 #include "anbox/utils.h"
 #include "anbox/build/config.h"
 
-#include "external/xdg/xdg.h"
+#include "thirdparty/xdg/xdg.h"
 
 #include <cstring>
 
