@@ -173,16 +173,18 @@ anbox::cmds::Launch::Launch()
     }
 
     auto bus_type = anbox::dbus::Bus::Type::Session;
-    if (use_system_dbus_)
+    if (use_system_dbus_){
       bus_type = anbox::dbus::Bus::Type::System;
+    }
     auto bus = std::make_shared<anbox::dbus::Bus>(bus_type);
 
     std::shared_ptr<ui::SplashScreen> ss;
     if (!bus->has_service_with_name(dbus::interface::Service::name())) {
       DEBUG("Session manager is not yet running, trying to start it");
 
-      if (!launch_session_manager())
+      if (!launch_session_manager()){
         return EXIT_FAILURE;
+      }
 
       // Give us a splash screen as long as we're trying to connect
       // with the session manager so the user knows something is

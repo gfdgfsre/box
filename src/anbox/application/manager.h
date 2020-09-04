@@ -51,11 +51,13 @@ class RestrictedManager : public Manager {
   void launch(const android::Intent &intent,
               const graphics::Rect &launch_bounds = graphics::Rect::Invalid,
               const wm::Stack::Id &stack = wm::Stack::Id::Default) override {
+
     auto selected_stack = stack;
     // If we have a static launch stack set use that one instead of
     // the one the caller gave us.
     if (launch_stack_ != wm::Stack::Id::Invalid)
       selected_stack = launch_stack_;
+    
     other_->launch(intent, launch_bounds, selected_stack);
   }
 

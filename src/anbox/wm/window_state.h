@@ -52,6 +52,7 @@ class WindowState {
   std::string package_name_;
   Task::Id task_;
   Stack::Id stack_;
+  
 };
 }  // namespace wm
 }  // namespace anbox

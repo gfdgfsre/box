@@ -52,10 +52,12 @@ class IpConfigBuilder {
  private:
   Version version_;
   Assignment assignment_;
+
   struct {
     std::string address;
     std::uint32_t prefix_length;
   } link_;
+  
   std::string gateway_;
   std::vector<std::string> dns_servers_;
   std::uint32_t id_;

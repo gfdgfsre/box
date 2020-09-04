@@ -42,10 +42,12 @@ class ContainerManager : public cli::CommandWithFlagsAndAction {
   std::string data_path_;
   std::shared_ptr<common::LoopDevice> android_img_loop_dev_;
   std::vector<std::shared_ptr<common::MountEntry>> mounts_;
+
   bool privileged_ = false;
   bool daemon_ = false;
   bool enable_rootfs_overlay_ = false;
   bool enable_squashfuse_ = false;
+  
   std::string container_network_address_;
   std::string container_network_gateway_;
   std::string container_network_dns_servers_;

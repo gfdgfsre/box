@@ -35,6 +35,7 @@ class Invocation;
 }  // namespace protobuf
 namespace rpc {
 class Invocation {
+  
  public:
   Invocation(anbox::protobuf::rpc::Invocation const& invocation)
       : invocation_(invocation) {}
@@ -55,8 +56,7 @@ class MessageProcessor : public network::MessageProcessor {
 
   bool process_data(const std::vector<std::uint8_t>& data) override;
 
-  void send_response(::google::protobuf::uint32 id,
-                     google::protobuf::MessageLite* response);
+  void send_response(::google::protobuf::uint32 id, google::protobuf::MessageLite* response);
 
   virtual void dispatch(Invocation const&) {}
   virtual void process_event_sequence(const std::string&) {}

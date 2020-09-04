@@ -37,8 +37,7 @@ TcpSocketConnector::TcpSocketConnector(
 TcpSocketConnector::~TcpSocketConnector() noexcept { acceptor_.cancel(); }
 
 void TcpSocketConnector::start_accept() {
-  auto socket =
-      std::make_shared<boost::asio::ip::tcp::socket>(runtime_->service());
+  auto socket = std::make_shared<boost::asio::ip::tcp::socket>(runtime_->service());
 
   acceptor_.async_accept(*socket,
                          [this, socket](boost::system::error_code const& err) {

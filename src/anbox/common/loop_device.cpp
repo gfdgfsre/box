@@ -47,17 +47,20 @@ LoopDevice::~LoopDevice() {
 }
 
 bool LoopDevice::attach_file(const boost::filesystem::path &file_path) {
-  if (fd_ < 0)
+  if (fd_ < 0){
     return false;
+  }
 
   int file_fd = ::open(file_path.c_str(), O_RDONLY);
-  if (file_fd < 0)
+  if (file_fd < 0){
     return false;
+  }
 
   DeferAction close_file_fd{[&]() { ::close(file_fd); }};
 
-  if (::ioctl(fd_, LOOP_SET_FD, file_fd) < 0)
+  if (::ioctl(fd_, LOOP_SET_FD, file_fd) < 0){
     return false;
+  }
 
   return true;
 }

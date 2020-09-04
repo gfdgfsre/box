@@ -33,6 +33,7 @@ class Fd {
   explicit Fd(int fd);
   explicit Fd(IntOwnedFd);
   static int const invalid{-1};
+  
   Fd();  // Initializes fd to the anbox::Fd::invalid;
   Fd(Fd&&);
   Fd(Fd const&) = default;

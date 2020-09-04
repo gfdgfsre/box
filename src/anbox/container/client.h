@@ -27,9 +27,11 @@ class PendingCallCache;
 class Channel;
 class MessageProcessor;
 }  // namespace rpc
+
 namespace network {
 class LocalSocketMessenger;
 }  // namespace network
+
 namespace container {
 class ManagementApiStub;
 class Client {

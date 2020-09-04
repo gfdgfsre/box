@@ -157,16 +157,19 @@ anbox::cmds::SessionManager::SessionManager()
     auto android_api_stub = std::make_shared<bridge::AndroidApiStub>();
 
     auto display_frame = graphics::Rect::Invalid;
-    if (single_window_)
+    if (single_window_){
       display_frame = window_size_;
+    }
 
     const auto should_enable_touch_emulation = utils::get_env_value("ANBOX_ENABLE_TOUCH_EMULATION", "true");
-    if (should_enable_touch_emulation == "false" || no_touch_emulation_)
+    if (should_enable_touch_emulation == "false" || no_touch_emulation_){
       no_touch_emulation_ = true;
+    }
 
     const auto should_force_server_side_decoration = utils::get_env_value("ANBOX_FORCE_SERVER_SIDE_DECORATION", "false");
-    if (should_force_server_side_decoration == "true")
+    if (should_force_server_side_decoration == "true"){
       server_side_decoration_ = true;
+    }
 
     platform::Configuration platform_config;
     platform_config.single_window = single_window_;
@@ -177,8 +180,9 @@ anbox::cmds::SessionManager::SessionManager()
     auto platform = platform::create(utils::get_env_value("ANBOX_PLATFORM", "sdl"),
                                      input_manager,
                                      platform_config);
-    if (!platform)
+    if (!platform){
       return EXIT_FAILURE;
+    }
 
     auto app_db = std::make_shared<application::Database>();
 
@@ -193,8 +197,9 @@ anbox::cmds::SessionManager::SessionManager()
 
     const auto should_force_software_rendering = utils::get_env_value("ANBOX_FORCE_SOFTWARE_RENDERING", "false");
     auto gl_driver = graphics::GLRendererServer::Config::Driver::Host;
-    if (should_force_software_rendering == "true" || use_software_rendering_)
-     gl_driver = graphics::GLRendererServer::Config::Driver::Software;
+    if (should_force_software_rendering == "true" || use_software_rendering_){
+      gl_driver = graphics::GLRendererServer::Config::Driver::Software;
+    }
 
     graphics::GLRendererServer::Config renderer_config {
       gl_driver,
@@ -233,8 +238,7 @@ anbox::cmds::SessionManager::SessionManager()
         std::make_shared<rpc::ConnectionCreator>(
             rt, [&](const std::shared_ptr<network::MessageSender> &sender) {
               auto pending_calls = std::make_shared<rpc::PendingCallCache>();
-              auto rpc_channel =
-                  std::make_shared<rpc::Channel>(pending_calls, sender);
+              auto rpc_channel = std::make_shared<rpc::Channel>(pending_calls, sender);
               // This is safe as long as we only support a single client. If we
               // support
               // more than one one day we need proper dispatching to the right
@@ -243,6 +247,7 @@ anbox::cmds::SessionManager::SessionManager()
 
               auto server = std::make_shared<bridge::PlatformApiSkeleton>(
                   pending_calls, platform, window_manager, app_db);
+              
               server->register_boot_finished_handler([&]() {
                 DEBUG("Android successfully booted");
                 android_api_stub->ready().set(true);
@@ -289,8 +294,9 @@ anbox::cmds::SessionManager::SessionManager()
     }
 
     auto bus_type = anbox::dbus::Bus::Type::Session;
-    if (use_system_dbus_)
+    if (use_system_dbus_){
       bus_type = anbox::dbus::Bus::Type::System;
+    }
     auto bus = std::make_shared<anbox::dbus::Bus>(bus_type);
 
     auto skeleton = anbox::dbus::skeleton::Service::create_for_bus(bus, app_manager);

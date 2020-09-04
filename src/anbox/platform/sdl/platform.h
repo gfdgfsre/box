@@ -34,9 +34,11 @@ namespace input {
 class Device;
 class Manager;
 }  // namespace input
+
 namespace wm {
 class Manager;
 } // namespace wm
+
 namespace platform {
 namespace sdl {
 class Platform : public std::enable_shared_from_this<Platform>,

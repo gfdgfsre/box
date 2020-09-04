@@ -70,8 +70,10 @@ class PlatformApiSkeleton {
 
   void handle_boot_finished_event(
       const anbox::protobuf::bridge::BootFinishedEvent &event);
+  
   void handle_window_state_update_event(
       const anbox::protobuf::bridge::WindowStateUpdateEvent &event);
+
   void handle_application_list_update_event(
       const anbox::protobuf::bridge::ApplicationListUpdateEvent &event);
 

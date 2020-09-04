@@ -37,8 +37,7 @@ ConnectionCreator::ConnectionCreator(const std::shared_ptr<Runtime>& rt,
 ConnectionCreator::~ConnectionCreator() noexcept {}
 
 void ConnectionCreator::create_connection_for(
-    std::shared_ptr<boost::asio::local::stream_protocol::socket> const&
-        socket) {
+    std::shared_ptr<boost::asio::local::stream_protocol::socket> const &socket) {
   if (connections_->size() >= 1) {
     socket->close();
     WARNING(
@@ -47,12 +46,11 @@ void ConnectionCreator::create_connection_for(
     return;
   }
 
-  auto const messenger =
-      std::make_shared<network::LocalSocketMessenger>(socket);
+  auto const messenger = std::make_shared<network::LocalSocketMessenger>(socket);
   auto const processor = message_processor_factory_(messenger);
 
-  auto const& connection = std::make_shared<network::SocketConnection>(
-      messenger, messenger, next_id(), connections_, processor);
+  auto const& connection = std::make_shared<network::SocketConnection>(messenger, messenger, next_id(), connections_, processor);
+
   connection->set_name("rpc");
   connections_->add(connection);
   connection->read_next_message();

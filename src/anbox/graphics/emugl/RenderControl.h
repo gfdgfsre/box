@@ -31,8 +31,7 @@ class LayerComposer;
 }  // namespace anbox
 
 void initRenderControlContext(renderControl_decoder_context_t *dec);
-void registerLayerComposer(
-    const std::shared_ptr<anbox::graphics::LayerComposer> &c);
+void registerLayerComposer(const std::shared_ptr<anbox::graphics::LayerComposer> &c);
 void registerRenderer(const std::shared_ptr<Renderer> &r);
 
 #endif

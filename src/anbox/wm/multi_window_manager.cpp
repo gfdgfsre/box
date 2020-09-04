@@ -55,6 +55,7 @@ void MultiWindowManager::apply_window_state_update(const WindowState::List &upda
     auto w = windows_.find(window.task());
     if (w != windows_.end()) {
       auto t = task_updates.find(window.task());
+      
       if (t == task_updates.end())
         task_updates.insert({window.task(), {window}});
       else

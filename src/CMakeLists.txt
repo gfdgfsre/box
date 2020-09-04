@@ -378,8 +378,7 @@ target_link_libraries(anbox-core
   xdg)
 
 add_executable(anbox main.cpp ${BACKWARD_ENABLE})
-target_link_libraries(anbox
-    anbox-core)
+target_link_libraries(anbox anbox-core)
 add_backward(anbox)
 
 install(

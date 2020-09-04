@@ -55,8 +55,7 @@ class PendingCallCache {
 
  private:
   struct PendingCall {
-    PendingCall(google::protobuf::MessageLite *response,
-                google::protobuf::Closure *target)
+    PendingCall(google::protobuf::MessageLite *response, google::protobuf::Closure *target)
         : response(response), complete(target) {}
 
     PendingCall() : response(0), complete() {}

@@ -88,6 +88,7 @@ void PipeConnectionCreator::create_connection_for(
 
   auto const &connection = std::make_shared<network::SocketConnection>(
       messenger, messenger, next_id(), connections_, processor);
+
   connection->set_name(client_type_to_string(type));
   connections_->add(connection);
   connection->read_next_message();
@@ -112,8 +113,7 @@ PipeConnectionCreator::client_type PipeConnectionCreator::identify_client(
     return client_type::opengles;
   // Even if 'boot-properties' is an argument to the service 'qemud' here we
   // take this as a own service instance as that is what it is.
-  else if (utils::string_starts_with(identifier_and_args,
-                                     "pipe:qemud:boot-properties"))
+  else if (utils::string_starts_with(identifier_and_args, "pipe:qemud:boot-properties"))
     return client_type::qemud_boot_properties;
   else if (utils::string_starts_with(identifier_and_args,
                                      "pipe:qemud:hw-control"))

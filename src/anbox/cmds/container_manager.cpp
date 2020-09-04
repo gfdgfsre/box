@@ -92,14 +92,17 @@ anbox::cmds::ContainerManager::ContainerManager()
         trap->stop();
       });
 
-      if (!data_path_.empty())
+      if (!data_path_.empty()){
         SystemConfiguration::instance().set_data_path(data_path_);
+      }
 
-      if (!fs::exists(data_path_))
+      if (!fs::exists(data_path_)){
         fs::create_directories(data_path_);
+      }
 
-      if (!setup_mounts())
+      if (!setup_mounts()){
         return EXIT_FAILURE;
+      }
 
       auto rt = Runtime::create();
       container::Service::Configuration config;
@@ -108,8 +111,9 @@ anbox::cmds::ContainerManager::ContainerManager()
       config.container_network_address = container_network_address_;
       config.container_network_gateway = container_network_gateway_;
 
-      if (container_network_dns_servers_.length() > 0)
+      if (container_network_dns_servers_.length() > 0){
         config.container_network_dns_servers = utils::string_split(container_network_dns_servers_, ',');
+      }
 
       auto service = container::Service::create(rt, config);
 
@@ -129,8 +133,9 @@ anbox::cmds::ContainerManager::~ContainerManager() {}
 
 bool anbox::cmds::ContainerManager::setup_mounts() {
   fs::path android_img_path = android_img_path_;
-  if (android_img_path.empty())
+  if (android_img_path.empty()){
     android_img_path = SystemConfiguration::instance().data_dir() / "android.img";
+  }
 
   if (!fs::exists(android_img_path)) {
     ERROR("Android image does not exist at path %s", android_img_path);
@@ -143,8 +148,9 @@ bool anbox::cmds::ContainerManager::setup_mounts() {
     return false;
   }
 
-  if (!fs::exists(android_rootfs_dir))
+  if (!fs::exists(android_rootfs_dir)){
     fs::create_directory(android_rootfs_dir);
+  }
 
   // We prefer using the kernel for mounting the squashfs image but
   // for some cases (unprivileged containers) where no loop support

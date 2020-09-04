@@ -115,9 +115,7 @@ bs::error_code BaseSocketMessenger<stream_protocol>::receive_msg(
   size_t nread = 0;
 
   while (nread < ba::buffer_size(buffer)) {
-    nread +=
-        boost::asio::read(*socket, ba::mutable_buffers_1{buffer + nread}, e);
-
+    nread += boost::asio::read(*socket, ba::mutable_buffers_1{buffer + nread}, e);
     if (e && e != ba::error::would_block) break;
   }
 

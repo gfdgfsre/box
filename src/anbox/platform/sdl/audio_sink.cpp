@@ -79,9 +79,7 @@ void AudioSink::read_data(std::uint8_t *buffer, int size) {
   while (count < wanted) {
     if (read_buffer_left_ > 0) {
       size_t avail = std::min<size_t>(wanted - count, read_buffer_left_);
-      memcpy(dst + count,
-             read_buffer_.data() + (read_buffer_.size() - read_buffer_left_),
-             avail);
+      memcpy(dst + count, read_buffer_.data() + (read_buffer_.size() - read_buffer_left_), avail);
       count += avail;
       read_buffer_left_ -= avail;
       continue;

@@ -40,14 +40,16 @@ namespace anbox {
 namespace common {
 std::shared_ptr<LoopDevice> LoopDeviceAllocator::new_device() {
   const auto ctl_fd = ::open(loop_control_path, O_RDWR);
-  if (ctl_fd < 0)
+  if (ctl_fd < 0){
     throw std::system_error{errno, std::system_category()};
+  }
 
   DeferAction close_ctl_fd{[&]() { ::close(ctl_fd); }};
 
   const auto device_nr = ::ioctl(ctl_fd, LOOP_CTL_GET_FREE);
-  if (device_nr < 0)
+  if (device_nr < 0){
     throw std::system_error{errno, std::system_category()};
+  }
 
   return LoopDevice::create(utils::string_format("%s%d", base_loop_path, device_nr));
 }
