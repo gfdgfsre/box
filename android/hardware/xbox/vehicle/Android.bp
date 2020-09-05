@@ -1,0 +1,98 @@
+// Copyright (C) 2017 The Android Open Source Project
+// Copyright (C) 2019 EPAM Systems Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//       http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+cc_binary {
+    name: "android.hardware.automotive.vehicle@2.0-service.xenvm",
+    init_rc: ["android.hardware.automotive.vehicle@2.0-service.xenvm.rc"],
+    vendor: true,
+    relative_install_path: "hw",
+    srcs: [
+        "VehicleService.cpp",
+        "common/src/SubscriptionManager.cpp",
+        "common/src/VehicleHalManager.cpp",
+        "common/src/VehicleObjectPool.cpp",
+        "common/src/VehiclePropertyStore.cpp",
+        "common/src/VehicleUtils.cpp",
+        "common/src/VisVehicleHal.cpp",
+    ],
+    shared_libs: [
+        "libbase",
+        "libvisclient",
+        "libhidlbase",
+        "libhidltransport",
+        "liblog",
+        "libutils",
+        "android.hardware.automotive.vehicle@2.0",
+        "libcrypto",
+        "libcutils",
+        "libuws",
+        "libz",
+    ],
+    local_include_dirs: ["common/include/vhal_v2_0"],
+        cflags: [
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+    ],
+}
+
+cc_library {
+    name: "libvisclient",
+    vendor: true,
+    srcs: [
+        "common/src/VisClient.cpp",
+    ],
+    static_libs: [
+    	"libjsoncpp",
+    ],
+    shared_libs: [
+        "liblog",
+        "libuws",
+        "libcrypto",
+        "libz",
+        "libcutils",
+    ],
+    local_include_dirs: ["common/include/vhal_v2_0"],
+    export_include_dirs: [
+        "common/include",
+        "common/include/vhal_v2_0",
+    ],
+    export_shared_lib_headers:[
+        "libuws",
+    ],
+    export_static_lib_headers:[
+        "libjsoncpp",
+    ],
+}
+
+cc_test {
+    name: "vis_test",
+    vendor: true,
+    srcs: [
+        "tests/VisTest.cpp",
+    ],
+    shared_libs: [
+        "liblog",
+        "libuws",
+        "libcrypto",
+        "libz",
+        "libcutils",
+        "libvisclient",
+    ],
+    static_libs: [
+        "libjsoncpp",
+    ],
+    local_include_dirs: ["common/include/vhal_v2_0"],
+}

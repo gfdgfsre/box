@@ -1,0 +1,388 @@
+/*
+ *  Xen base frontend handler
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
+ *
+ * Copyright (C) 2016 EPAM Systems Inc.
+ */
+
+#include "FrontendHandlerBase.hpp"
+
+#include <algorithm>
+#include <functional>
+#include <sstream>
+
+extern "C" {
+#include "xenstore.h"
+#include "xenctrl.h"
+}
+
+#include "BackendBase.hpp"
+#include "Utils.hpp"
+
+using std::bind;
+using std::find;
+using std::lock_guard;
+using std::make_pair;
+using std::mutex;
+using std::placeholders::_1;
+using std::stoi;
+using std::string;
+using std::stringstream;
+using std::to_string;
+using std::unordered_map;
+using std::vector;
+
+namespace XenBackend {
+
+/*******************************************************************************
+ * FrontendHandlerBase
+ ******************************************************************************/
+
+FrontendHandlerBase::FrontendHandlerBase(const std::string& name,
+										 const std::string& devName,
+										 domid_t domId, uint16_t devId) :
+	mDomId(domId),
+	mDevId(devId),
+	mDevName(devName),
+	mBackendState(XenbusStateUnknown),
+	mFrontendState(XenbusStateUnknown),
+	mXenStore(bind(&FrontendHandlerBase::onError, this, _1)),
+	mLog(name.empty() ? "FrontendHandler" : name)
+{
+	LOG(mLog, DEBUG) << Utils::logDomId(mDomId, mDevId)
+					 << "Create frontend handler";
+
+	init();
+}
+
+FrontendHandlerBase::~FrontendHandlerBase()
+{
+	stop();
+
+	LOG(mLog, DEBUG) << Utils::logDomId(mDomId, mDevId)
+					 << "Delete frontend handler";
+}
+
+/*******************************************************************************
+ * Public
+ ******************************************************************************/
+
+void FrontendHandlerBase::start()
+{
+	lock_guard<mutex> lock(mMutex);
+
+	mXenStore.setWatch(mFeStatePath,
+					   bind(&FrontendHandlerBase::frontendStateChanged, this));
+
+	mXenStore.setWatch(mBeStatePath,
+					   bind(&FrontendHandlerBase::backendStateChanged, this));
+
+	mXenStore.start();
+}
+
+void FrontendHandlerBase::stop()
+{
+	mXenStore.clearWatches();
+
+	mXenStore.stop();
+
+	lock_guard<mutex> lock(mMutex);
+
+	close(XenbusStateClosed);
+
+	mAsyncContext.stop();
+}
+
+/*******************************************************************************
+ * Protected
+ ******************************************************************************/
+
+void FrontendHandlerBase::addRingBuffer(RingBufferPtr ringBuffer)
+{
+	LOG(mLog, INFO) << Utils::logDomId(mDomId, mDevId)
+					<< "Add ring buffer, ref: "
+					<< ringBuffer->getRef() << ", port: "
+					<< ringBuffer->getPort();
+
+	ringBuffer->setErrorCallback(bind(&FrontendHandlerBase::onError, this, _1));
+	ringBuffer->start();
+
+	mRingBuffers.push_back(ringBuffer);
+}
+
+void FrontendHandlerBase::setBackendState(xenbus_state state)
+{
+	if (state == mBackendState)
+	{
+		return;
+	}
+
+	LOG(mLog, INFO) << Utils::logDomId(mDomId, mDevId)
+					<< "Set backend state to: "
+					<< Utils::logState(state);
+
+	mBackendState = state;
+
+	if (mXenStore.checkIfExist(mBeStatePath))
+	{
+		mXenStore.writeInt(mBeStatePath, state);
+	}
+}
+
+void FrontendHandlerBase::onClosing()
+{
+
+}
+
+void FrontendHandlerBase::onStateUnknown()
+{
+}
+
+void FrontendHandlerBase::onStateInitializing()
+{
+	if (mBackendState == XenbusStateConnected)
+	{
+		LOG(mLog, WARNING) << Utils::logDomId(mDomId, mDevId)
+						   << "Frontend restarted";
+
+		close(XenbusStateInitWait);
+	}
+
+	if (mBackendState == XenbusStateInitialising ||
+		mBackendState == XenbusStateClosed)
+	{
+		setBackendState(XenbusStateInitWait);
+	}
+}
+
+void FrontendHandlerBase::onStateInitWait()
+{
+
+}
+
+void FrontendHandlerBase::onStateInitialized()
+{
+	if (mBackendState == XenbusStateInitialising ||
+		mBackendState == XenbusStateInitWait)
+	{
+		onBind();
+
+		setBackendState(XenbusStateConnected);
+	}
+}
+
+void FrontendHandlerBase::onStateConnected()
+{
+	if (mBackendState == XenbusStateInitialising ||
+		mBackendState == XenbusStateInitWait)
+	{
+		onBind();
+
+		setBackendState(XenbusStateConnected);
+	}
+}
+
+void FrontendHandlerBase::onStateClosing()
+{
+	if (mBackendState == XenbusStateInitialised ||
+		mBackendState == XenbusStateConnected)
+	{
+		close(XenbusStateInitWait);
+	}
+}
+
+void FrontendHandlerBase::onStateClosed()
+{
+	if (mBackendState == XenbusStateInitialised ||
+		mBackendState == XenbusStateConnected)
+	{
+		close(XenbusStateInitWait);
+	}
+}
+
+void FrontendHandlerBase::onStateReconfiguring()
+{
+
+}
+
+void FrontendHandlerBase::onStateReconfigured()
+{
+
+}
+
+/*******************************************************************************
+ * Private
+ ******************************************************************************/
+
+void FrontendHandlerBase::initXenStorePathes()
+{
+	mXsFrontendPath = mXenStore.getDomainPath(mDomId) + "/device/" + mDevName + 
+					  "/" + to_string(mDevId);
+	mXsBackendPath = mXenStore.readString(mXsFrontendPath + "/backend");
+
+	mFeStatePath = mXsFrontendPath + "/state";
+	mBeStatePath = mXsBackendPath + "/state";
+
+
+	LOG(mLog, DEBUG) << "Frontend path: " << mXsFrontendPath;
+	LOG(mLog, DEBUG) << "Backend path:  " << mXsBackendPath;
+}
+
+void FrontendHandlerBase::init()
+{
+	initXenStorePathes();
+
+	if (mXenStore.checkIfExist(mBeStatePath))
+	{
+		mBackendState = static_cast<xenbus_state>(mXenStore.readInt(mBeStatePath));
+
+		if (mBackendState != XenbusStateClosed)
+		{
+			close(XenbusStateInitialising);
+		}
+		else
+		{
+			setBackendState(XenbusStateInitialising);
+		}
+	}
+}
+
+void FrontendHandlerBase::release()
+{
+	// stop is required to prevent calling processRequest during deletion
+
+	for(auto ringBuffer : mRingBuffers)
+	{
+		ringBuffer->stop();
+	}
+
+	mRingBuffers.clear();
+}
+
+void FrontendHandlerBase::frontendStateChanged()
+{
+	lock_guard<mutex> lock(mMutex);
+
+	if (!mXenStore.checkIfExist(mFeStatePath))
+	{
+		return;
+	}
+
+	auto state = static_cast<xenbus_state>(mXenStore.readInt(mFeStatePath));
+
+	if (state == mFrontendState)
+	{
+		return;
+	}
+
+	mFrontendState = state;
+
+	LOG(mLog, INFO) << Utils::logDomId(mDomId, mDevId)
+					<< "Frontend state changed to: "
+					<< Utils::logState(state);
+
+	onFrontendStateChanged(mFrontendState);
+}
+
+void FrontendHandlerBase::backendStateChanged()
+{
+	lock_guard<mutex> lock(mMutex);
+
+	if (!mXenStore.checkIfExist(mBeStatePath))
+	{
+		return;
+	}
+
+	auto state = static_cast<xenbus_state>(mXenStore.readInt(mBeStatePath));
+
+	if (state == mBackendState)
+	{
+		return;
+	}
+
+	mBackendState = state;
+
+	LOG(mLog, INFO) << Utils::logDomId(mDomId, mDevId)
+					<< "Backend state changed to: "
+					<< Utils::logState(state);
+
+	onBackendStateChanged(mBackendState);
+}
+
+void FrontendHandlerBase::onFrontendStateChanged(xenbus_state state)
+{
+	static unordered_map<int, StateFn> sStateTable = {
+		{XenbusStateUnknown,       &FrontendHandlerBase::onStateUnknown},
+		{XenbusStateInitialising,  &FrontendHandlerBase::onStateInitializing},
+		{XenbusStateInitWait,      &FrontendHandlerBase::onStateInitWait},
+		{XenbusStateInitialised,   &FrontendHandlerBase::onStateInitialized},
+		{XenbusStateConnected,     &FrontendHandlerBase::onStateConnected},
+		{XenbusStateClosing,       &FrontendHandlerBase::onStateClosing},
+		{XenbusStateClosed,        &FrontendHandlerBase::onStateClosed},
+		{XenbusStateReconfiguring, &FrontendHandlerBase::onStateReconfiguring},
+		{XenbusStateReconfigured,  &FrontendHandlerBase::onStateReconfigured},
+	};
+
+	if (state < sStateTable.size())
+	{
+		(this->*sStateTable.at(state))();
+	}
+	else
+	{
+		LOG(mLog, WARNING) << Utils::logDomId(mDomId, mDevId)
+						   << "Invalid state: " << state;
+	}
+}
+
+void FrontendHandlerBase::onBackendStateChanged(xenbus_state state)
+{
+	if (state == XenbusStateClosing || state == XenbusStateClosed)
+	{
+		close(XenbusStateClosed);
+	}
+	else if (state == XenbusStateInitialising)
+	{
+		setBackendState(XenbusStateInitWait);
+	}
+}
+
+void FrontendHandlerBase::onError(const std::exception& e)
+{
+	LOG(mLog, ERROR) << Utils::logDomId(mDomId, mDevId) << e.what();
+
+	mAsyncContext.call(bind(&FrontendHandlerBase::close, this,
+					   XenbusStateClosed));
+}
+
+void FrontendHandlerBase::close(xenbus_state stateAfterClose)
+{
+	LOG(mLog, INFO) << "Close";
+
+	if (mBackendState != XenbusStateClosed)
+	{
+		setBackendState(XenbusStateClosing);
+	}
+
+	onClosing();
+
+	release();
+
+	setBackendState(XenbusStateClosed);
+
+	setBackendState(stateAfterClose);
+}
+
+}
