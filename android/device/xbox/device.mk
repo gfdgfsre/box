@@ -198,7 +198,7 @@ PRODUCT_PACKAGES += \
     evs_app_xbox \
 
 PRODUCT_COPY_FILES += \
-    vendor/xbox/evs/app/evs_app_xbox.json:$(TARGET_COPY_OUT_VENDOR)/etc/vehicle/evs_app_box.json
+    vendor/xbox/evs/app/evs_app_xbox.json:$(TARGET_COPY_OUT_VENDOR)/etc/vehicle/evs_app_xbox.json
 
 # Set default log size on userdebug/eng builds to 2M
 ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))

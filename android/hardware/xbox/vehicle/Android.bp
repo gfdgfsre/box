@@ -14,8 +14,8 @@
 // limitations under the License.
 
 cc_binary {
-    name: "android.hardware.automotive.vehicle@2.0-service.xenvm",
-    init_rc: ["android.hardware.automotive.vehicle@2.0-service.xenvm.rc"],
+    name: "android.hardware.automotive.vehicle@2.0-service.xbox",
+    init_rc: ["android.hardware.automotive.vehicle@2.0-service.xbox.rc"],
     vendor: true,
     relative_install_path: "hw",
     srcs: [

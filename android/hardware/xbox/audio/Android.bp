@@ -15,7 +15,7 @@
 // Copyright (C) 2018 EPAM Systems Inc.
 
 cc_library_shared {
-    name: "audio.primary.xenvm",
+    name: "audio.primary.xbox",
     relative_install_path: "hw",
     vendor: true,
     srcs: [

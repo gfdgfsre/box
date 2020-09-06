@@ -16,7 +16,7 @@
  */
 
 // #define LOG_NDEBUG 0
-#define LOG_TAG "automotive.vehicle@2.0-xenvm"
+#define LOG_TAG "automotive.vehicle@2.0-xbox"
 
 #include <android-base/macros.h>
 #include <android/log.h>
@@ -40,7 +40,7 @@ namespace V2_0 {
 
 using namespace impl;
 
-namespace xenvm {
+namespace xbox {
 
 VisVehicleHal::VisVehicleHal(VehiclePropertyStore* propStore)
     : mPropStore(propStore),
