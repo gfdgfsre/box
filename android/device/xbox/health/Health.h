@@ -36,7 +36,7 @@ namespace android {
 namespace hardware {
 namespace health {
 namespace V2_0 {
-namespace xenvm {
+namespace xbox {
 
 using V1_0::BatteryStatus;
 

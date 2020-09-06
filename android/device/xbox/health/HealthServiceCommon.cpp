@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "android.hardware.health@2.0-service.xenvm"
+#define LOG_TAG "android.hardware.health@2.0-service.xbox"
 
 #include <android-base/logging.h>
 
@@ -33,7 +33,7 @@ using android::hardware::setupTransportPolling;
 using android::hardware::health::V2_0::HealthInfo;
 using android::hardware::health::V1_0::hal_conversion::convertToHealthInfo;
 using android::hardware::health::V2_0::IHealth;
-using android::hardware::health::V2_0::xenvm::Health;
+using android::hardware::health::V2_0::xbox::Health;
 
 extern int healthd_main(void);
 
