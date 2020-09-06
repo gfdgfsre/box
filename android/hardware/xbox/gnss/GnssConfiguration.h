@@ -29,7 +29,7 @@ namespace android {
 namespace hardware {
 namespace gnss {
 namespace V1_1 {
-namespace xenvm {
+namespace xbox {
 
 using ::android::hardware::hidl_array;
 using ::android::hardware::hidl_memory;

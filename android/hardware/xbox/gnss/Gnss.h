@@ -33,7 +33,7 @@ namespace android {
 namespace hardware {
 namespace gnss {
 namespace V1_1 {
-namespace xenvm {
+namespace xbox {
 
 using ::android::hardware::hidl_array;
 using ::android::hardware::hidl_memory;
@@ -120,7 +120,7 @@ struct Gnss : public IGnss {
     VisDataProvider mVis;
 };
 
-}  // namespace xenvm
+}  // namespace xbox
 }  // namespace V1_1
 }  // namespace gnss
 }  // namespace hardware

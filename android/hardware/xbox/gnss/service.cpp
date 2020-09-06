@@ -14,14 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#define LOG_TAG "android.hardware.gnss@1.1-service.xenvm"
+#define LOG_TAG "android.hardware.gnss@1.1-service.xbox"
 
 #include <hidl/HidlSupport.h>
 #include <hidl/HidlTransportSupport.h>
 #include "Gnss.h"
 
 using ::android::hardware::configureRpcThreadpool;
-using ::android::hardware::gnss::V1_1::xenvm::Gnss;
+using ::android::hardware::gnss::V1_1::xbox::Gnss;
 using ::android::hardware::gnss::V1_1::IGnss;
 using ::android::hardware::joinRpcThreadpool;
 using ::android::OK;

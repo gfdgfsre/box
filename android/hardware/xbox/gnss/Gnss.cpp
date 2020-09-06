@@ -16,7 +16,7 @@
  */
 
 // #define LOG_NDEBUG 0
-#define LOG_TAG "gnss.xenvm"
+#define LOG_TAG "gnss.xbox"
 
 #include <android/hardware/gnss/1.0/types.h>
 #include <log/log.h>
@@ -33,7 +33,7 @@ namespace android {
 namespace hardware {
 namespace gnss {
 namespace V1_1 {
-namespace xenvm {
+namespace xbox {
 
 using GnssSvFlags = IGnssCallback::GnssSvFlags;
 
