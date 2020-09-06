@@ -21,5 +21,5 @@
 # In particular, you can add lunch options with the add_lunch_combo
 # function: add_lunch_combo generic-eng
 
-add_lunch_combo xenvm-userdebug
-add_lunch_combo xenvm-eng
+add_lunch_combo xbox-userdebug
+add_lunch_combo xbox-eng

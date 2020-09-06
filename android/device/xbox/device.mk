@@ -16,7 +16,7 @@
 #
 
 $(call inherit-product, build/target/product/core_64_bit.mk)
-$(call inherit-product, device/xen/xenvm/build/car.mk)
+$(call inherit-product, device/xbox/build/car.mk)
 $(call inherit-product, frameworks/native/build/tablet-10in-xhdpi-2048-dalvik-heap.mk)
 
 PRODUCT_CFI_INCLUDE_PATHS :=
@@ -74,33 +74,33 @@ PRODUCT_COPY_FILES += \
 
 # Manifest
 PRODUCT_COPY_FILES += \
-    device/xen/xenvm/manifest.xml:$(TARGET_COPY_OUT_VENDOR)/manifest.xml
+    device/xbox/manifest.xml:$(TARGET_COPY_OUT_VENDOR)/manifest.xml
 
 # Init rc
 PRODUCT_COPY_FILES +=\
-    device/xen/xenvm/init.xenvm.rc:root/init.xenvm.rc \
-    device/xen/xenvm/ueventd.xenvm.rc:root/ueventd.xenvm.rc \
+    device/xbox/init.xbox.rc:root/init.xbox.rc \
+    device/xbox/ueventd.xbox.rc:root/ueventd.xbox.rc \
     packages/services/Car/car_product/init/init.car.rc:root/init.car.rc \
     packages/services/Car/car_product/init/init.bootstat.rc:root/init.bootstat.rc
 
 # Mount points
 ifeq ($(ENABLE_AVB),true)
   PRODUCT_COPY_FILES += \
-    device/xen/xenvm/fstab.xenvm.avb:root/fstab.xenvm
+    device/xbox/fstab.xbox.avb:root/fstab.xbox
 else
   PRODUCT_COPY_FILES += \
-    device/xen/xenvm/fstab.xenvm:root/fstab.xenvm
+    device/xbox/fstab.xbox:root/fstab.xbox
 endif
 PRODUCT_COPY_FILES += \
-    device/xen/xenvm/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml \
+    device/xbox/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml \
     frameworks/av/services/audiopolicy/config/audio_policy_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_volumes.xml \
     frameworks/av/services/audiopolicy/config/default_volume_tables.xml:$(TARGET_COPY_OUT_VENDOR)/etc/default_volume_tables.xml \
-    device/xen/xenvm/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml
+    device/xbox/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml
 
 
 # media codec config xml file
 PRODUCT_COPY_FILES += \
-    device/xen/xenvm/media_codecs.xml:system/etc/media_codecs.xml \
+    device/xbox/media_codecs.xml:system/etc/media_codecs.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml
 
@@ -110,7 +110,7 @@ PRODUCT_COPY_FILES += \
 
 # Input configuration
 PRODUCT_COPY_FILES += \
-    device/xen/xenvm/Vendor_5853_Product_fffd.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/Vendor_5853_Product_fffd.idc \
+    device/xbox/Vendor_5853_Product_fffd.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/Vendor_5853_Product_fffd.idc \
 
 # Native apps for audio
 PRODUCT_PACKAGES += \
@@ -127,7 +127,7 @@ PRODUCT_PACKAGES += \
 
 # Audio
 PRODUCT_PACKAGES += \
-	audio.primary.xenvm \
+	audio.primary.xbox \
     android.hardware.audio@4.0-impl \
     android.hardware.audio.effect@2.0-impl \
     android.hardware.audio@2.0-service
@@ -144,7 +144,7 @@ PRODUCT_PACKAGES += \
 
 # Health HAL 2.0
 PRODUCT_PACKAGES += \
-    android.hardware.health@2.0-service.xenvm \
+    android.hardware.health@2.0-service.xbox \
 
 DEVICE_FRAMEWORK_MANIFEST_FILE += \
             system/libhidl/vintfdata/manifest_healthd_exclude.xml
@@ -155,10 +155,10 @@ DEVICE_FRAMEWORK_MANIFEST_FILE += \
 # Vehicle HAL
 PRODUCT_PACKAGES += \
     android.hardware.automotive.vehicle-V2.0-java \
-    android.hardware.automotive.vehicle@2.0-service.xenvm \
+    android.hardware.automotive.vehicle@2.0-service.xbox \
 
 PRODUCT_COPY_FILES += \
-    vendor/xen/vehicle/cfg/vehicle-mappings.json:$(TARGET_COPY_OUT_VENDOR)/etc/vehicle/vehicle-mappings.json
+    vendor/xbox/vehicle/cfg/vehicle-mappings.json:$(TARGET_COPY_OUT_VENDOR)/etc/vehicle/vehicle-mappings.json
 
 # HW service manager
 PRODUCT_PACKAGES += \
@@ -180,25 +180,25 @@ PRODUCT_PACKAGES += \
 
 # GNSS
 PRODUCT_PACKAGES += \
-    android.hardware.gnss@1.1-service.xenvm \
+    android.hardware.gnss@1.1-service.xbox \
     libuws \
 
 #Sensors
 PRODUCT_PACKAGES += \
-       android.hardware.sensors@1.0-service.xenvm \
+       android.hardware.sensors@1.0-service.xbox \
 
 PRODUCT_COPY_FILES += \
-    vendor/xen/sensors/cfg/sensors-config.json:$(TARGET_COPY_OUT_VENDOR)/etc/vehicle/sensors-config.json
+    vendor/xbox/sensors/cfg/sensors-config.json:$(TARGET_COPY_OUT_VENDOR)/etc/vehicle/sensors-config.json
 
 # Exterior View System (EVS)
 PRODUCT_PACKAGES += \
     android.hardware.automotive.evs@1.0-service \
-    android.hardware.automotive.evs@1.0.xenvm \
-    android.automotive.evs.manager@1.0.xenvm \
-    evs_app_xt \
+    android.hardware.automotive.evs@1.0.xbox \
+    android.automotive.evs.manager@1.0.xbox \
+    evs_app_xbox \
 
 PRODUCT_COPY_FILES += \
-    vendor/xen/evs/app/evs_app_xt.json:$(TARGET_COPY_OUT_VENDOR)/etc/vehicle/evs_app_xt.json
+    vendor/xbox/evs/app/evs_app_xbox.json:$(TARGET_COPY_OUT_VENDOR)/etc/vehicle/evs_app_box.json
 
 # Set default log size on userdebug/eng builds to 2M
 ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
@@ -214,11 +214,11 @@ ifneq ($(TARGET_PREBUILT_KERNEL),)
 PRODUCT_COPY_FILES +=   $(TARGET_PREBUILT_KERNEL):kernel
 endif
 
-$(call inherit-product, device/xen/xenvm/graphics.mk)
+$(call inherit-product, device/xbox/graphics.mk)
 $(call inherit-product-if-exists, frameworks/base/data/sounds/AudioPackage13.mk)
 $(call inherit-product-if-exists, frameworks/base/data/fonts/fonts.mk)
 ifeq ($(USE_G_APPS),true)
 $(call inherit-product-if-exists, vendor/Google/Google-product.mk)
 endif
-$(call inherit-product, device/xen/xenvm/security.mk)
+$(call inherit-product, device/xbox/security.mk)
 

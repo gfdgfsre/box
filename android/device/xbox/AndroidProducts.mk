@@ -16,4 +16,4 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/xenvm.mk
+    $(LOCAL_DIR)/xbox.mk

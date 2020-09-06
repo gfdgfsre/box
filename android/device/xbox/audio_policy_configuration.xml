@@ -17,7 +17,7 @@
 <audioPolicyConfiguration version="1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
     <modules>
 
-        <!-- XEN VM Audio HAL -->
+        <!-- xbox VM Audio HAL -->
         <module name="primary" halVersion="4.0">
           <attachedDevices>
             <item>bus0_out_media</item>

@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-ifneq ($(filter xenvm, $(TARGET_DEVICE)),)
+ifneq ($(filter xbox, $(TARGET_DEVICE)),)
 
 LOCAL_PATH := $(call my-dir)
 include $(call all-makefiles-under,$(LOCAL_PATH))

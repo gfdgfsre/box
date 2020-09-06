@@ -1,1 +1,1 @@
-android_device_xenvm
+android_device_xbox

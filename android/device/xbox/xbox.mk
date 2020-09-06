@@ -14,13 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-$(call inherit-product, device/xen/xenvm/device.mk)
+$(call inherit-product, device/xbox/device.mk)
 
-PRODUCT_NAME := xenvm
-PRODUCT_DEVICE := xenvm
+PRODUCT_NAME := xbox
+PRODUCT_DEVICE := xbox
 PRODUCT_BRAND := Android
 PRODUCT_MODEL := Xenvm
 PRODUCT_MANUFACTURER := Xen
 PRODUCT_RUNTIMES := runtime_libart_default
-DEVICE_PACKAGE_OVERLAYS := device/xen/xenvm/overlay
+DEVICE_PACKAGE_OVERLAYS := device/xbox/overlay
 PRODUCT_CHARACTERISTICS := nosdcard
