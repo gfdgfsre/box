@@ -42,9 +42,9 @@ cc_binary {
         "libutils",
     ],
 
-    init_rc: ["android.hardware.automotive.evs@1.0.xenvm.rc"],
+    init_rc: ["android.hardware.automotive.evs@1.0.xbox.rc"],
 
-    name: "android.hardware.automotive.evs@1.0.xenvm",
+    name: "android.hardware.automotive.evs@1.0.xbox",
 
     vendor: true,
 
