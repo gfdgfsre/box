@@ -1,6 +1,6 @@
 cc_binary {
-    name: "android.hardware.gnss@1.1-service.xenvm",
-    init_rc: ["android.hardware.gnss@1.1-service.xenvm.rc"],
+    name: "android.hardware.gnss@1.1-service.xbox",
+    init_rc: ["android.hardware.gnss@1.1-service.xbox.rc"],
     relative_install_path: "hw",
     vendor: true,
     srcs: [

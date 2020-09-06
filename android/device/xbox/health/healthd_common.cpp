@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "android.hardware.health@2.0-impl.xenvm"
+#define LOG_TAG "android.hardware.health@2.0-impl.xbox"
 #define KLOG_LEVEL 6
 
 #include <healthd/BatteryMonitor.h>

@@ -1,4 +1,4 @@
-#service evs_app /vendor/bin/evs_app_xt
+#service evs_app /vendor/bin/evs_app_xbox
 #    class hal
 #    priority -20
 #    user automotive_evs

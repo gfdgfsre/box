@@ -27,7 +27,7 @@ PRODUCT_PACKAGES += \
     tee-supplicant \
 
 # settings for building of trusted applications (TA)
-OPTEE_OS_DIR := vendor/xen/optee_os
+OPTEE_OS_DIR := vendor/xbox/optee_os
 OPTEE_TA_TARGETS := ta_arm64
 OPTEE_CFG_ARM64_CORE := y
 BUILD_OPTEE_MK := $(OPTEE_OS_DIR)/mk/aosp_optee.mk

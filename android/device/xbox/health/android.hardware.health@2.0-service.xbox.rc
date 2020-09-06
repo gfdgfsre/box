@@ -1,4 +1,4 @@
-service health-hal-2-0 /vendor/bin/hw/android.hardware.health@2.0-service.xenvm
+service health-hal-2-0 /vendor/bin/hw/android.hardware.health@2.0-service.xbox
     class hal
     user system
     group system

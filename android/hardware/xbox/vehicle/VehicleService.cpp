@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "automotive.vehicle@2.0-service.xenvm"
+#define LOG_TAG "automotive.vehicle@2.0-service.xbox"
 #include <android/log.h>
 #include <hidl/HidlTransportSupport.h>
 
@@ -27,7 +27,7 @@
 using namespace android;
 using namespace android::hardware;
 using namespace android::hardware::automotive::vehicle::V2_0;
-using namespace android::hardware::automotive::vehicle::V2_0::xenvm;
+using namespace android::hardware::automotive::vehicle::V2_0::xbox;
 
 int main(int /* argc */, char* /* argv */ []) {
     auto store = std::make_unique<VehiclePropertyStore>();

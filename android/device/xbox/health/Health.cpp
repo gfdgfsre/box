@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#define LOG_TAG "android.hardware.health@2.0-impl.xenvm"
+#define LOG_TAG "android.hardware.health@2.0-impl.xbox"
 #include <android-base/logging.h>
 
 #include <android-base/file.h>
@@ -29,7 +29,7 @@ namespace android {
 namespace hardware {
 namespace health {
 namespace V2_0 {
-namespace xenvm {
+namespace xbox {
 
 sp<Health> Health::instance_;
 

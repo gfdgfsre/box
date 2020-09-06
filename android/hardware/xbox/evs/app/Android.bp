@@ -54,9 +54,9 @@ cc_binary {
 
     strip: {none:true},
 
-    init_rc: ["evs_app_xt.rc"],
+    init_rc: ["evs_app_xbox.rc"],
 
-    name: "evs_app_xt",
+    name: "evs_app_xbox",
 
     vendor: true,
 

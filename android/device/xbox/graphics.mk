@@ -61,7 +61,7 @@ RGX_MODULE:
 	mv $(PRODUCT_OUT)/obj/ROGUE_KM_OBJ/target_aarch64/kbuild/pvrsrvkm.ko $(TARGET_KERNEL_MODULES_OUT)
 
 TARGET_KERNEL_EXT_MODULES += RGX_MODULE
-$(BOARD_VENDOR_KERNEL_MODULES) : $(ABS_TOP)/device/xen/kernel $(DDK_UM_DEP) RGX_MODULE
+$(BOARD_VENDOR_KERNEL_MODULES) : $(ABS_TOP)/device/xbox/kernel $(DDK_UM_DEP) RGX_MODULE
 
 else
 # Use DDK-KM module from prebuilds

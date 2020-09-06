@@ -5,10 +5,10 @@ on init
     symlink /sdcard /mnt/sdcard
 
 on fs
-    mount_all ./fstab.xenvm --early
+    mount_all ./fstab.xbox --early
 
 on late-fs
-    mount_all ./fstab.xenvm --late
+    mount_all ./fstab.xbox --late
 
 on post-fs-data
     setprop vold.post_fs_data_done 1

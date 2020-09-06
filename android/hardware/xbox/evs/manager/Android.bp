@@ -34,9 +34,9 @@ cc_binary {
         "android.hardware.automotive.evs@1.0",
     ],
 
-    init_rc: ["android.automotive.evs.manager@1.0.xenvm.rc"],
+    init_rc: ["android.automotive.evs.manager@1.0.xbox.rc"],
 
-    name: "android.automotive.evs.manager@1.0.xenvm",
+    name: "android.automotive.evs.manager@1.0.xbox",
 
     vendor: true,
 

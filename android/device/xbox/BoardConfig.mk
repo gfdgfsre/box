@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-TARGET_BOOTLOADER_BOARD_NAME := xenvm
-TARGET_COPY_OUT_VENDOR := vendor
+TARGET_BOOTLOADER_BOARD_NAME := xbox
+TARGET_COPY_OUT_VENDOR := xbox
 
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_KERNEL := false
@@ -69,20 +69,20 @@ endif
 ART_USE_HSPACE_COMPACT := true
 
 # SECCOMP device specific policy dir
-BOARD_SECCOMP_POLICY += device/xen/xenvm/seccomp
+BOARD_SECCOMP_POLICY += device/xbox/seccomp
 
 # SELinux support
-BOARD_VENDOR_SEPOLICY_DIRS += device/xen/xenvm/sepolicy/vendor
-BOARD_PLAT_PRIVATE_SEPOLICY_DIR += device/xen/xenvm/sepolicy/private
-BOARD_PLAT_PUBLIC_SEPOLICY_DIR += device/xen/xenvm/sepolicy/public
+BOARD_VENDOR_SEPOLICY_DIRS += device/xbox/sepolicy/vendor
+BOARD_PLAT_PRIVATE_SEPOLICY_DIR += device/xbox/sepolicy/private
+BOARD_PLAT_PUBLIC_SEPOLICY_DIR += device/xbox/sepolicy/public
 
 ifeq ($(TARGET_PREBUILT_KERNEL),)
 # Kernel build rules
 BOARD_KERNEL_CMDLINE :=
 BOARD_KERNEL_BASE := 0x48000000
 BOARD_MKBOOTIMG_ARGS := --second_offset 0x800 --kernel_offset 0x80000 --ramdisk_offset 0x1100000
-TARGET_KERNEL_SOURCE := device/xen/kernel
-TARGET_KERNEL_CONFIG := android_xenvm_defconfig
+TARGET_KERNEL_SOURCE := device/xbox/kernel
+TARGET_KERNEL_CONFIG := android_xbox_defconfig
 endif
 
 PVRSRV_VZ_NUM_OSID := 2
