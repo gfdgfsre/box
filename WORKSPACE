@@ -1,4 +1,4 @@
-workspace(name = "anbox")
+workspace(name = "xbox")
 
 load("//bazel:anbox_deps_setup.bzl", "anbox_deps_setup")
 
