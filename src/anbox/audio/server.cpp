@@ -27,6 +27,8 @@
 #include "anbox/logger.h"
 
 using namespace std::placeholders;
+using namespace boost::asio::local::stream_protocol;
+using namespace boost::asio::basic_stream_socket;
 
 namespace {
 class AudioForwarder : public anbox::network::MessageProcessor {
@@ -52,7 +54,7 @@ Server::Server(const std::shared_ptr<Runtime>& rt, const std::shared_ptr<platfor
   socket_file_(utils::string_format("%s/anbox_audio", SystemConfiguration::instance().socket_dir())),
   connector_(std::make_shared<network::PublishedSocketConnector>(
              socket_file_, rt,
-             std::make_shared<network::DelegateConnectionCreator<boost::asio::local::stream_protocol>>(std::bind(&Server::create_connection_for, this, _1)))),
+             std::make_shared<network::DelegateConnectionCreator<stream_protocol>>(std::bind(&Server::create_connection_for, this, _1)))),
   connections_(std::make_shared<network::Connections<network::SocketConnection>>()),
   next_id_(0) {
 
@@ -63,15 +65,13 @@ Server::Server(const std::shared_ptr<Runtime>& rt, const std::shared_ptr<platfor
 
 Server::~Server() {}
 
-void Server::create_connection_for(std::shared_ptr<boost::asio::basic_stream_socket<boost::asio::local::stream_protocol>> const& socket) {
-  auto const messenger =
-      std::make_shared<network::LocalSocketMessenger>(socket);
+void Server::create_connection_for(std::shared_ptr<basic_stream_socket<stream_protocol>> const& socket) {
+  auto const messenger = std::make_shared<network::LocalSocketMessenger>(socket);
 
   // We have to read the client flags first before we can continue
   // processing the actual commands
   ClientInfo client_info;
-  auto err = messenger->receive_msg(
-      boost::asio::buffer(&client_info, sizeof(ClientInfo)));
+  auto err = messenger->receive_msg( boost::asio::buffer(&client_info, sizeof(ClientInfo)));
   if (err) {
     ERROR("Failed to read client info: %s", err.message());
     return;
@@ -99,6 +99,7 @@ void Server::create_connection_for(std::shared_ptr<boost::asio::basic_stream_soc
         messenger, messenger, next_id(), connections_, processor);
   connections_->add(connection);
 
+  // bind the socket connection to callback
   connection->read_next_message();
 }
 

@@ -72,7 +72,9 @@ class NullConnectionCreator : public anbox::network::ConnectionCreator<
 };
 }
 
-void anbox::cmds::SessionManager::launch_appmgr_if_needed(const std::shared_ptr<bridge::AndroidApiStub> &android_api_stub) {
+void anbox::cmds::SessionManager::launch_appmgr_if_needed(
+  const std::shared_ptr<bridge::AndroidApiStub> &android_api_stub) {
+  
   if (!single_window_)
     return;
 
