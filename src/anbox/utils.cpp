@@ -201,6 +201,7 @@ std::string find_program_on_path(const std::string &name) {
     const auto current_path = path.substr(start_pos, end_pos - start_pos) + "/" + name;
     if ((::stat(current_path.c_str(), &sb) == 0) && (sb.st_mode & S_IXOTH))
       return current_path;
+    
     start_pos = end_pos + 1;
   }
   return "";
