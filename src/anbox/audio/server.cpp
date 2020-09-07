@@ -37,6 +37,7 @@ class AudioForwarder : public anbox::network::MessageProcessor {
     sink_(sink) {
   }
 
+  // write data to sink pipe
   bool process_data(const std::vector<std::uint8_t> &data) override {
     sink_->write_data(data);
     return true;
@@ -77,6 +78,7 @@ void Server::create_connection_for(std::shared_ptr<basic_stream_socket<stream_pr
     return;
   }
 
+  // will be used on socket receive callback in SocketConnection instance
   std::shared_ptr<network::MessageProcessor> processor;
 
   switch (client_info.type) {

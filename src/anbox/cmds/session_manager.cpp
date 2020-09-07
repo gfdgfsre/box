@@ -74,7 +74,7 @@ class NullConnectionCreator : public anbox::network::ConnectionCreator<
 
 void anbox::cmds::SessionManager::launch_appmgr_if_needed(
   const std::shared_ptr<bridge::AndroidApiStub> &android_api_stub) {
-  
+
   if (!single_window_)
     return;
 
@@ -252,6 +252,7 @@ anbox::cmds::SessionManager::SessionManager()
               
               server->register_boot_finished_handler([&]() {
                 DEBUG("Android successfully booted");
+                
                 android_api_stub->ready().set(true);
                 appmgr_start_timer.expires_from_now(default_appmgr_startup_delay);
                 appmgr_start_timer.async_wait([&](const boost::system::error_code &err) {
@@ -264,7 +265,7 @@ anbox::cmds::SessionManager::SessionManager()
                   sender, server, pending_calls);
             }));
 
-    container::Configuration container_configuration;
+    container::Configuration container_conf;
 
     // Instruct healthd to fake battery level as it may take it from other connected
     // devices like mouse or keyboard and will incorrectly show a system popup to
@@ -272,13 +273,13 @@ anbox::cmds::SessionManager::SessionManager()
     // input as focus is bound to the system popup exclusively.
     //
     // See https://github.com/anbox/anbox/issues/780 for further details.
-    container_configuration.extra_properties.push_back("ro.boot.fake_battery=1");
+    container_conf.extra_properties.push_back("ro.boot.fake_battery=1");
 
     if (server_side_decoration_)
-        container_configuration.extra_properties.push_back("ro.anbox.no_decorations=1");
+        container_conf.extra_properties.push_back("ro.anbox.no_decorations=1");
 
     if (!standalone_) {
-      container_configuration.bind_mounts = {
+      container_conf.bind_mounts = {
         {qemu_pipe_connector->socket_file(), "/dev/qemu_pipe"},
         {bridge_connector->socket_file(), "/dev/anbox_bridge"},
         {audio_server->socket_file(), "/dev/anbox_audio"},
@@ -286,15 +287,16 @@ anbox::cmds::SessionManager::SessionManager()
 
       };
 
-      container_configuration.devices = {
+      container_conf.devices = {
         {"/dev/fuse", {0666}},
       };
 
       dispatcher->dispatch([&]() {
-        container_->start(container_configuration);
+        container_->start(container_conf);
       });
     }
 
+    // dbus manage session
     auto bus_type = anbox::dbus::Bus::Type::Session;
     if (use_system_dbus_){
       bus_type = anbox::dbus::Bus::Type::System;
@@ -305,6 +307,7 @@ anbox::cmds::SessionManager::SessionManager()
 
     bus->run_async();
 
+    // runtime start loop thread
     rt->start();
     trap->run();
 
