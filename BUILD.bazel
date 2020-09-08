@@ -23,6 +23,15 @@ config_setting(
     values = {"compilation_mode": "opt"},
 )
 
+config_setting(
+    name = "raspberry_pi_armeabi",
+    values = {
+        "crosstool_top": "@local_config_arm_compiler//:toolchain",
+        "cpu": "armeabi",
+    },
+    visibility = ["//visibility:public"],
+)
+
 # === Begin of rpc definitions ===
 
 # main common lib.
