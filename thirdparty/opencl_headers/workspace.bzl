@@ -11,5 +11,5 @@ def repo():
             "https://storage.googleapis.com/mirror.tensorflow.org/github.com/KhronosGroup/OpenCL-Headers/archive/0d5f18c6e7196863bc1557a693f1509adfcee056.tar.gz",
             "https://github.com/KhronosGroup/OpenCL-Headers/archive/0d5f18c6e7196863bc1557a693f1509adfcee056.tar.gz",
         ],
-        build_file = "//third_party/opencl_headers:BUILD.bazel",
+        build_file = "//thirdparty/opencl_headers:BUILD.bazel",
     )

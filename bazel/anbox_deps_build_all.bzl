@@ -2,22 +2,22 @@ load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
 load("@com_github_nelhage_rules_boost//:boost/boost.bzl", "boost_deps")
 load("@com_github_jupp0r_prometheus_cpp//bazel:repositories.bzl", "prometheus_cpp_repositories")
 load("@com_github_checkstyle_java//:repo.bzl", "checkstyle_deps")
-load("@com_github_grpc_grpc//third_party/py:python_configure.bzl", "python_configure")
+load("@com_github_grpc_grpc//thirdparty/py:python_configure.bzl", "python_configure")
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 load("@rules_proto_grpc//:repositories.bzl", "rules_proto_grpc_toolchains")
 
 load("//bazel:repo.bzl", "tf_http_archive")
-load("//third_party/opencl_headers:workspace.bzl", opencl_headers = "repo")
+load("//thirdparty/opencl_headers:workspace.bzl", opencl_headers = "repo")
 
 
-load("//third_party/toolchains/cpus/arm:arm_compiler_configure.bzl", "arm_compiler_configure")
-load("//third_party/toolchains/embedded/arm-linux:arm_linux_toolchain_configure.bzl", "arm_linux_toolchain_configure")
+load("//thirdparty/toolchains/cpus/arm:arm_compiler_configure.bzl", "arm_compiler_configure")
+load("//thirdparty/toolchains/embedded/arm-linux:arm_linux_toolchain_configure.bzl", "arm_linux_toolchain_configure")
 
 # Sanitize a dependency so that it works correctly from code that includes
 # TensorFlow as a submodule.
 def clean_dep(dep):
     return str(Label(dep))
-    
+
 def anbox_deps_build_all():
   bazel_skylib_workspace()
   checkstyle_deps()
@@ -31,7 +31,7 @@ def anbox_deps_build_all():
   # Point //external/local_config_arm_compiler to //external/arm_compiler
   arm_compiler_configure(
         name = "local_config_arm_compiler",
-        build_file = clean_dep("//third_party/toolchains/cpus/arm:BUILD"),
+        build_file = clean_dep("//thirdparty/toolchains/cpus/arm:BUILD"),
         remote_config_repo_arm = "../arm_compiler",
         remote_config_repo_aarch64 = "../aarch64_compiler",
   )
@@ -39,7 +39,7 @@ def anbox_deps_build_all():
   # TFLite crossbuild toolchain for embeddeds Linux
   arm_linux_toolchain_configure(
         name = "local_config_embedded_arm",
-        build_file = clean_dep("//third_party/toolchains/embedded/arm-linux:BUILD"),
+        build_file = clean_dep("//thirdparty/toolchains/embedded/arm-linux:BUILD"),
         aarch64_repo = "../aarch64_linux_toolchain",
         armhf_repo = "../armhf_linux_toolchain",
   )
@@ -72,7 +72,7 @@ def anbox_deps_build_all():
 
   tf_http_archive(
         name = "aarch64_linux_toolchain",
-        build_file = clean_dep("//third_party/toolchains/embedded/arm-linux:aarch64-linux-toolchain.BUILD"),
+        build_file = clean_dep("//thirdparty/toolchains/embedded/arm-linux:aarch64-linux-toolchain.BUILD"),
         sha256 = "8ce3e7688a47d8cd2d8e8323f147104ae1c8139520eca50ccf8a7fa933002731",
         strip_prefix = "gcc-arm-8.3-2019.03-x86_64-aarch64-linux-gnu",
         urls = [
@@ -83,7 +83,7 @@ def anbox_deps_build_all():
 
   tf_http_archive(
         name = "armhf_linux_toolchain",
-        build_file = clean_dep("//third_party/toolchains/embedded/arm-linux:armhf-linux-toolchain.BUILD"),
+        build_file = clean_dep("//thirdparty/toolchains/embedded/arm-linux:armhf-linux-toolchain.BUILD"),
         sha256 = "d4f6480ecaa99e977e3833cc8a8e1263f9eecd1ce2d022bb548a24c4f32670f5",
         strip_prefix = "gcc-arm-8.3-2019.03-x86_64-arm-linux-gnueabihf",
         urls = [
