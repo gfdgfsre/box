@@ -24,6 +24,7 @@
 
 namespace anbox {
 namespace container {
+
 struct DeviceSpecification {
   uint32_t permission;
   std::string old_device_name = "";
@@ -34,6 +35,7 @@ struct Configuration {
   std::unordered_map<std::string, DeviceSpecification> devices;
   std::vector<std::string> extra_properties;
 };
+
 }  // namespace container
 }  // namespace anbox
 

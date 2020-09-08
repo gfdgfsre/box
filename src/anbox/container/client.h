@@ -33,6 +33,7 @@ class LocalSocketMessenger;
 }  // namespace network
 
 namespace container {
+  
 class ManagementApiStub;
 class Client {
  public:
@@ -48,8 +49,7 @@ class Client {
 
  private:
   void read_next_message();
-  void on_read_size(const boost::system::error_code &ec,
-                    std::size_t bytes_read);
+  void on_read_size(const boost::system::error_code &ec, std::size_t bytes_read);
 
   std::shared_ptr<network::LocalSocketMessenger> messenger_;
   std::shared_ptr<rpc::PendingCallCache> pending_calls_;

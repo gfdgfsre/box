@@ -22,7 +22,7 @@ namespace android {
 namespace hardware {
 namespace gnss {
 namespace V1_1 {
-namespace xenvm {
+namespace xbox {
 
 const float kMockLatitudeDegrees = 37.4219999;
 const float kMockLongitudeDegrees = -122.0840575;
@@ -35,7 +35,7 @@ const float kMockSpeedAccuracyMetersPerSecond = 1;
 const float kMockBearingAccuracyDegrees = 90;
 const int64_t kMockTimestamp = 1519930775453L;
 
-}  // namespace xenvm
+}  // namespace xbox
 }  // namespace V1_1
 }  // namespace gnss
 }  // namespace hardware

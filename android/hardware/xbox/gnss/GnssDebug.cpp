@@ -26,7 +26,7 @@ namespace android {
 namespace hardware {
 namespace gnss {
 namespace V1_1 {
-namespace xenvm {
+namespace xbox {
 
 // Methods from ::android::hardware::gnss::V1_0::IGnssDebug follow.
 Return<void> GnssDebug::getDebugData(V1_0::IGnssDebug::getDebugData_cb _hidl_cb) {

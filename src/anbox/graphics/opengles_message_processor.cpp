@@ -39,14 +39,13 @@ OpenGlesMessageProcessor::OpenGlesMessageProcessor(
   // We have to read the client flags first before we can continue
   // processing the actual commands
   unsigned int client_flags = 0;
-  auto err = messenger_->receive_msg(
-      boost::asio::buffer(&client_flags, sizeof(unsigned int)));
+  auto err = messenger_->receive_msg(boost::asio::buffer(&client_flags, sizeof(unsigned int)));
   if (err) ERROR("%s", err.message());
 
   render_thread_.reset(RenderThread::create(renderer, stream_.get(), std::ref(global_lock)));
-  if (!render_thread_->start())
-    BOOST_THROW_EXCEPTION(
-        std::runtime_error("Failed to start renderer thread"));
+  if (!render_thread_->start()){
+    BOOST_THROW_EXCEPTION(std::runtime_error("Failed to start renderer thread"));
+  }
 }
 
 OpenGlesMessageProcessor::~OpenGlesMessageProcessor() {
@@ -54,8 +53,7 @@ OpenGlesMessageProcessor::~OpenGlesMessageProcessor() {
   render_thread_->wait(nullptr);
 }
 
-bool OpenGlesMessageProcessor::process_data(
-    const std::vector<std::uint8_t> &data) {
+bool OpenGlesMessageProcessor::process_data(const std::vector<std::uint8_t> &data) {
   auto stream = std::static_pointer_cast<BufferedIOStream>(stream_);
   Buffer buffer{data.data(), data.data() + data.size()};
   stream->post_data(std::move(buffer));

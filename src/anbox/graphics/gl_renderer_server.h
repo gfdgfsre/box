@@ -27,12 +27,15 @@ namespace anbox {
 namespace input {
 class Manager;
 }  // namespace input
+
 namespace wm {
 class Manager;
 }  // namespace wm
+
 namespace graphics {
 class LayerComposer;
 class GLRendererServer {
+
  public:
   struct Config {
     enum class Driver {

@@ -16,7 +16,7 @@
  */
 
 // #define LOG_NDEBUG 0
-#define LOG_TAG "gnss.vis-provider.xenvm"
+#define LOG_TAG "gnss.vis-provider.xbox"
 
 #include <cutils/properties.h>
 #include <log/log.h>
@@ -35,7 +35,7 @@ namespace android {
 namespace hardware {
 namespace gnss {
 namespace V1_1 {
-namespace xenvm {
+namespace xbox {
 
 int VisDataProvider::init() {
     char propValue[PROPERTY_VALUE_MAX] = {};
@@ -180,7 +180,7 @@ int VisDataProvider::pull() {
 }
 
 
-}  // namespace xenvm
+}  // namespace xbox
 }  // namespace V1_1
 }  // namespace gnss
 }  // namespace hardware

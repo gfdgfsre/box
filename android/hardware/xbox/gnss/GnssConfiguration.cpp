@@ -24,7 +24,7 @@ namespace android {
 namespace hardware {
 namespace gnss {
 namespace V1_1 {
-namespace xenvm {
+namespace xbox {
 
 // Methods from ::android::hardware::gnss::V1_0::IGnssConfiguration follow.
 Return<bool> GnssConfiguration::setSuplEs(bool) {

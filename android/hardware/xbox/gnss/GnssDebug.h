@@ -25,7 +25,7 @@ namespace android {
 namespace hardware {
 namespace gnss {
 namespace V1_1 {
-namespace xenvm {
+namespace xbox {
 
 using ::android::sp;
 using ::android::hardware::hidl_string;
@@ -43,7 +43,7 @@ struct GnssDebug : public IGnssDebug {
     Return<void> getDebugData(V1_0::IGnssDebug::getDebugData_cb _hidl_cb) override;
 };
 
-}  // namespace xenvm
+}  // namespace xbox
 }  // namespace V1_1
 }  // namespace gnss
 }  // namespace hardware

@@ -63,14 +63,14 @@ std::string client_type_to_string(
   return "unknown";
 }
 }
+
 namespace anbox {
 namespace qemu {
 PipeConnectionCreator::PipeConnectionCreator(const std::shared_ptr<Renderer> &renderer, const std::shared_ptr<Runtime> &rt)
     : renderer_(renderer),
       runtime_(rt),
       next_connection_id_(0),
-      connections_(
-          std::make_shared<network::Connections<network::SocketConnection>>()) {
+      connections_(std::make_shared<network::Connections<network::SocketConnection>>()) {
 }
 
 PipeConnectionCreator::~PipeConnectionCreator() noexcept {
@@ -115,20 +115,17 @@ PipeConnectionCreator::client_type PipeConnectionCreator::identify_client(
   // take this as a own service instance as that is what it is.
   else if (utils::string_starts_with(identifier_and_args, "pipe:qemud:boot-properties"))
     return client_type::qemud_boot_properties;
-  else if (utils::string_starts_with(identifier_and_args,
-                                     "pipe:qemud:hw-control"))
+  else if (utils::string_starts_with(identifier_and_args, "pipe:qemud:hw-control"))
     return client_type::qemud_hw_control;
   else if (utils::string_starts_with(identifier_and_args, "pipe:qemud:sensors"))
     return client_type::qemud_sensors;
   else if (utils::string_starts_with(identifier_and_args, "pipe:qemud:camera"))
     return client_type::qemud_camera;
-  else if (utils::string_starts_with(identifier_and_args,
-                                     "pipe:qemud:fingerprintlisten"))
+  else if (utils::string_starts_with(identifier_and_args, "pipe:qemud:fingerprintlisten"))
     return client_type::qemud_fingerprint;
   else if (utils::string_starts_with(identifier_and_args, "pipe:qemud:gsm"))
     return client_type::qemud_gsm;
-  else if (utils::string_starts_with(identifier_and_args,
-                                     "pipe:anbox:bootanimation"))
+  else if (utils::string_starts_with(identifier_and_args, "pipe:anbox:bootanimation"))
     return client_type::bootanimation;
   else if (utils::string_starts_with(identifier_and_args, "pipe:qemud:adb"))
     return client_type::qemud_adb;
@@ -136,10 +133,10 @@ PipeConnectionCreator::client_type PipeConnectionCreator::identify_client(
   return client_type::invalid;
 }
 
-std::shared_ptr<network::MessageProcessor>
-PipeConnectionCreator::create_processor(
+std::shared_ptr<network::MessageProcessor> PipeConnectionCreator::create_processor(
     const client_type &type,
     const std::shared_ptr<network::SocketMessenger> &messenger) {
+
   if (type == client_type::opengles)
     return std::make_shared<graphics::OpenGlesMessageProcessor>(renderer_, messenger);
   else if (type == client_type::qemud_boot_properties)

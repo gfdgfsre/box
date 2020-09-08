@@ -23,11 +23,20 @@ config_setting(
     values = {"compilation_mode": "opt"},
 )
 
+config_setting(
+    name = "raspberry_pi_armeabi",
+    values = {
+        "crosstool_top": "@local_config_arm_compiler//:toolchain",
+        "cpu": "armeabi",
+    },
+    visibility = ["//visibility:public"],
+)
+
 # === Begin of rpc definitions ===
 
 # main common lib.
 cc_library(
-    name = "anbox_main_lib",
+    name = "xbox_main_lib",
     srcs = glob([
         "src/main.cpp",
     ]),
@@ -44,7 +53,7 @@ cc_library(
 )
 
 cc_binary(
-    name = "anbox_stub",
+    name = "xbox_stub",
     srcs = glob([
         "src/stub.cpp",
     ]),
@@ -58,15 +67,15 @@ cc_binary(
 
 
 genrule(
-    name = "anbox_pkg",
+    name = "xbox_pkg",
     srcs = [
-        ":anbox_stub",
+        ":xbox_stub",
         "//thirdparty/cpu_features:cpu_features",
         "//thirdparty/process-cpp-minimal:process-cpp",
         "//thirdparty/process-cpp-minimal:posix-process",
         "//thirdparty/nsexec:nsexec",
     ],
-    outs = ["anbox_pkg.out"],
+    outs = ["xbox_pkg.out"],
     cmd = "echo '' > \"$@\"",
     local = 1,
 )

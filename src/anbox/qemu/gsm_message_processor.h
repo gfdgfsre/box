@@ -26,8 +26,7 @@ namespace qemu {
 class AtParser;
 class GsmMessageProcessor : public network::MessageProcessor {
  public:
-  GsmMessageProcessor(
-      const std::shared_ptr<network::SocketMessenger> &messenger);
+  GsmMessageProcessor(const std::shared_ptr<network::SocketMessenger> &messenger);
   ~GsmMessageProcessor();
 
   bool process_data(const std::vector<std::uint8_t> &data) override;

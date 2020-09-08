@@ -28,8 +28,7 @@ class Connector;
 
 class ConnectionContext {
  public:
-  ConnectionContext(Connector const* connector)
-      : ConnectionContext([]() {}, connector) {}
+  ConnectionContext(Connector const* connector) : ConnectionContext([]() {}, connector) {}
   ConnectionContext(std::function<void()> const connect_handler,
                     Connector const* connector);
 

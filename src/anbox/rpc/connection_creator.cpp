@@ -23,6 +23,7 @@
 #include <string>
 
 namespace ba = boost::asio;
+using namespace boost::asio::local::stream_protocol;
 
 namespace anbox {
 namespace rpc {
@@ -30,14 +31,14 @@ ConnectionCreator::ConnectionCreator(const std::shared_ptr<Runtime>& rt,
                                      const MessageProcessorFactory& factory)
     : runtime_(rt),
       next_connection_id_(0),
-      connections_(
-          std::make_shared<network::Connections<network::SocketConnection>>()),
+      connections_(std::make_shared<network::Connections<network::SocketConnection>>()),
       message_processor_factory_(factory) {}
 
 ConnectionCreator::~ConnectionCreator() noexcept {}
 
 void ConnectionCreator::create_connection_for(
-    std::shared_ptr<boost::asio::local::stream_protocol::socket> const &socket) {
+    std::shared_ptr<stream_protocol::socket> const &socket) {
+  
   if (connections_->size() >= 1) {
     socket->close();
     WARNING(

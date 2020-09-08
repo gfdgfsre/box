@@ -28,7 +28,7 @@ namespace android {
 namespace hardware {
 namespace gnss {
 namespace V1_1 {
-namespace xenvm {
+namespace xbox {
 
 enum ConnState {
     STATE_DISCONNECTED,
@@ -66,7 +66,7 @@ class VisDataProvider {
 };
 
 
-}  // namespace xenvm
+}  // namespace xbox
 }  // namespace V1_1
 }  // namespace gnss
 }  // namespace hardware

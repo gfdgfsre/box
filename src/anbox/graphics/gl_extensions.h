@@ -39,6 +39,7 @@ class GLExtensions {
     while ((ext_ptr = strstr(ext_ptr, ext)) != nullptr) {
       if (ext_ptr[len] == ' ' || ext_ptr[len] == '\0')
         break;
+      
       ext_ptr += len;
     }
 

@@ -25,6 +25,8 @@
 
 namespace anbox {
 namespace network {
+
+  
 template <class Connection>
 class Connections {
  public:
