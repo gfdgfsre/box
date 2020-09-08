@@ -18,14 +18,14 @@
 #ifndef ANBOX_APPLICATION_LAUNCHER_STORAGE_H_
 #define ANBOX_APPLICATION_LAUNCHER_STORAGE_H_
 
-#include "anbox/application/database.h"
 #include "anbox/android/intent.h"
+#include "anbox/application/database.h"
 
 #include <string>
 #include <vector>
 
-#include <boost/filesystem.hpp>
 #include <boost/algorithm/string/predicate.hpp>
+#include <boost/filesystem.hpp>
 
 namespace anbox {
 namespace application {

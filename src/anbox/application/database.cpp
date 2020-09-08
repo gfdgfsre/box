@@ -17,15 +17,14 @@
 
 #include "anbox/application/database.h"
 #include "anbox/application/launcher_storage.h"
-#include "anbox/system_configuration.h"
 #include "anbox/logger.h"
+#include "anbox/system_configuration.h"
 
 namespace anbox {
 namespace application {
 const Database::Item Database::Unknown{};
 
-Database::Database() :
-  storage_(std::make_shared<LauncherStorage>(SystemConfiguration::instance().application_item_dir())) {}
+Database::Database() : storage_(std::make_shared<LauncherStorage>(SystemConfiguration::instance().application_item_dir())) {}
 
 Database::~Database() {}
 
@@ -50,7 +49,7 @@ void Database::remove(const Item &item) {
   items_.erase(iter);
 }
 
-const Database::Item& Database::find_by_package(const std::string &package) const {
+const Database::Item &Database::find_by_package(const std::string &package) const {
   auto iter = items_.find(package);
   if (iter == items_.end())
     return Unknown;

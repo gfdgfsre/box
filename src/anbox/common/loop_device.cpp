@@ -20,9 +20,9 @@
 
 #include <system_error>
 
-#include <linux/loop.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <linux/loop.h>
 #include <sys/ioctl.h>
 
 namespace anbox {
@@ -35,8 +35,7 @@ std::shared_ptr<LoopDevice> LoopDevice::create(const boost::filesystem::path &pa
   return std::shared_ptr<LoopDevice>(new LoopDevice(Fd{fd}, path));
 }
 
-LoopDevice::LoopDevice(Fd fd, const boost::filesystem::path &path) :
-  fd_{fd}, path_{path} {}
+LoopDevice::LoopDevice(Fd fd, const boost::filesystem::path &path) : fd_{fd}, path_{path} {}
 
 LoopDevice::~LoopDevice() {
   if (fd_ < 0)
@@ -47,22 +46,22 @@ LoopDevice::~LoopDevice() {
 }
 
 bool LoopDevice::attach_file(const boost::filesystem::path &file_path) {
-  if (fd_ < 0){
+  if (fd_ < 0) {
     return false;
   }
 
   int file_fd = ::open(file_path.c_str(), O_RDONLY);
-  if (file_fd < 0){
+  if (file_fd < 0) {
     return false;
   }
 
   DeferAction close_file_fd{[&]() { ::close(file_fd); }};
 
-  if (::ioctl(fd_, LOOP_SET_FD, file_fd) < 0){
+  if (::ioctl(fd_, LOOP_SET_FD, file_fd) < 0) {
     return false;
   }
 
   return true;
 }
-} // namespace common
-} // namespace anbox
+}  // namespace common
+}  // namespace anbox

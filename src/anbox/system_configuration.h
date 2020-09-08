@@ -18,8 +18,8 @@
 #ifndef ANBOX_SYSTEM_CONFIGURATION_H_
 #define ANBOX_SYSTEM_CONFIGURATION_H_
 
-#include <string>
 #include <memory>
+#include <string>
 
 #include <boost/filesystem.hpp>
 
@@ -30,7 +30,7 @@ class SystemConfiguration {
 
   virtual ~SystemConfiguration() = default;
 
-  void set_data_path(const std::string &path);
+  void set_data_path(const std::string& path);
 
   boost::filesystem::path data_dir() const;
   std::string rootfs_dir() const;
@@ -54,4 +54,4 @@ class SystemConfiguration {
 };
 }  // namespace anbox
 
-#endif // ANBOX_SYSTEM_CONFIGURATION_H_
+#endif  // ANBOX_SYSTEM_CONFIGURATION_H_

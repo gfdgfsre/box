@@ -30,7 +30,7 @@
 namespace anbox {
 namespace bridge {
 class AndroidApiStub;
-} // namespace bridge
+}  // namespace bridge
 namespace container {
 class Client;
 }  // namespace container

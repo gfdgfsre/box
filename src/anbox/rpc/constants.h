@@ -28,6 +28,6 @@ enum MessageType {
   response = 1,
 };
 }  // namespace rpc
-}  // namespace network
+}  // namespace anbox
 
 #endif

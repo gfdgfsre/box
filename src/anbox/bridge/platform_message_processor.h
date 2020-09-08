@@ -37,7 +37,7 @@ class PlatformMessageProcessor : public rpc::MessageProcessor {
  private:
   std::shared_ptr<PlatformApiSkeleton> server_;
 };
+}  // namespace bridge
 }  // namespace anbox
-}  // namespace network
 
 #endif

@@ -28,7 +28,6 @@ anbox::cmds::WaitReady::WaitReady()
     : CommandWithFlagsAndAction{
           cli::Name{"wait-ready"}, cli::Usage{"wait-ready"},
           cli::Description{"Wait until the Android system has successfully booted"}} {
-
   flag(cli::make_flag(cli::Name{"use-system-dbus"},
                       cli::Description{"Use system instead of session DBus"},
                       use_system_dbus_));

@@ -16,8 +16,8 @@
  */
 
 #include "anbox/platform/null/platform.h"
-#include "anbox/wm/window.h"
 #include "anbox/logger.h"
+#include "anbox/wm/window.h"
 
 namespace {
 class NullWindow : public anbox::wm::Window {
@@ -27,7 +27,7 @@ class NullWindow : public anbox::wm::Window {
              const std::string &title)
       : anbox::wm::Window(nullptr, task, frame, title) {}
 };
-}
+}  // namespace
 
 namespace anbox {
 namespace platform {
@@ -59,17 +59,17 @@ std::shared_ptr<audio::Source> NullPlatform::create_audio_source() {
 }
 
 void NullPlatform::set_renderer(const std::shared_ptr<Renderer> &renderer) {
-  (void) renderer;
+  (void)renderer;
   ERROR("Not implemented");
 }
 
 void NullPlatform::set_window_manager(const std::shared_ptr<wm::Manager> &window_manager) {
-  (void) window_manager;
+  (void)window_manager;
   ERROR("Not implemented");
 }
 
 bool NullPlatform::supports_multi_window() const {
   return false;
 }
-}  // namespace wm
+}  // namespace platform
 }  // namespace anbox

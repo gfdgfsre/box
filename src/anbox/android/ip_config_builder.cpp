@@ -39,18 +39,18 @@ constexpr const std::uint32_t gateway_is_present{1};
 namespace aa = anbox::android;
 std::string assignment_to_string(const aa::IpConfigBuilder::Assignment &value) {
   switch (value) {
-  case anbox::android::IpConfigBuilder::Assignment::Static:
-    return assignment_static;
-    break;
-  case anbox::android::IpConfigBuilder::Assignment::DHCP:
-    return assignment_dhcp;
-    break;
-  default:
-    break;
+    case anbox::android::IpConfigBuilder::Assignment::Static:
+      return assignment_static;
+      break;
+    case anbox::android::IpConfigBuilder::Assignment::DHCP:
+      return assignment_dhcp;
+      break;
+    default:
+      break;
   }
   return assignment_unknown;
 }
-}
+}  // namespace
 
 namespace anbox {
 namespace android {

@@ -55,28 +55,27 @@ std::ostream &operator<<(std::ostream &out, const Rect &rect) {
              << rect.height() << "}";
 }
 
-std::istream& operator>>(std::istream& in, anbox::graphics::Rect &rect)
-try {
+std::istream &operator>>(std::istream &in, anbox::graphics::Rect &rect) try {
   std::string str;
   in >> str;
   auto tokens = anbox::utils::string_split(str, ',');
 
   switch (tokens.size()) {
-  case 2: {
-    rect = anbox::graphics::Rect(0, 0,
-             boost::lexical_cast<std::int32_t>(tokens[0]),
-             boost::lexical_cast<std::int32_t>(tokens[1]));
-    break;
-  }
-  case 4:
-    rect = anbox::graphics::Rect(
-             boost::lexical_cast<std::int32_t>(tokens[0]),
-             boost::lexical_cast<std::int32_t>(tokens[1]),
-             boost::lexical_cast<std::int32_t>(tokens[2]),
-             boost::lexical_cast<std::int32_t>(tokens[3]));
-    break;
-  default:
-    break;
+    case 2: {
+      rect = anbox::graphics::Rect(0, 0,
+                                   boost::lexical_cast<std::int32_t>(tokens[0]),
+                                   boost::lexical_cast<std::int32_t>(tokens[1]));
+      break;
+    }
+    case 4:
+      rect = anbox::graphics::Rect(
+          boost::lexical_cast<std::int32_t>(tokens[0]),
+          boost::lexical_cast<std::int32_t>(tokens[1]),
+          boost::lexical_cast<std::int32_t>(tokens[2]),
+          boost::lexical_cast<std::int32_t>(tokens[3]));
+      break;
+    default:
+      break;
   }
 
   return in;

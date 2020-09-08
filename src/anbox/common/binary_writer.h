@@ -20,8 +20,8 @@
 #define ANBOX_COMMON_BINARY_WRITER_H_
 
 #include <cstdint>
-#include <vector>
 #include <string>
+#include <vector>
 
 namespace anbox {
 namespace common {
@@ -51,7 +51,7 @@ class BinaryWriter {
   std::vector<std::uint8_t>::iterator end_;
   Order byte_order_;
 };
-} // namespace common
-} // namespace anbox
+}  // namespace common
+}  // namespace anbox
 
 #endif

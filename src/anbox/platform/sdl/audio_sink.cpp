@@ -29,15 +29,14 @@ const constexpr size_t max_queue_size{16};
 namespace anbox {
 namespace platform {
 namespace sdl {
-AudioSink::AudioSink() :
-  device_id_(0),
-  queue_(max_queue_size) {
+AudioSink::AudioSink() : device_id_(0),
+                         queue_(max_queue_size) {
 }
 
 AudioSink::~AudioSink() {}
 
 void AudioSink::on_data_requested(void *user_data, std::uint8_t *buffer, int size) {
-  auto thiz = static_cast<AudioSink*>(user_data);
+  auto thiz = static_cast<AudioSink *>(user_data);
   thiz->read_data(buffer, size);
 }
 
@@ -112,6 +111,6 @@ void AudioSink::write_data(const std::vector<std::uint8_t> &data) {
   graphics::Buffer buffer{data.data(), data.data() + data.size()};
   queue_.push_locked(std::move(buffer), l);
 }
-} // namespace sdl
-} // namespace platform
-} // namespace anbox
+}  // namespace sdl
+}  // namespace platform
+}  // namespace anbox

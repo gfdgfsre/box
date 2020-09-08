@@ -25,45 +25,43 @@
 
 namespace {
 std::vector<std::string> cpu_whitelist = {
-  // QEMU does not necessarily expose correctly that it supports SSE and friends even
-  // when started with `-cpu qemu64,+ssse3,+sse4.1,+sse4.2,+x2apic`
-  "QEMU",
+    // QEMU does not necessarily expose correctly that it supports SSE and friends even
+    // when started with `-cpu qemu64,+ssse3,+sse4.1,+sse4.2,+x2apic`
+    "QEMU",
 
-  // The following CPUs do not support AVX and without it cpu_features can't detect
-  // if SSE & friends are supported. See https://github.com/google/cpu_features/issues/4
+    // The following CPUs do not support AVX and without it cpu_features can't detect
+    // if SSE & friends are supported. See https://github.com/google/cpu_features/issues/4
 
-  // Intel Core i7 M620
-  "M 620",
-  // Intel Core i5 M460
-  "M 460",
-  // Intel Celeron N2840
-  "N2840",
-  // Intel Core i7 Q720
-  "Q 720",
-  // Intel Pentium T4500
-  "T4500", 
-  // Intel Core i7 Q720
-  "Q 720",
-  // Intel Xeon E5520
-  "E5520"
-  // Intel Core2 Duo T6500
-  "T6500"
-};
-} // namespace
+    // Intel Core i7 M620
+    "M 620",
+    // Intel Core i5 M460
+    "M 460",
+    // Intel Celeron N2840
+    "N2840",
+    // Intel Core i7 Q720
+    "Q 720",
+    // Intel Pentium T4500
+    "T4500",
+    // Intel Core i7 Q720
+    "Q 720",
+    // Intel Xeon E5520
+    "E5520"
+    // Intel Core2 Duo T6500
+    "T6500"};
+}  // namespace
 
 anbox::cmds::CheckFeatures::CheckFeatures()
     : CommandWithFlagsAndAction{
           cli::Name{"check-features"}, cli::Usage{"check-features"},
           cli::Description{"Check that the host system supports all necessary features"}} {
-
-  action([this](const cli::Command::Context&) {
+  action([this](const cli::Command::Context &) {
 #if defined(CPU_FEATURES_ARCH_X86)
     const auto info = cpu_features::GetX86Info();
     std::vector<std::string> missing_features;
 
 #define CHECK_BOOL(x, name) \
-  if (!x) \
-    missing_features.push_back(name)
+  if (!x)                   \
+  missing_features.push_back(name)
 
     CHECK_BOOL(info.features.sse4_1, "SSE 4.1");
     CHECK_BOOL(info.features.sse4_2, "SSE 4.2");
@@ -125,7 +123,7 @@ bool anbox::cmds::CheckFeatures::sanity_check_for_features() {
 
   std::vector<std::string> missing_features;
 
-#define CHECK_FEATURE(name) \
+#define CHECK_FEATURE(name)          \
   if (!__builtin_cpu_supports(name)) \
     missing_features.push_back(name);
 

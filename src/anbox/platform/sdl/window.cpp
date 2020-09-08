@@ -16,9 +16,9 @@
  */
 
 #include "anbox/platform/sdl/window.h"
-#include "anbox/wm/window_state.h"
 #include "anbox/graphics/density.h"
 #include "anbox/logger.h"
+#include "anbox/wm/window_state.h"
 
 #include <boost/throw_exception.hpp>
 
@@ -32,7 +32,7 @@ constexpr const int top_drag_area{42};
 constexpr const int button_size{32};
 constexpr const int button_margin{5};
 constexpr const int button_padding{0};
-}
+}  // namespace
 
 namespace anbox {
 namespace platform {
@@ -119,7 +119,7 @@ Window::~Window() {
 }
 
 SDL_HitTestResult Window::on_window_hit(SDL_Window *window, const SDL_Point *pt, void *data) {
-  auto platform_window = reinterpret_cast<Window*>(data);
+  auto platform_window = reinterpret_cast<Window *>(data);
 
   int w = 0, h = 0;
   SDL_GetWindowSize(window, &w, &h);
@@ -130,7 +130,7 @@ SDL_HitTestResult Window::on_window_hit(SDL_Window *window, const SDL_Point *pt,
   const auto flags = SDL_GetWindowFlags(window);
 
   if (flags & SDL_WINDOW_FULLSCREEN)
-      return SDL_HITTEST_NORMAL;
+    return SDL_HITTEST_NORMAL;
 
   if (!(flags & SDL_WINDOW_RESIZABLE)) {
     if (pt->y < border_size)
@@ -154,21 +154,21 @@ SDL_HitTestResult Window::on_window_hit(SDL_Window *window, const SDL_Point *pt,
     return SDL_HITTEST_NORMAL;
 
   if (pt->x < border_size && pt->y < border_size)
-      return SDL_HITTEST_RESIZE_TOPLEFT;
+    return SDL_HITTEST_RESIZE_TOPLEFT;
   else if (pt->x > border_size && pt->x < w - border_size && pt->y < border_size)
-      return SDL_HITTEST_RESIZE_TOP;
+    return SDL_HITTEST_RESIZE_TOP;
   else if (pt->x > w - border_size && pt->y < border_size)
-      return SDL_HITTEST_RESIZE_TOPRIGHT;
+    return SDL_HITTEST_RESIZE_TOPRIGHT;
   else if (pt->x > w - border_size && pt->y > border_size && pt->y < h - border_size)
-      return SDL_HITTEST_RESIZE_RIGHT;
+    return SDL_HITTEST_RESIZE_RIGHT;
   else if (pt->x > w - border_size && pt->y > h - border_size)
-      return SDL_HITTEST_RESIZE_BOTTOMRIGHT;
+    return SDL_HITTEST_RESIZE_BOTTOMRIGHT;
   else if (pt->x < w - border_size && pt->x > border_size && pt->y > h - border_size)
-      return SDL_HITTEST_RESIZE_BOTTOM;
+    return SDL_HITTEST_RESIZE_BOTTOM;
   else if (pt->x < border_size && pt->y > h - border_size)
-      return SDL_HITTEST_RESIZE_BOTTOMLEFT;
+    return SDL_HITTEST_RESIZE_BOTTOMLEFT;
   else if (pt->x < border_size && pt->y < h - border_size && pt->y > border_size)
-      return SDL_HITTEST_RESIZE_LEFT;
+    return SDL_HITTEST_RESIZE_LEFT;
 
   return SDL_HITTEST_NORMAL;
 }
@@ -220,6 +220,6 @@ EGLNativeWindowType Window::native_handle() const { return native_window_; }
 Window::Id Window::id() const { return id_; }
 
 std::uint32_t Window::window_id() const { return SDL_GetWindowID(window_); }
-} // namespace sdl
-} // namespace platform
-} // namespace anbox
+}  // namespace sdl
+}  // namespace platform
+}  // namespace anbox

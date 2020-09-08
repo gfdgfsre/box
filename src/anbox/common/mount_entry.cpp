@@ -31,7 +31,7 @@ std::shared_ptr<MountEntry> MountEntry::create(const boost::filesystem::path &sr
 
   const void *mount_data = nullptr;
   if (!data.empty())
-    mount_data = reinterpret_cast<const void*>(data.c_str());
+    mount_data = reinterpret_cast<const void *>(data.c_str());
 
   DEBUG("Mounting %s on %s ...", src, target);
 
@@ -65,8 +65,7 @@ std::shared_ptr<MountEntry> MountEntry::create(const boost::filesystem::path &ta
   return entry;
 }
 
-MountEntry::MountEntry(const boost::filesystem::path &target) :
-  active_{false}, target_{target} {}
+MountEntry::MountEntry(const boost::filesystem::path &target) : active_{false}, target_{target} {}
 
 MountEntry::~MountEntry() {
   if (!active_)
@@ -74,5 +73,5 @@ MountEntry::~MountEntry() {
 
   ::umount(target_.c_str());
 }
-} // namespace common
-} // namespace anbox
+}  // namespace common
+}  // namespace anbox

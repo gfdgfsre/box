@@ -28,7 +28,7 @@ struct dummy {
   using type = X;
 };
 
-}  // namespaces details
+}  // namespace details
 
 // add some convenience shortcuts for an overly complex std::enable_if syntax
 
@@ -62,9 +62,7 @@ struct is_callable_as : std::false_type {};
 // into a call expression F(), or if the result of that call is not |R|
 template <class F, class R>
 struct is_callable_as<
-    F, R(), typename std::enable_if<std::is_same<
-                typename details::dummy<decltype(std::declval<F>()())>::type,
-                R>::value>::type> : std::true_type {};
+    F, R(), typename std::enable_if<std::is_same<typename details::dummy<decltype(std::declval<F>()())>::type, R>::value>::type> : std::true_type {};
 
 // One more specialization, for non empty argument list
 template <class F, class R, class... Args>

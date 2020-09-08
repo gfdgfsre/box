@@ -16,11 +16,11 @@
  */
 
 #include "anbox/cmds/launch.h"
-#include "anbox/dbus/stub/application_manager.h"
 #include "anbox/dbus/interface.h"
-#include "anbox/ui/splash_screen.h"
-#include "anbox/system_configuration.h"
+#include "anbox/dbus/stub/application_manager.h"
 #include "anbox/logger.h"
+#include "anbox/system_configuration.h"
+#include "anbox/ui/splash_screen.h"
 
 #include "core/posix/exec.h"
 #include "core/posix/fork.h"
@@ -53,7 +53,7 @@ static int redirect_to_null(int flags, int fd) {
   close(fd2);
   return fd;
 }
-} // namespace
+}  // namespace
 
 bool anbox::cmds::Launch::launch_session_manager() {
   std::vector<std::string> args = {"session-manager"};
@@ -61,7 +61,7 @@ bool anbox::cmds::Launch::launch_session_manager() {
   if (should_force_software_rendering == "true")
     args.push_back("--software-rendering");
 
-  std::map<std::string,std::string> env;
+  std::map<std::string, std::string> env;
   core::posix::this_process::env::for_each([&](const std::string &name, const std::string &value) {
     env.insert({name, value});
   });
@@ -75,7 +75,6 @@ bool anbox::cmds::Launch::launch_session_manager() {
   try {
     auto flags = core::posix::StandardStream::empty;
     auto child = core::posix::fork([&]() {
-
       // We redirect all in/out/err to /dev/null as they can't be seen
       // anywhere. All logging output will directly go to syslog as we
       // will become a session leader below which will get us rid of a
@@ -105,7 +104,8 @@ bool anbox::cmds::Launch::launch_session_manager() {
       auto grandchild = core::posix::exec(exe_path, args, env, flags);
       grandchild.dont_kill_on_cleanup();
       return core::posix::exit::Status::success;
-    }, flags);
+    },
+                                   flags);
 
     // We don't wait for the grandchild but the child as we use double forking
     // here to break through the process hierarchy and make the grandchild a
@@ -114,8 +114,7 @@ bool anbox::cmds::Launch::launch_session_manager() {
     child.wait_for(core::posix::wait::Flags::untraced);
 
     DEBUG("Started session manager, will now try to connect ..");
-  }
-  catch (...) {
+  } catch (...) {
     ERROR("Failed to start session manager instance");
   }
 
@@ -163,8 +162,7 @@ anbox::cmds::Launch::Launch()
                       cli::Description{"Use system instead of session DBus"},
                       use_system_dbus_));
 
-
-  action([this](const cli::Command::Context&) {
+  action([this](const cli::Command::Context &) {
     if (!intent_.valid()) {
       ERROR("The intent you provided is invalid. Please provide a correct launch intent.");
       ERROR("For example to launch the application manager, run:");
@@ -173,7 +171,7 @@ anbox::cmds::Launch::Launch()
     }
 
     auto bus_type = anbox::dbus::Bus::Type::Session;
-    if (use_system_dbus_){
+    if (use_system_dbus_) {
       bus_type = anbox::dbus::Bus::Type::System;
     }
     auto bus = std::make_shared<anbox::dbus::Bus>(bus_type);
@@ -182,7 +180,7 @@ anbox::cmds::Launch::Launch()
     if (!bus->has_service_with_name(dbus::interface::Service::name())) {
       DEBUG("Session manager is not yet running, trying to start it");
 
-      if (!launch_session_manager()){
+      if (!launch_session_manager()) {
         return EXIT_FAILURE;
       }
 

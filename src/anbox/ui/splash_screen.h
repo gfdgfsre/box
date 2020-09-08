@@ -36,7 +36,7 @@ class SplashScreen {
   bool event_thread_running_;
   SDL_Window *window_;
 };
-} // namespace ui
-} // namespace anbox
+}  // namespace ui
+}  // namespace anbox
 
 #endif

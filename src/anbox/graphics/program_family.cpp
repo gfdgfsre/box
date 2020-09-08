@@ -20,8 +20,8 @@
 
 #include "anbox/graphics/emugl/DispatchTables.h"
 
-#include <string>
 #include <stdexcept>
+#include <string>
 
 namespace anbox {
 namespace graphics {

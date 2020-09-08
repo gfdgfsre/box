@@ -29,7 +29,7 @@ namespace anbox {
 namespace protobuf {
 namespace rpc {
 class Void;
-}  // namespace bridge
+}  // namespace rpc
 }  // namespace protobuf
 namespace rpc {
 class Channel;
@@ -52,7 +52,7 @@ class AndroidApiStub : public anbox::application::Manager {
               const graphics::Rect &launch_bounds = graphics::Rect::Invalid,
               const wm::Stack::Id &stack = wm::Stack::Id::Default) override;
 
-  core::Property<bool>& ready() override;
+  core::Property<bool> &ready() override;
 
  private:
   void ensure_rpc_channel();

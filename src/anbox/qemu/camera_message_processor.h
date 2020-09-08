@@ -40,7 +40,7 @@ class CameraMessageProcessor : public network::MessageProcessor {
   std::shared_ptr<network::SocketMessenger> messenger_;
   std::vector<std::uint8_t> buffer_;
 };
-}  // namespace graphics
+}  // namespace qemu
 }  // namespace anbox
 
 #endif

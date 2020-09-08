@@ -34,8 +34,8 @@ class KeycodeConverter {
  private:
   static const std::array<SDL_Scancode, 249> code_map;
 };
-} // namespace sdl
-} // namespace platform
-} // namespace anbox
+}  // namespace sdl
+}  // namespace platform
+}  // namespace anbox
 
 #endif

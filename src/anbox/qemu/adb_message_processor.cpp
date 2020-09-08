@@ -39,7 +39,7 @@ const std::string start_command{"start"};
 // user until we connect to the adb host instance after it appeared and not
 // too short to not put unnecessary burden on the CPU.
 const boost::posix_time::seconds default_adb_wait_time{1};
-}
+}  // namespace
 
 using namespace std::placeholders;
 

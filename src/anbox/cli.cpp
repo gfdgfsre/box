@@ -39,19 +39,19 @@ static constexpr const char* command = "    %1% %2%";
 
 static constexpr const char* options = "OPTIONS:";
 static constexpr const char* option = "    --%1% %2%";
-}
+}  // namespace pattern
 
 void add_to_desc_for_flags(po::options_description& desc,
                            const std::set<cli::Flag::Ptr>& flags) {
   for (auto flag : flags) {
-    po::value_semantic *spec = nullptr;
+    po::value_semantic* spec = nullptr;
     flag->specify_option(spec);
     if (!spec) continue;
     desc.add_options()(flag->name().as_string().c_str(), spec,
                        flag->description().as_string().c_str());
   }
 }
-}
+}  // namespace
 
 std::vector<std::string> cli::args(int argc, char** argv) {
   std::vector<std::string> result;

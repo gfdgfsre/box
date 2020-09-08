@@ -71,7 +71,7 @@ class AdbMessageProcessor : public network::MessageProcessor {
 
   static std::mutex active_instance_;
 };
-}  // namespace graphics
+}  // namespace qemu
 }  // namespace anbox
 
 #endif

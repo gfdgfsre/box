@@ -15,8 +15,8 @@
  *
  */
 
-#include "anbox/dbus/interface.h"
 #include "anbox/dbus/stub/application_manager.h"
+#include "anbox/dbus/interface.h"
 #include "anbox/logger.h"
 
 #include <sstream>
@@ -24,13 +24,12 @@
 namespace anbox {
 namespace dbus {
 namespace stub {
-std::shared_ptr<ApplicationManager> ApplicationManager::create_for_bus(const BusPtr& bus) {
+std::shared_ptr<ApplicationManager> ApplicationManager::create_for_bus(const BusPtr &bus) {
   return std::shared_ptr<ApplicationManager>(new ApplicationManager(bus));
 }
 
-ApplicationManager::ApplicationManager(const BusPtr& bus)
+ApplicationManager::ApplicationManager(const BusPtr &bus)
     : bus_(bus) {
-
   if (!bus_->has_service_with_name(interface::Service::name()))
     throw std::runtime_error("Application manager service is not running yet");
 
@@ -58,7 +57,7 @@ void ApplicationManager::update_properties() {
 void ApplicationManager::launch(const android::Intent &intent,
                                 const graphics::Rect &launch_bounds,
                                 const wm::Stack::Id &stack) {
-  (void) launch_bounds;
+  (void)launch_bounds;
 
   sd_bus_message *m = nullptr;
   auto r = sd_bus_message_new_method_call(bus_->raw(),
@@ -114,11 +113,11 @@ void ApplicationManager::launch(const android::Intent &intent,
   if (r < 0)
     throw std::runtime_error("Failed to construct DBus message");
 
-  #pragma GCC diagnostic push
-  #pragma GCC diagnostic warning "-Wpragmas"
-  #pragma GCC diagnostic warning "-Wc99-extensions"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic warning "-Wpragmas"
+#pragma GCC diagnostic warning "-Wc99-extensions"
   sd_bus_error error = SD_BUS_ERROR_NULL;
-  #pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 
   r = sd_bus_call(bus_->raw(), m, 0, &error, nullptr);
   if (r < 0) {
@@ -128,9 +127,9 @@ void ApplicationManager::launch(const android::Intent &intent,
   }
 }
 
-core::Property<bool>& ApplicationManager::ready() {
+core::Property<bool> &ApplicationManager::ready() {
   return ready_;
 }
-}  // namespace skeleton
+}  // namespace stub
 }  // namespace dbus
 }  // namespace anbox

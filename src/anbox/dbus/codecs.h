@@ -26,7 +26,7 @@
 
 namespace core {
 namespace dbus {
-template<>
+template <>
 struct Codec<anbox::wm::Stack::Id> {
   inline static void encode_argument(Message::Writer &out, const anbox::wm::Stack::Id &stack) {
     std::stringstream ss;
@@ -41,7 +41,7 @@ struct Codec<anbox::wm::Stack::Id> {
     ss >> stack;
   }
 };
-} // namespace dbus
-} // namespace core
+}  // namespace dbus
+}  // namespace core
 
 #endif

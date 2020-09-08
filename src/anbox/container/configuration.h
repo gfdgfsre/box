@@ -19,8 +19,8 @@
 #define ANBOX_CONTAINER_CONFIGURATION_H_
 
 #include <string>
-#include <vector>
 #include <unordered_map>
+#include <vector>
 
 namespace anbox {
 namespace container {

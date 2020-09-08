@@ -20,9 +20,9 @@
 
 #include "anbox/common/binary_writer.h"
 
+#include <cstdint>
 #include <string>
 #include <vector>
-#include <cstdint>
 
 namespace anbox {
 namespace android {
@@ -57,7 +57,7 @@ class IpConfigBuilder {
     std::string address;
     std::uint32_t prefix_length;
   } link_;
-  
+
   std::string gateway_;
   std::vector<std::string> dns_servers_;
   std::uint32_t id_;

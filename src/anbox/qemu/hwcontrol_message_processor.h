@@ -31,7 +31,7 @@ class HwControlMessageProcessor : public QemudMessageProcessor {
  protected:
   void handle_command(const std::string &command) override;
 };
-}  // namespace graphics
+}  // namespace qemu
 }  // namespace anbox
 
 #endif

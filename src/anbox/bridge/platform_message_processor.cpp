@@ -57,5 +57,5 @@ void PlatformMessageProcessor::process_event_sequence(
     server_->handle_application_list_update_event(
         seq.application_list_update());
 }
+}  // namespace bridge
 }  // namespace anbox
-}  // namespace network

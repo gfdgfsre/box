@@ -44,7 +44,7 @@ void exception_safe_run(boost::asio::io_service& service) {
     }
   }
 }
-}
+}  // namespace
 namespace anbox {
 
 std::shared_ptr<Runtime> Runtime::create(std::uint32_t pool_size) {
@@ -53,15 +53,15 @@ std::shared_ptr<Runtime> Runtime::create(std::uint32_t pool_size) {
 
 Runtime::Runtime(std::uint32_t pool_size)
     : pool_size_{pool_size},
-      
-      #if BOOST_VERSION >= 106600
+#if BOOST_VERSION >= 106600
       service_{static_cast<int>(pool_size_)},
-      #else
+#else
       service_{pool_size_},
-      #endif
-      
+#endif
+
       strand_{service_},
-      keep_alive_{service_} {}
+      keep_alive_{service_} {
+}
 
 Runtime::~Runtime() noexcept(true) {
   try {

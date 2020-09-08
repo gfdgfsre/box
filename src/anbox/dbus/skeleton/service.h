@@ -34,12 +34,12 @@ namespace skeleton {
 class ApplicationManager;
 class Service : public DoNotCopyOrMove {
  public:
-  static std::shared_ptr<Service> create_for_bus(const BusPtr& bus, const std::shared_ptr<anbox::application::Manager> &impl);
+  static std::shared_ptr<Service> create_for_bus(const BusPtr& bus, const std::shared_ptr<anbox::application::Manager>& impl);
 
   ~Service();
 
  private:
-  Service(const BusPtr& bus, const std::shared_ptr<anbox::application::Manager> &impl);
+  Service(const BusPtr& bus, const std::shared_ptr<anbox::application::Manager>& impl);
 
   BusPtr bus_;
   std::shared_ptr<application::Manager> application_manager_;

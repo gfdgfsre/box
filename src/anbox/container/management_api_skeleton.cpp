@@ -79,7 +79,6 @@ void ManagementApiSkeleton::start_container(
 void ManagementApiSkeleton::stop_container(
     anbox::protobuf::container::StopContainer const *request,
     anbox::protobuf::rpc::Void *response, google::protobuf::Closure *done) {
-
   (void)request;
 
   if (container_->state() != Container::State::running) {

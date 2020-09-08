@@ -33,7 +33,7 @@ class LocalSocketMessenger;
 }  // namespace network
 
 namespace container {
-  
+
 class ManagementApiStub;
 class Client {
  public:

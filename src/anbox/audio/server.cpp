@@ -17,22 +17,21 @@
 
 #include "anbox/audio/server.h"
 #include "anbox/audio/sink.h"
-#include "anbox/network/published_socket_connector.h"
+#include "anbox/common/type_traits.h"
+#include "anbox/logger.h"
 #include "anbox/network/delegate_connection_creator.h"
 #include "anbox/network/local_socket_messenger.h"
 #include "anbox/network/message_processor.h"
-#include "anbox/common/type_traits.h"
+#include "anbox/network/published_socket_connector.h"
 #include "anbox/system_configuration.h"
 #include "anbox/utils.h"
-#include "anbox/logger.h"
 
 using namespace std::placeholders;
 
 namespace {
 class AudioForwarder : public anbox::network::MessageProcessor {
  public:
-  AudioForwarder(const std::shared_ptr<anbox::audio::Sink> &sink) :
-    sink_(sink) {
+  AudioForwarder(const std::shared_ptr<anbox::audio::Sink> &sink) : sink_(sink) {
   }
 
   // write data to sink pipe
@@ -44,19 +43,17 @@ class AudioForwarder : public anbox::network::MessageProcessor {
  private:
   std::shared_ptr<anbox::audio::Sink> sink_;
 };
-}
+}  // namespace
 
 namespace anbox {
 namespace audio {
-Server::Server(const std::shared_ptr<Runtime>& rt, const std::shared_ptr<platform::BasePlatform> &platform) :
-  platform_(platform),
-  socket_file_(utils::string_format("%s/anbox_audio", SystemConfiguration::instance().socket_dir())),
-  connector_(std::make_shared<network::PublishedSocketConnector>(
-             socket_file_, rt,
-             std::make_shared<network::DelegateConnectionCreator<boost::asio::local::stream_protocol>>(std::bind(&Server::create_connection_for, this, _1)))),
-  connections_(std::make_shared<network::Connections<network::SocketConnection>>()),
-  next_id_(0) {
-
+Server::Server(const std::shared_ptr<Runtime> &rt, const std::shared_ptr<platform::BasePlatform> &platform) : platform_(platform),
+                                                                                                              socket_file_(utils::string_format("%s/anbox_audio", SystemConfiguration::instance().socket_dir())),
+                                                                                                              connector_(std::make_shared<network::PublishedSocketConnector>(
+                                                                                                                  socket_file_, rt,
+                                                                                                                  std::make_shared<network::DelegateConnectionCreator<boost::asio::local::stream_protocol>>(std::bind(&Server::create_connection_for, this, _1)))),
+                                                                                                              connections_(std::make_shared<network::Connections<network::SocketConnection>>()),
+                                                                                                              next_id_(0) {
   // FIXME: currently creating the socket creates it with the rights of
   // the user we're running as. As this one is mapped into the container
   ::chmod(socket_file_.c_str(), 0777);
@@ -64,13 +61,13 @@ Server::Server(const std::shared_ptr<Runtime>& rt, const std::shared_ptr<platfor
 
 Server::~Server() {}
 
-void Server::create_connection_for(std::shared_ptr<boost::asio::basic_stream_socket<boost::asio::local::stream_protocol>> const& socket) {
+void Server::create_connection_for(std::shared_ptr<boost::asio::basic_stream_socket<boost::asio::local::stream_protocol>> const &socket) {
   auto const messenger = std::make_shared<network::LocalSocketMessenger>(socket);
 
   // We have to read the client flags first before we can continue
   // processing the actual commands
   ClientInfo client_info;
-  auto err = messenger->receive_msg( boost::asio::buffer(&client_info, sizeof(ClientInfo)));
+  auto err = messenger->receive_msg(boost::asio::buffer(&client_info, sizeof(ClientInfo)));
   if (err) {
     ERROR("Failed to read client info: %s", err.message());
     return;
@@ -80,23 +77,23 @@ void Server::create_connection_for(std::shared_ptr<boost::asio::basic_stream_soc
   std::shared_ptr<network::MessageProcessor> processor;
 
   switch (client_info.type) {
-  case ClientInfo::Type::Playback:
-    processor = std::make_shared<AudioForwarder>(platform_->create_audio_sink());
-    break;
-  case ClientInfo::Type::Recording:
-    break;
-  default:
-    ERROR("Invalid client type %d", static_cast<int>(client_info.type));
-    return;
+    case ClientInfo::Type::Playback:
+      processor = std::make_shared<AudioForwarder>(platform_->create_audio_sink());
+      break;
+    case ClientInfo::Type::Recording:
+      break;
+    default:
+      ERROR("Invalid client type %d", static_cast<int>(client_info.type));
+      return;
   }
 
   // Everything ok, so approve the client by sending the requesting client
   // info back. Once we have more things to negotiate we will send a modified
   // client info struct back.
-  messenger->send(reinterpret_cast<char*>(&client_info), sizeof(client_info));
+  messenger->send(reinterpret_cast<char *>(&client_info), sizeof(client_info));
 
   auto connection = std::make_shared<network::SocketConnection>(
-        messenger, messenger, next_id(), connections_, processor);
+      messenger, messenger, next_id(), connections_, processor);
   connections_->add(connection);
 
   // bind the socket connection to callback
@@ -106,5 +103,5 @@ void Server::create_connection_for(std::shared_ptr<boost::asio::basic_stream_soc
 int Server::next_id() {
   return next_id_.fetch_add(1);
 }
-} // namespace audio
-} // namespace anbox
+}  // namespace audio
+}  // namespace anbox

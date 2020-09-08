@@ -66,7 +66,7 @@ void ManagementApiStub::start_container(const Configuration &configuration) {
   }
 
   channel_->call_method("start_container", &message, c->response.get(),
-      google::protobuf::NewCallback(this, &ManagementApiStub::container_started, c.get()));
+                        google::protobuf::NewCallback(this, &ManagementApiStub::container_started, c.get()));
 
   c->wh.wait_for_all();
 
@@ -89,7 +89,7 @@ void ManagementApiStub::stop_container() {
   }
 
   channel_->call_method("stop_container", &message, c->response.get(),
-      google::protobuf::NewCallback(this, &ManagementApiStub::container_stopped, c.get()));
+                        google::protobuf::NewCallback(this, &ManagementApiStub::container_stopped, c.get()));
 
   // If container manager dies before session manager, the session manager
   // cannot exit if it waits for all, so just wait for 3 seconds.

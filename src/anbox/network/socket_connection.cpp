@@ -69,7 +69,7 @@ void SocketConnection::on_read_size(const boost::system::error_code& error, std:
   if (processor_->process_data(data))
     read_next_message();
   else
-      connections_->remove(id());
+    connections_->remove(id());
 }
-}  // namespace anbox
 }  // namespace network
+}  // namespace anbox

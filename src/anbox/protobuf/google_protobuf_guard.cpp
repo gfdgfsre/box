@@ -33,6 +33,6 @@ namespace anbox {
 namespace protobuf {
 void google_protobuf_guard();
 }
-}
+}  // namespace anbox
 
 void anbox::protobuf::google_protobuf_guard() {}

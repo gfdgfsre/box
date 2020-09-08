@@ -22,9 +22,9 @@
 
 #include <boost/filesystem.hpp>
 
-#include <linux/loop.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <linux/loop.h>
 #include <sys/ioctl.h>
 
 #include <system_error>
@@ -34,24 +34,24 @@ namespace fs = boost::filesystem;
 namespace {
 const constexpr char *loop_control_path{"/dev/loop-control"};
 const constexpr char *base_loop_path{"/dev/loop"};
-}
+}  // namespace
 
 namespace anbox {
 namespace common {
 std::shared_ptr<LoopDevice> LoopDeviceAllocator::new_device() {
   const auto ctl_fd = ::open(loop_control_path, O_RDWR);
-  if (ctl_fd < 0){
+  if (ctl_fd < 0) {
     throw std::system_error{errno, std::system_category()};
   }
 
   DeferAction close_ctl_fd{[&]() { ::close(ctl_fd); }};
 
   const auto device_nr = ::ioctl(ctl_fd, LOOP_CTL_GET_FREE);
-  if (device_nr < 0){
+  if (device_nr < 0) {
     throw std::system_error{errno, std::system_category()};
   }
 
   return LoopDevice::create(utils::string_format("%s%d", base_loop_path, device_nr));
 }
-} // namespace common
-} // namespace anbox
+}  // namespace common
+}  // namespace anbox

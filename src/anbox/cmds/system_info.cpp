@@ -16,15 +16,15 @@
  */
 
 #include "anbox/cmds/system_info.h"
-#include "anbox/graphics/emugl/RenderApi.h"
 #include "anbox/graphics/emugl/DispatchTables.h"
-#include "anbox/utils/environment_file.h"
+#include "anbox/graphics/emugl/RenderApi.h"
 #include "anbox/logger.h"
+#include "anbox/utils/environment_file.h"
 
 #include "anbox/build/config.h"
 
-#include <sstream>
 #include <fstream>
+#include <sstream>
 
 #include <boost/filesystem.hpp>
 
@@ -72,7 +72,7 @@ class SystemInformation {
       << "  arch:  " << cpu_info_.arch << std::endl
       << "  brand: " << cpu_info_.brand << std::endl
       << "  features: " << std::endl;
-    for (const auto& feature : cpu_info_.features)
+    for (const auto &feature : cpu_info_.features)
       s << "    - " << feature << std::endl;
 
     s << "os:" << std::endl
@@ -116,23 +116,23 @@ class SystemInformation {
  private:
   void collect_cpu_info() {
 #if defined(CPU_FEATURES_ARCH_X86)
-  cpu_info_.arch = "x86";
+    cpu_info_.arch = "x86";
 
-  const auto info = cpu_features::GetX86Info();
-  if (info.features.aes)
-    cpu_info_.features.push_back("aes");
-  if (info.features.sse4_1)
-    cpu_info_.features.push_back("sse4_1");
-  if (info.features.sse4_2)
-    cpu_info_.features.push_back("sse4_2");
-  if (info.features.avx)
-    cpu_info_.features.push_back("avx");
-  if (info.features.avx2)
-    cpu_info_.features.push_back("avx2");
+    const auto info = cpu_features::GetX86Info();
+    if (info.features.aes)
+      cpu_info_.features.push_back("aes");
+    if (info.features.sse4_1)
+      cpu_info_.features.push_back("sse4_1");
+    if (info.features.sse4_2)
+      cpu_info_.features.push_back("sse4_2");
+    if (info.features.avx)
+      cpu_info_.features.push_back("avx");
+    if (info.features.avx2)
+      cpu_info_.features.push_back("avx2");
 
-  char brand_string[49];
-  cpu_features::FillX86BrandString(brand_string);
-  cpu_info_.brand = brand_string;
+    char brand_string[49];
+    cpu_features::FillX86BrandString(brand_string);
+    cpu_info_.brand = brand_string;
 #endif
   }
 
@@ -142,7 +142,7 @@ class SystemInformation {
     // If we're running from within a snap the best we can do is to
     // access the hostfs and read the os-release file from there.
     if (os_info_.snap_based && fs::exists(host_os_release_path))
-        path = host_os_release_path;
+      path = host_os_release_path;
 
     // Double check that there aren't any permission errors when trying
     // to access the file (e.g. because of snap confinement)
@@ -177,7 +177,7 @@ class SystemInformation {
         auto str = s_egl.eglQueryString(display, item);
         if (!str)
           return std::string("n/a");
-        return std::string(reinterpret_cast<const char*>(str));
+        return std::string(reinterpret_cast<const char *>(str));
       };
 
       graphics_info_.egl_vendor = egl_safe_get_string(EGL_VENDOR);
@@ -192,7 +192,7 @@ class SystemInformation {
       EGLConfig config;
       int n;
       if (s_egl.eglChooseConfig(display, config_attribs, &config, 1, &n) && n > 0) {
-        GLint attribs[] = { EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE};
+        GLint attribs[] = {EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE};
         auto context = s_egl.eglCreateContext(display, config, nullptr, attribs);
         if (context != EGL_NO_CONTEXT) {
           // We require surfaceless-context support here for now. If eglMakeCurrent fails
@@ -203,7 +203,7 @@ class SystemInformation {
             auto str = s_gles2.glGetString(item);
             if (!str)
               return std::string("n/a");
-            return std::string(reinterpret_cast<const char*>(str));
+            return std::string(reinterpret_cast<const char *>(str));
           };
 
           graphics_info_.gles2_vendor = gl_safe_get_string(GL_VENDOR);
@@ -250,13 +250,13 @@ std::ostream &operator<<(std::ostream &out, const SystemInformation &info) {
   out << info.to_text();
   return out;
 }
-}
+}  // namespace
 
 anbox::cmds::SystemInfo::SystemInfo()
     : CommandWithFlagsAndAction{
           cli::Name{"system-info"}, cli::Usage{"system-info"},
           cli::Description{"Print various information about the system we're running on"}} {
-  action([](const cli::Command::Context&) {
+  action([](const cli::Command::Context &) {
     SystemInformation si;
     std::cout << si;
     return EXIT_SUCCESS;

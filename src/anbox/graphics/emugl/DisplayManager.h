@@ -39,8 +39,8 @@ class DisplayInfo {
   std::uint32_t vertical_resolution_ = 1280;
   std::uint32_t horizontal_resolution_ = 720;
 };
-} // namespace emugl
-} // namespace graphics
-} // namespace anbox
+}  // namespace emugl
+}  // namespace graphics
+}  // namespace anbox
 
 #endif

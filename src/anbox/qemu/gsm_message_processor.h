@@ -53,7 +53,7 @@ class GsmMessageProcessor : public network::MessageProcessor {
   std::vector<std::uint8_t> buffer_;
   std::shared_ptr<AtParser> parser_;
 };
-}  // namespace graphics
+}  // namespace qemu
 }  // namespace anbox
 
 #endif

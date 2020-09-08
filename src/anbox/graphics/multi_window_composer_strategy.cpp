@@ -16,8 +16,8 @@
  */
 
 #include "anbox/graphics/multi_window_composer_strategy.h"
-#include "anbox/wm/manager.h"
 #include "anbox/utils.h"
+#include "anbox/wm/manager.h"
 
 namespace anbox {
 namespace graphics {

@@ -16,9 +16,9 @@
  */
 
 #include "anbox/bridge/android_api_stub.h"
-#include "anbox/system_configuration.h"
 #include "anbox/logger.h"
 #include "anbox/rpc/channel.h"
+#include "anbox/system_configuration.h"
 #include "anbox/utils.h"
 #include "anbox/wm/stack.h"
 
@@ -30,12 +30,11 @@
 #include <google/protobuf/stubs/callback.h>
 #endif
 
-
 namespace fs = boost::filesystem;
 
 namespace {
 constexpr const std::chrono::milliseconds default_rpc_call_timeout{30000};
-} // namespace
+}  // namespace
 
 namespace anbox {
 namespace bridge {
@@ -68,17 +67,17 @@ void AndroidApiStub::launch(const android::Intent &intent,
   }
 
   switch (stack) {
-  case wm::Stack::Id::Default:
-    message.set_stack(::anbox::protobuf::bridge::LaunchApplication_Stack_DEFAULT);
-    break;
-  case wm::Stack::Id::Fullscreen:
-    message.set_stack(::anbox::protobuf::bridge::LaunchApplication_Stack_FULLSCREEN);
-    break;
-  case wm::Stack::Id::Freeform:
-    message.set_stack(::anbox::protobuf::bridge::LaunchApplication_Stack_FREEFORM);
-    break;
-  default:
-    break;
+    case wm::Stack::Id::Default:
+      message.set_stack(::anbox::protobuf::bridge::LaunchApplication_Stack_DEFAULT);
+      break;
+    case wm::Stack::Id::Fullscreen:
+      message.set_stack(::anbox::protobuf::bridge::LaunchApplication_Stack_FULLSCREEN);
+      break;
+    case wm::Stack::Id::Freeform:
+      message.set_stack(::anbox::protobuf::bridge::LaunchApplication_Stack_FREEFORM);
+      break;
+    default:
+      break;
   }
 
   if (launch_bounds != graphics::Rect::Invalid) {
@@ -118,7 +117,7 @@ void AndroidApiStub::launch(const android::Intent &intent,
   if (c->response->has_error()) throw std::runtime_error(c->response->error());
 }
 
-core::Property<bool>& AndroidApiStub::ready() {
+core::Property<bool> &AndroidApiStub::ready() {
   return ready_;
 }
 

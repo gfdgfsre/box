@@ -32,6 +32,6 @@ class ConnectionCreator : public DoNotCopyOrMove {
       std::shared_ptr<boost::asio::basic_stream_socket<stream_protocol>> const&
           socket) = 0;
 };
-}  // namespace anbox
 }  // namespace network
+}  // namespace anbox
 #endif

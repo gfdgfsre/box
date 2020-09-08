@@ -30,7 +30,7 @@ struct ClientInfo {
   };
   Type type;
 };
-} // namespace audio
-} // namespace anbox
+}  // namespace audio
+}  // namespace anbox
 
 #endif

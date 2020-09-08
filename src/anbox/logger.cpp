@@ -37,7 +37,7 @@ namespace attrs {
 BOOST_LOG_ATTRIBUTE_KEYWORD(Severity, "Severity", anbox::Logger::Severity)
 BOOST_LOG_ATTRIBUTE_KEYWORD(Location, "Location", anbox::Logger::Location)
 BOOST_LOG_ATTRIBUTE_KEYWORD(Timestamp, "Timestamp", boost::posix_time::ptime)
-}
+}  // namespace attrs
 
 struct BoostLogLogger : public anbox::Logger {
   BoostLogLogger() : initialized_(false) {}
@@ -66,12 +66,12 @@ struct BoostLogLogger : public anbox::Logger {
       logger->set_formatter(formatter);
     } else {
       boost::shared_ptr<boost::log::sinks::syslog_backend> backend(
-            new boost::log::sinks::syslog_backend(
+          new boost::log::sinks::syslog_backend(
               boost::log::keywords::facility = boost::log::sinks::syslog::user,
               boost::log::keywords::use_impl = boost::log::sinks::syslog::native));
       backend->set_severity_mapper(boost::log::sinks::syslog::direct_severity_mapping<int>("Severity"));
       boost::log::core::get()->add_sink(boost::make_shared<boost::log::sinks::synchronous_sink<
-                                          boost::log::sinks::syslog_backend>>(backend));
+                                            boost::log::sinks::syslog_backend>>(backend));
     }
 
     severity_ = severity;
@@ -126,7 +126,7 @@ std::shared_ptr<anbox::Logger>& MutableInstance() {
 void SetInstance(const std::shared_ptr<anbox::Logger>& logger) {
   MutableInstance() = logger;
 }
-}
+}  // namespace
 namespace anbox {
 
 bool Logger::SetSeverityFromString(const std::string& severity) {

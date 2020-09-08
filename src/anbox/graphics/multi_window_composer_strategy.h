@@ -31,7 +31,7 @@ class MultiWindowComposerStrategy : public LayerComposer::Strategy {
 
   WindowRenderableList process_layers(const RenderableList &renderables) override;
 
-private:
+ private:
   std::shared_ptr<wm::Manager> wm_;
 };
 }  // namespace graphics

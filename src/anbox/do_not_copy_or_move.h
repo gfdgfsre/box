@@ -31,6 +31,6 @@ class DoNotCopyOrMove {
  protected:
   DoNotCopyOrMove() = default;
 };
-}
+}  // namespace anbox
 
 #endif

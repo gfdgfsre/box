@@ -16,9 +16,9 @@
  */
 
 #include "anbox/input/manager.h"
-#include "anbox/system_configuration.h"
 #include "anbox/input/device.h"
 #include "anbox/runtime.h"
+#include "anbox/system_configuration.h"
 #include "anbox/utils.h"
 
 #include <boost/format.hpp>

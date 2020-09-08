@@ -20,5 +20,5 @@
 namespace anbox {
 namespace wm {
 Manager::~Manager() {}
-} // namespace wm
-} // namespace anbox
+}  // namespace wm
+}  // namespace anbox

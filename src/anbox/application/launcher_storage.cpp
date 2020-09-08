@@ -16,8 +16,8 @@
  */
 
 #include "anbox/application/launcher_storage.h"
-#include "anbox/utils.h"
 #include "anbox/logger.h"
+#include "anbox/utils.h"
 
 #include <algorithm>
 #include <fstream>
@@ -29,25 +29,24 @@ namespace {
 // This will always point us to the right executable when we're running within
 // a snap environment.
 constexpr const char *snap_exe_path{"/snap/bin/anbox"};
-}
+}  // namespace
 
 namespace anbox {
 namespace application {
-LauncherStorage::LauncherStorage(const fs::path &path) :
-  path_(path) {}
+LauncherStorage::LauncherStorage(const fs::path &path) : path_(path) {}
 
 LauncherStorage::~LauncherStorage() {}
 
 void LauncherStorage::reset() {
   if (fs::exists(path_)) {
-    for(auto & p : boost::filesystem::directory_iterator(path_)) {
-        if (fs::is_regular_file(p)){
-          auto str = p.path().filename().string();
-          if (boost::starts_with(str, "anbox-"))
-            fs::remove(p);
-        }
-     }
-   }
+    for (auto &p : boost::filesystem::directory_iterator(path_)) {
+      if (fs::is_regular_file(p)) {
+        auto str = p.path().filename().string();
+        if (boost::starts_with(str, "anbox-"))
+          fs::remove(p);
+      }
+    }
+  }
 }
 
 std::string LauncherStorage::clean_package_name(const std::string &package_name) {

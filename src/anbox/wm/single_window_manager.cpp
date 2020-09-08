@@ -16,13 +16,13 @@
  */
 
 #include "anbox/wm/single_window_manager.h"
-#include "anbox/platform/base_platform.h"
 #include "anbox/logger.h"
+#include "anbox/platform/base_platform.h"
 
 #include <algorithm>
 
-#include <sys/types.h>
 #include <signal.h>
+#include <sys/types.h>
 
 namespace anbox {
 namespace wm {

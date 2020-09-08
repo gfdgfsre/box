@@ -37,7 +37,7 @@ class BootAnimationMessageProcessor : public QemudMessageProcessor {
 
   std::string icon_path_;
 };
-}  // namespace graphics
+}  // namespace qemu
 }  // namespace anbox
 
 #endif

@@ -20,9 +20,9 @@
 
 #include "anbox/android/intent.h"
 
-#include <string>
 #include <map>
 #include <memory>
+#include <string>
 
 namespace anbox {
 namespace application {
@@ -46,11 +46,11 @@ class Database {
   void store_or_update(const Item &item);
   void remove(const Item &item);
 
-  const Item& find_by_package(const std::string &package) const;
+  const Item &find_by_package(const std::string &package) const;
 
  private:
   std::shared_ptr<LauncherStorage> storage_;
-  std::map<std::string,Item> items_;
+  std::map<std::string, Item> items_;
   bool done_reset = false;
 };
 }  // namespace application

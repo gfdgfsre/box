@@ -21,9 +21,9 @@
 #include "anbox/input/device.h"
 #include "anbox/input/manager.h"
 #include "anbox/logger.h"
+#include "anbox/platform/sdl/audio_sink.h"
 #include "anbox/platform/sdl/keycode_converter.h"
 #include "anbox/platform/sdl/window.h"
-#include "anbox/platform/sdl/audio_sink.h"
 #include "anbox/wm/manager.h"
 
 #include <boost/throw_exception.hpp>
@@ -41,7 +41,6 @@ Platform::Platform(
     : input_manager_(input_manager),
       event_thread_running_(false),
       config_(config) {
-
   // Don't block the screensaver from kicking in. It will be blocked
   // by the desktop shell already and we don't have to do this again.
   // If we would leave this enabled it will prevent systems from
@@ -126,7 +125,7 @@ Platform::Platform(
   touch_->set_prop_bit(INPUT_PROP_DIRECT);
 
   for (int i = 0; i < MAX_FINGERS; i++)
-      touch_slots[i] = -1;
+    touch_slots[i] = -1;
 
   event_thread_ = std::thread(&Platform::process_events, this);
 }
@@ -272,8 +271,7 @@ void Platform::process_input_event(const SDL_Event &event) {
       push_finger_up(event.tfinger.fingerId, touch_events);
       break;
     }
-	case SDL_FINGERMOTION: {
-
+    case SDL_FINGERMOTION: {
       if (!calculate_touch_coordinates(event, x, y))
         break;
       push_finger_motion(x, y, event.tfinger.fingerId, touch_events);
@@ -284,7 +282,7 @@ void Platform::process_input_event(const SDL_Event &event) {
   }
 
   if (mouse_events.size() > 0) {
-    mouse_events.push_back({EV_SYN, SYN_REPORT, 0});      
+    mouse_events.push_back({EV_SYN, SYN_REPORT, 0});
     pointer_->send_events(mouse_events);
   }
 
@@ -295,55 +293,54 @@ void Platform::process_input_event(const SDL_Event &event) {
     touch_->send_events(touch_events);
 }
 
-int Platform::find_touch_slot(int id){
-    for (int i = 0; i < MAX_FINGERS; i++) {
-        if (touch_slots[i] == id)
-          return i;
-    }
-    return -1;
+int Platform::find_touch_slot(int id) {
+  for (int i = 0; i < MAX_FINGERS; i++) {
+    if (touch_slots[i] == id)
+      return i;
+  }
+  return -1;
 }
 
-void Platform::push_slot(std::vector<input::Event> &touch_events, int slot){
-    if (last_slot != slot) {
-        touch_events.push_back({EV_ABS, ABS_MT_SLOT, slot});
-        last_slot = slot;
-    }
+void Platform::push_slot(std::vector<input::Event> &touch_events, int slot) {
+  if (last_slot != slot) {
+    touch_events.push_back({EV_ABS, ABS_MT_SLOT, slot});
+    last_slot = slot;
+  }
 }
 
-void Platform::push_finger_down(int x, int y, int finger_id, std::vector<input::Event> &touch_events){
-    int slot = find_touch_slot(-1);
-    if (slot == -1) {
-        DEBUG("no free slot!");
-        return;
-    }
-    touch_slots[slot] = finger_id;
-    push_slot(touch_events, slot);
-    touch_events.push_back({EV_ABS, ABS_MT_TRACKING_ID, static_cast<std::int32_t>(finger_id % MAX_TRACKING_ID + 1)});
-    touch_events.push_back({EV_ABS, ABS_MT_POSITION_X, x});
-    touch_events.push_back({EV_ABS, ABS_MT_POSITION_Y, y});
-    touch_events.push_back({EV_SYN, SYN_REPORT, 0});
+void Platform::push_finger_down(int x, int y, int finger_id, std::vector<input::Event> &touch_events) {
+  int slot = find_touch_slot(-1);
+  if (slot == -1) {
+    DEBUG("no free slot!");
+    return;
+  }
+  touch_slots[slot] = finger_id;
+  push_slot(touch_events, slot);
+  touch_events.push_back({EV_ABS, ABS_MT_TRACKING_ID, static_cast<std::int32_t>(finger_id % MAX_TRACKING_ID + 1)});
+  touch_events.push_back({EV_ABS, ABS_MT_POSITION_X, x});
+  touch_events.push_back({EV_ABS, ABS_MT_POSITION_Y, y});
+  touch_events.push_back({EV_SYN, SYN_REPORT, 0});
 }
 
-void Platform::push_finger_up(int finger_id, std::vector<input::Event> &touch_events){
-    int slot = find_touch_slot(finger_id);
-    if (slot == -1) 
-      return;
-    push_slot(touch_events, slot);
-    touch_events.push_back({EV_ABS, ABS_MT_TRACKING_ID, -1});
-    touch_events.push_back({EV_SYN, SYN_REPORT, 0});
-    touch_slots[slot] = -1;
+void Platform::push_finger_up(int finger_id, std::vector<input::Event> &touch_events) {
+  int slot = find_touch_slot(finger_id);
+  if (slot == -1)
+    return;
+  push_slot(touch_events, slot);
+  touch_events.push_back({EV_ABS, ABS_MT_TRACKING_ID, -1});
+  touch_events.push_back({EV_SYN, SYN_REPORT, 0});
+  touch_slots[slot] = -1;
 }
 
-void Platform::push_finger_motion(int x, int y, int finger_id, std::vector<input::Event> &touch_events){
-    int slot = find_touch_slot(finger_id);
-    if (slot == -1) 
-      return;
-    push_slot(touch_events, slot);
-    touch_events.push_back({EV_ABS, ABS_MT_POSITION_X, x});
-    touch_events.push_back({EV_ABS, ABS_MT_POSITION_Y, y});
-    touch_events.push_back({EV_SYN, SYN_REPORT, 0});
+void Platform::push_finger_motion(int x, int y, int finger_id, std::vector<input::Event> &touch_events) {
+  int slot = find_touch_slot(finger_id);
+  if (slot == -1)
+    return;
+  push_slot(touch_events, slot);
+  touch_events.push_back({EV_ABS, ABS_MT_POSITION_X, x});
+  touch_events.push_back({EV_ABS, ABS_MT_POSITION_Y, y});
+  touch_events.push_back({EV_SYN, SYN_REPORT, 0});
 }
-
 
 bool Platform::adjust_coordinates(std::int32_t &x, std::int32_t &y) {
   SDL_Window *window = nullptr;
@@ -381,7 +378,7 @@ bool Platform::calculate_touch_coordinates(const SDL_Event &event,
 
   window = SDL_GetWindowFromID(focused_sdl_window_id_);
   // before SDL 2.0.7 on X11 tfinger coordinates are not normalized
-  if (!SDL_VERSION_ATLEAST(2,0,7) && (event.tfinger.x > 1 || event.tfinger.y > 1)) {
+  if (!SDL_VERSION_ATLEAST(2, 0, 7) && (event.tfinger.x > 1 || event.tfinger.y > 1)) {
     x = event.tfinger.x;
     y = event.tfinger.y;
   } else {
@@ -419,7 +416,7 @@ std::shared_ptr<wm::Window> Platform::create_window(
 
   auto id = next_window_id();
   auto w = std::make_shared<Window>(renderer_, id, task, shared_from_this(), frame, title,
-		  !window_size_immutable_, !config_.server_side_decoration);
+                                    !window_size_immutable_, !config_.server_side_decoration);
   focused_sdl_window_id_ = w->window_id();
   windows_.insert({id, w});
   return w;
@@ -447,7 +444,7 @@ void Platform::window_wants_focus(const Window::Id &id) {
 }
 
 void Platform::window_moved(const Window::Id &id, const std::int32_t &x,
-                                  const std::int32_t &y) {
+                            const std::int32_t &y) {
   auto w = windows_.find(id);
   if (w == windows_.end()) return;
 
@@ -460,8 +457,8 @@ void Platform::window_moved(const Window::Id &id, const std::int32_t &x,
 }
 
 void Platform::window_resized(const Window::Id &id,
-                                    const std::int32_t &width,
-                                    const std::int32_t &height) {
+                              const std::int32_t &width,
+                              const std::int32_t &height) {
   auto w = windows_.find(id);
   if (w == windows_.end()) return;
 
@@ -508,6 +505,6 @@ std::shared_ptr<audio::Source> Platform::create_audio_source() {
 bool Platform::supports_multi_window() const {
   return true;
 }
-} // namespace sdl
-} // namespace platform
-} // namespace anbox
+}  // namespace sdl
+}  // namespace platform
+}  // namespace anbox

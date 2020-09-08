@@ -29,7 +29,7 @@ class Sink {
   virtual ~Sink() {}
   virtual void write_data(const std::vector<std::uint8_t> &data) = 0;
 };
-} // namespace audio
-} // namespace anbox
+}  // namespace audio
+}  // namespace anbox
 
 #endif

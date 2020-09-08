@@ -29,14 +29,14 @@ namespace anbox {
 namespace audio {
 class Sink;
 class Source;
-} // namespace audio
+}  // namespace audio
 namespace wm {
 class Window;
 class Manager;
-} // namespace wm
+}  // namespace wm
 namespace input {
 class Manager;
-} // namespace input
+}  // namespace input
 namespace platform {
 class BasePlatform {
  public:

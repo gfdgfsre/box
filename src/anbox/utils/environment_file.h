@@ -18,9 +18,9 @@
 #ifndef ANBOX_UTILS_ENVIRONMENT_FILE_H_
 #define ANBOX_UTILS_ENVIRONMENT_FILE_H_
 
+#include <boost/filesystem.hpp>
 #include <map>
 #include <string>
-#include <boost/filesystem.hpp>
 
 namespace anbox {
 namespace utils {
@@ -34,7 +34,7 @@ class EnvironmentFile {
  private:
   std::map<std::string, std::string> data_;
 };
-} // namespace utils
-} // namespace anbox
+}  // namespace utils
+}  // namespace anbox
 
 #endif

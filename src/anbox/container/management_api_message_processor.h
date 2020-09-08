@@ -37,7 +37,7 @@ class ManagementApiMessageProcessor : public rpc::MessageProcessor {
  private:
   std::shared_ptr<ManagementApiSkeleton> server_;
 };
+}  // namespace container
 }  // namespace anbox
-}  // namespace network
 
 #endif

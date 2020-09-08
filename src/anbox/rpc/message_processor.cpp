@@ -104,7 +104,8 @@ void MessageProcessor::send_response(::google::protobuf::uint32 id,
   const unsigned char header_bytes[header_size] = {
       static_cast<unsigned char>((size >> 16) & 0xff),
       static_cast<unsigned char>((size >> 8) & 0xff),
-      static_cast<unsigned char>((size >> 0) & 0xff), MessageType::response,
+      static_cast<unsigned char>((size >> 0) & 0xff),
+      MessageType::response,
   };
 
   std::vector<std::uint8_t> send_buffer(sizeof(header_bytes) + size);
@@ -117,5 +118,5 @@ void MessageProcessor::send_response(::google::protobuf::uint32 id,
   sender_->send(reinterpret_cast<const char *>(send_buffer.data()),
                 send_buffer.size());
 }
+}  // namespace rpc
 }  // namespace anbox
-}  // namespace network

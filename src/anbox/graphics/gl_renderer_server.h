@@ -35,7 +35,6 @@ class Manager;
 namespace graphics {
 class LayerComposer;
 class GLRendererServer {
-
  public:
   struct Config {
     enum class Driver {

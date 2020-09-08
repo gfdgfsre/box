@@ -28,9 +28,9 @@ struct Service {
 struct ApplicationManager {
   static inline const char* name() { return "org.anbox.ApplicationManager"; }
   struct Methods {
-      struct Launch {
-        static inline const char* name() { return "Launch"; }
-      };
+    struct Launch {
+      static inline const char* name() { return "Launch"; }
+    };
   };
   struct Properties {
     struct Ready {

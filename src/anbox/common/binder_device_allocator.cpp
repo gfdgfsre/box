@@ -24,10 +24,10 @@
 
 #include <boost/filesystem.hpp>
 
-#include <cerrno>
 #include <fcntl.h>
 #include <linux/loop.h>
 #include <sys/ioctl.h>
+#include <cerrno>
 
 #include <system_error>
 
@@ -37,7 +37,7 @@ namespace {
 const constexpr char* binderfs_base_path{BINDERFS_PATH};
 const constexpr char* binderfs_control_path{BINDERFS_PATH "/binder-control"};
 const constexpr char* default_binder_device_name{"binder"};
-} // namespace
+}  // namespace
 
 namespace anbox {
 namespace common {
@@ -65,14 +65,14 @@ std::unique_ptr<BinderDevice> BinderDeviceAllocator::new_device() {
     return nullptr;
   }
 
-  std::memcpy(dev.name, device_name.c_str(),  device_name.length());
+  std::memcpy(dev.name, device_name.c_str(), device_name.length());
 
   if (::ioctl(ctl_fd, BINDER_CTL_ADD, &dev) < 0) {
     ERROR("Failed to allocate new binder node: %s", std::strerror(errno));
     return nullptr;
   }
 
-  const auto path = utils::string_format("%s/%s", binderfs_base_path,  device_name);
+  const auto path = utils::string_format("%s/%s", binderfs_base_path, device_name);
   if (!fs::exists(path)) {
     ERROR("Allocated binder device %s is missing", path);
     return nullptr;
@@ -80,5 +80,5 @@ std::unique_ptr<BinderDevice> BinderDeviceAllocator::new_device() {
 
   return BinderDevice::create(path);
 }
-} // namespace common
-} // namespace anbox
+}  // namespace common
+}  // namespace anbox

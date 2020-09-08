@@ -28,7 +28,7 @@ class ReadBuffer {
   size_t validData() {
     return m_validData;
   }
-                               // return the amount of valid data in readptr
+  // return the amount of valid data in readptr
   void consume(size_t amount);  // notify that 'amount' data has been consumed;
  private:
   unsigned char *m_buf;

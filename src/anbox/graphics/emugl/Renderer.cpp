@@ -124,7 +124,8 @@ bool Renderer::initialize(EGLNativeDisplayType nativeDisplay) {
 
   int n;
   if ((s_egl.eglChooseConfig(m_eglDisplay, configAttribs, &m_eglConfig,
-                             1, &n) == EGL_FALSE) || n == 0) {
+                             1, &n) == EGL_FALSE) ||
+      n == 0) {
     ERROR("Failed to select EGL configuration");
     return false;
   }
@@ -523,7 +524,7 @@ bool Renderer::flushWindowSurfaceColorBuffer(HandleType p_surface) {
   WindowSurfaceMap::iterator w(m_windows.find(p_surface));
   if (w == m_windows.end()) {
     ERROR("FB::flushWindowSurfaceColorBuffer: window handle %#x not found",
-        p_surface);
+          p_surface);
     // bad surface handle
     return false;
   }
@@ -910,9 +911,7 @@ void Renderer::draw(RendererWindow *window, const Renderable &renderable,
   s_gles2.glEnableVertexAttribArray(prog.texcoord_attr);
 
   m_primitives.clear();
-  tessellate(m_primitives, {
-             static_cast<int32_t>(cb->getWidth()),
-             static_cast<int32_t>(cb->getHeight())}, renderable);
+  tessellate(m_primitives, {static_cast<int32_t>(cb->getWidth()), static_cast<int32_t>(cb->getHeight())}, renderable);
 
   for (auto const &p : m_primitives) {
     cb->bind();
@@ -938,7 +937,6 @@ void Renderer::draw(RendererWindow *window, const Renderable &renderable,
 bool Renderer::draw(EGLNativeWindowType native_window,
                     const anbox::graphics::Rect &window_frame,
                     const RenderableList &renderables) {
-
   std::unique_lock<std::mutex> l(m_lock);
 
   auto w = m_nativeWindows.find(native_window);

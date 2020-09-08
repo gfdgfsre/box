@@ -16,9 +16,9 @@
  */
 
 #include "anbox/platform/base_platform.h"
+#include "anbox/logger.h"
 #include "anbox/platform/null/platform.h"
 #include "anbox/platform/sdl/platform.h"
-#include "anbox/logger.h"
 
 namespace anbox {
 namespace platform {
@@ -35,5 +35,5 @@ std::shared_ptr<BasePlatform> create(const std::string &name,
 
   return nullptr;
 }
-} // namespace platform
-} // namespace anbox
+}  // namespace platform
+}  // namespace anbox

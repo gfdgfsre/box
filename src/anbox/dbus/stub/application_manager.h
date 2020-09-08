@@ -32,9 +32,9 @@ class ApplicationManager : public anbox::application::Manager {
 
   ~ApplicationManager();
 
-  void launch(const android::Intent &intent,
-              const graphics::Rect &launch_bounds = graphics::Rect::Invalid,
-              const wm::Stack::Id &stack = wm::Stack::Id::Default) override;
+  void launch(const android::Intent& intent,
+              const graphics::Rect& launch_bounds = graphics::Rect::Invalid,
+              const wm::Stack::Id& stack = wm::Stack::Id::Default) override;
 
   core::Property<bool>& ready() override;
 

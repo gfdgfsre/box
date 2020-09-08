@@ -32,14 +32,12 @@ class Stack {
   };
 
   Stack() = delete;
-  Stack(const Stack&) = delete;
+  Stack(const Stack &) = delete;
 };
 
-std::ostream& operator<<(std::ostream &out, Stack::Id const &stack);
-std::istream& operator>>(std::istream &in, Stack::Id &stack);
+std::ostream &operator<<(std::ostream &out, Stack::Id const &stack);
+std::istream &operator>>(std::istream &in, Stack::Id &stack);
 }  // namespace wm
 }  // namespace anbox
-
-
 
 #endif

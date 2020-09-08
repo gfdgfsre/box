@@ -25,7 +25,6 @@
 #include <stdio.h>
 #include <string.h>
 
-
 WindowSurface::WindowSurface(EGLDisplay display, EGLConfig config)
     : mSurface(NULL),
       mAttachedColorBuffer(NULL),
@@ -147,8 +146,10 @@ bool WindowSurface::resize(unsigned int p_width, unsigned int p_height) {
   }
 
   const EGLint pbufAttribs[5] = {
-      EGL_WIDTH, static_cast<EGLint>(p_width),
-      EGL_HEIGHT, static_cast<EGLint>(p_height),
+      EGL_WIDTH,
+      static_cast<EGLint>(p_width),
+      EGL_HEIGHT,
+      static_cast<EGLint>(p_height),
       EGL_NONE,
   };
 

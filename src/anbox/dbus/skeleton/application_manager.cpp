@@ -16,9 +16,9 @@
  */
 
 #include "anbox/dbus/skeleton/application_manager.h"
+#include "anbox/android/intent.h"
 #include "anbox/dbus/interface.h"
 #include "anbox/dbus/sd_bus_helpers.hpp"
-#include "anbox/android/intent.h"
 #include "anbox/logger.h"
 
 #include <sstream>
@@ -45,17 +45,16 @@ int parse_string_from_message(sd_bus_message *m, std::string &str) {
 
   return 0;
 }
-} // namespace
+}  // namespace
 
 namespace anbox {
 namespace dbus {
 namespace skeleton {
 const sd_bus_vtable ApplicationManager::vtable[] = {
-  sdbus_vtable_create_start(0),
-  sdbus_vtable_create_method("Launch", "a{sv}s", "", ApplicationManager::method_launch, SD_BUS_VTABLE_UNPRIVILEGED),
-  sdbus_vtable_create_property("Ready", "b", ApplicationManager::property_ready_get, SD_BUS_VTABLE_PROPERTY_EMITS_CHANGE),
-  sdbus_vtable_create_end()
-};
+    sdbus_vtable_create_start(0),
+    sdbus_vtable_create_method("Launch", "a{sv}s", "", ApplicationManager::method_launch, SD_BUS_VTABLE_UNPRIVILEGED),
+    sdbus_vtable_create_property("Ready", "b", ApplicationManager::property_ready_get, SD_BUS_VTABLE_PROPERTY_EMITS_CHANGE),
+    sdbus_vtable_create_end()};
 
 int ApplicationManager::method_launch(sd_bus_message *m, void *userdata, sd_bus_error *ret_error) {
   auto r = sd_bus_message_enter_container(m, SD_BUS_TYPE_ARRAY, "{sv}");
@@ -104,7 +103,7 @@ int ApplicationManager::method_launch(sd_bus_message *m, void *userdata, sd_bus_
 
   const char *stack = nullptr;
   r = sd_bus_message_read(m, "s", &stack);
-  if (r <  0)
+  if (r < 0)
     return r;
 
   wm::Stack::Id launch_stack = wm::Stack::Id::Default;
@@ -119,7 +118,7 @@ int ApplicationManager::method_launch(sd_bus_message *m, void *userdata, sd_bus_
     return -EINVAL;
   }
 
-  auto thiz = static_cast<ApplicationManager*>(userdata);
+  auto thiz = static_cast<ApplicationManager *>(userdata);
   try {
     thiz->launch(intent, graphics::Rect::Invalid, launch_stack);
   } catch (std::exception &err) {
@@ -134,21 +133,19 @@ int ApplicationManager::method_launch(sd_bus_message *m, void *userdata, sd_bus_
 int ApplicationManager::property_ready_get(sd_bus *bus, const char *path, const char *interface,
                                            const char *property, sd_bus_message *reply,
                                            void *userdata, sd_bus_error *ret_error) {
+  (void)bus;
+  (void)path;
+  (void)interface;
+  (void)property;
+  (void)ret_error;
 
-  (void) bus;
-  (void) path;
-  (void) interface;
-  (void) property;
-  (void) ret_error;
-
-  auto thiz = static_cast<ApplicationManager*>(userdata);
+  auto thiz = static_cast<ApplicationManager *>(userdata);
 
   return sd_bus_message_append(reply, "b", thiz->impl_->ready().get());
 }
 
-ApplicationManager::ApplicationManager(const BusPtr& bus, const std::shared_ptr<anbox::application::Manager> &impl)
+ApplicationManager::ApplicationManager(const BusPtr &bus, const std::shared_ptr<anbox::application::Manager> &impl)
     : bus_(bus), impl_(impl) {
-
   const auto r = sd_bus_add_object_vtable(bus_->raw(),
                                           &obj_slot_,
                                           interface::Service::path(),
@@ -159,7 +156,7 @@ ApplicationManager::ApplicationManager(const BusPtr& bus, const std::shared_ptr<
     std::runtime_error("Failed to setup application manager DBus service");
 
   impl_->ready().changed().connect([&](bool value) {
-    (void) value;
+    (void)value;
 
     sd_bus_emit_properties_changed(bus_->raw(),
                                    interface::Service::path(),
@@ -181,7 +178,7 @@ void ApplicationManager::launch(const android::Intent &intent,
   impl_->launch(intent, launch_bounds, stack);
 }
 
-core::Property<bool>& ApplicationManager::ready() {
+core::Property<bool> &ApplicationManager::ready() {
   return impl_->ready();
 }
 }  // namespace skeleton

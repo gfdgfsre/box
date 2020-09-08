@@ -62,7 +62,7 @@ std::string client_type_to_string(
   }
   return "unknown";
 }
-}
+}  // namespace
 
 namespace anbox {
 namespace qemu {
@@ -136,7 +136,6 @@ PipeConnectionCreator::client_type PipeConnectionCreator::identify_client(
 std::shared_ptr<network::MessageProcessor> PipeConnectionCreator::create_processor(
     const client_type &type,
     const std::shared_ptr<network::SocketMessenger> &messenger) {
-
   if (type == client_type::opengles)
     return std::make_shared<graphics::OpenGlesMessageProcessor>(renderer_, messenger);
   else if (type == client_type::qemud_boot_properties)

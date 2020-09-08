@@ -23,14 +23,14 @@ namespace dbus {
 Bus::Bus(Type type) {
   int ret = 0;
   switch (type) {
-  case Type::Session:
-    ret = sd_bus_open_user(&bus_);
-    break;
-  case Type::System:
-    ret = sd_bus_open_system(&bus_);
-    break;
-  default:
-    throw std::invalid_argument("Invalid bus type");
+    case Type::Session:
+      ret = sd_bus_open_user(&bus_);
+      break;
+    case Type::System:
+      ret = sd_bus_open_system(&bus_);
+      break;
+    default:
+      throw std::invalid_argument("Invalid bus type");
   }
 
   if (ret < 0 || !bus_)
@@ -44,7 +44,7 @@ Bus::~Bus() {
     sd_bus_unref(bus_);
 }
 
-bool Bus::has_service_with_name(const std::string &name) {
+bool Bus::has_service_with_name(const std::string& name) {
   auto r = sd_bus_get_name_creds(bus_,
                                  name.c_str(),
                                  0,

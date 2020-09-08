@@ -28,14 +28,14 @@ namespace dbus {
 namespace skeleton {
 class ApplicationManager : public anbox::application::Manager {
  public:
-  ApplicationManager(const BusPtr& bus, const std::shared_ptr<anbox::application::Manager> &impl);
+  ApplicationManager(const BusPtr &bus, const std::shared_ptr<anbox::application::Manager> &impl);
   ~ApplicationManager();
 
   void launch(const android::Intent &intent,
               const graphics::Rect &launch_bounds = graphics::Rect::Invalid,
               const wm::Stack::Id &stack = wm::Stack::Id::Default) override;
 
-  core::Property<bool>& ready() override;
+  core::Property<bool> &ready() override;
 
  private:
   static const sd_bus_vtable vtable[];

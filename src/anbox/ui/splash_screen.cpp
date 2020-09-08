@@ -16,9 +16,9 @@
  */
 
 #include "anbox/ui/splash_screen.h"
+#include "anbox/logger.h"
 #include "anbox/system_configuration.h"
 #include "anbox/utils.h"
-#include "anbox/logger.h"
 
 #include <SDL2/SDL_image.h>
 
@@ -99,5 +99,5 @@ void SplashScreen::process_events() {
     }
   }
 }
-} // namespace ui
-} // namespace anbox
+}  // namespace ui
+}  // namespace anbox

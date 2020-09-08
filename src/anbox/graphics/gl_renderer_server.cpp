@@ -25,8 +25,8 @@
 #include "anbox/logger.h"
 #include "anbox/wm/manager.h"
 
-#include <boost/throw_exception.hpp>
 #include <boost/filesystem.hpp>
+#include <boost/throw_exception.hpp>
 #include <cstdarg>
 #include <stdexcept>
 
@@ -44,32 +44,31 @@ void logger_write(const emugl::LogLevel &level, const char *format, ...) {
   va_end(args);
 
   switch (level) {
-  case emugl::LogLevel::WARNING:
-    WARNING("%s", message);
-    break;
-  case emugl::LogLevel::ERROR:
-    ERROR("%s", message);
-    break;
-  case emugl::LogLevel::FATAL:
-    FATAL("%s", message);
-    break;
-  case emugl::LogLevel::DEBUG:
-    DEBUG("%s", message);
-    break;
-  case emugl::LogLevel::TRACE:
-    TRACE("%s", message);
-    break;
-  default:
-    break;
+    case emugl::LogLevel::WARNING:
+      WARNING("%s", message);
+      break;
+    case emugl::LogLevel::ERROR:
+      ERROR("%s", message);
+      break;
+    case emugl::LogLevel::FATAL:
+      FATAL("%s", message);
+      break;
+    case emugl::LogLevel::DEBUG:
+      DEBUG("%s", message);
+      break;
+    case emugl::LogLevel::TRACE:
+      TRACE("%s", message);
+      break;
+    default:
+      break;
   }
 }
-}
+}  // namespace
 
 namespace anbox {
 namespace graphics {
 GLRendererServer::GLRendererServer(const Config &config, const std::shared_ptr<wm::Manager> &wm)
     : renderer_(std::make_shared<::Renderer>()) {
-
   std::shared_ptr<LayerComposer::Strategy> composer_strategy;
   if (config.single_window)
     composer_strategy = std::make_shared<SingleWindowComposerStrategy>(wm);
@@ -82,7 +81,7 @@ GLRendererServer::GLRendererServer(const Config &config, const std::shared_ptr<w
   if (config.driver == Config::Driver::Software) {
     auto swiftshader_path = fs::path(utils::get_env_value("SWIFTSHADER_PATH"));
     const auto snap_path = utils::get_env_value("SNAP");
-    
+
     if (!snap_path.empty())
       swiftshader_path = fs::path(snap_path) / "lib" / "anbox" / "swiftshader";
 
@@ -90,9 +89,9 @@ GLRendererServer::GLRendererServer(const Config &config, const std::shared_ptr<w
       throw std::runtime_error("Software rendering is enabled, but SwiftShader library directory is not found.");
 
     gl_libs = std::vector<emugl::GLLibrary>{
-      {emugl::GLLibrary::Type::EGL, (swiftshader_path / "libEGL.so").string()},
-      {emugl::GLLibrary::Type::GLESv1, (swiftshader_path / "libGLES_CM.so").string()},
-      {emugl::GLLibrary::Type::GLESv2, (swiftshader_path / "libGLESv2.so").string()},
+        {emugl::GLLibrary::Type::EGL, (swiftshader_path / "libEGL.so").string()},
+        {emugl::GLLibrary::Type::GLESv1, (swiftshader_path / "libGLES_CM.so").string()},
+        {emugl::GLLibrary::Type::GLESv2, (swiftshader_path / "libGLESv2.so").string()},
     };
   }
 

@@ -15,11 +15,11 @@
  *
  */
 
-#include "anbox/application/database.h"
 #include "anbox/wm/multi_window_manager.h"
-#include "anbox/platform/base_platform.h"
+#include "anbox/application/database.h"
 #include "anbox/bridge/android_api_stub.h"
 #include "anbox/logger.h"
+#include "anbox/platform/base_platform.h"
 
 #include <algorithm>
 
@@ -33,7 +33,7 @@ MultiWindowManager::MultiWindowManager(const std::weak_ptr<platform::BasePlatfor
 MultiWindowManager::~MultiWindowManager() {}
 
 void MultiWindowManager::apply_window_state_update(const WindowState::List &updated,
-                                        const WindowState::List &removed) {
+                                                   const WindowState::List &removed) {
   std::lock_guard<std::mutex> l(mutex_);
 
   // Base on the update we get from the Android WindowManagerService we will
@@ -55,7 +55,7 @@ void MultiWindowManager::apply_window_state_update(const WindowState::List &upda
     auto w = windows_.find(window.task());
     if (w != windows_.end()) {
       auto t = task_updates.find(window.task());
-      
+
       if (t == task_updates.end())
         task_updates.insert({window.task(), {window}});
       else
@@ -114,7 +114,7 @@ std::shared_ptr<Window> MultiWindowManager::find_window_for_task(const Task::Id 
 }
 
 void MultiWindowManager::resize_task(const Task::Id &task, const anbox::graphics::Rect &rect,
-                                      const std::int32_t &resize_mode) {
+                                     const std::int32_t &resize_mode) {
   android_api_stub_->resize_task(task, rect, resize_mode);
 }
 

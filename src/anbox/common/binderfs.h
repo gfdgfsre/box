@@ -18,8 +18,8 @@
 #ifndef ANBOX_COMMON_BINDERFS_H_
 #define ANBOX_COMMON_BINDERFS_H_
 
-#include <linux/types.h>
 #include <linux/ioctl.h>
+#include <linux/types.h>
 
 #define BINDERFS_MAX_NAME 255
 

@@ -26,12 +26,11 @@ namespace fs = boost::filesystem;
 
 anbox::cmds::Install::Install()
     : CommandWithFlagsAndAction{
-          cli::Name{"install"}, 
+          cli::Name{"install"},
           cli::Usage{"install"},
           cli::Description{"Install specified application in the Android container"}} {
-            
   flag(cli::make_flag(cli::Name{"apk"},
-                      cli::Description{"Path to APK to install"}, 
+                      cli::Description{"Path to APK to install"},
                       apk_));
 
   action([this](const cli::Command::Context&) {

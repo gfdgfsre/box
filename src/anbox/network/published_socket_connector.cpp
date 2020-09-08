@@ -16,9 +16,9 @@
  */
 
 #include "anbox/network/published_socket_connector.h"
+#include "anbox/logger.h"
 #include "anbox/network/connection_context.h"
 #include "anbox/network/socket_helper.h"
-#include "anbox/logger.h"
 
 namespace anbox {
 namespace network {

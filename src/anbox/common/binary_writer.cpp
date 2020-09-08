@@ -27,17 +27,15 @@
 namespace {
 bool is_little_endian() {
   static const std::uint32_t v = 1;
-  return (*reinterpret_cast<const std::uint8_t*>(&v) ==  1);
+  return (*reinterpret_cast<const std::uint8_t *>(&v) == 1);
 }
-}
+}  // namespace
 
 namespace anbox {
 namespace common {
 
 BinaryWriter::BinaryWriter(std::vector<std::uint8_t>::iterator begin,
-                           std::vector<std::uint8_t>::iterator end) :
-  begin_{begin}, current_{begin}, end_{end},
-  byte_order_{is_little_endian() ? Order::Little : Order::Big} {}
+                           std::vector<std::uint8_t>::iterator end) : begin_{begin}, current_{begin}, end_{end}, byte_order_{is_little_endian() ? Order::Little : Order::Big} {}
 
 void BinaryWriter::set_byte_order(Order order) {
   byte_order_ = order;
@@ -49,14 +47,14 @@ void BinaryWriter::write_uint16(std::uint16_t value) {
 
   std::uint16_t v = value;
   switch (byte_order_) {
-  case Order::Big:
-    v = boost::endian::native_to_big(value);
-    break;
-  case Order::Little:
-    v = boost::endian::native_to_little(value);
-    break;
-  default:
-    break;
+    case Order::Big:
+      v = boost::endian::native_to_big(value);
+      break;
+    case Order::Little:
+      v = boost::endian::native_to_little(value);
+      break;
+    default:
+      break;
   }
 
   memcpy(&(*current_), &v, sizeof(std::uint16_t));
@@ -69,14 +67,14 @@ void BinaryWriter::write_uint32(std::uint32_t value) {
 
   std::uint32_t v = value;
   switch (byte_order_) {
-  case Order::Big:
-    v = boost::endian::native_to_big(value);
-    break;
-  case Order::Little:
-    v = boost::endian::native_to_little(value);
-    break;
-  default:
-    break;
+    case Order::Big:
+      v = boost::endian::native_to_big(value);
+      break;
+    case Order::Little:
+      v = boost::endian::native_to_little(value);
+      break;
+    default:
+      break;
   }
   memcpy(&(*current_), &v, sizeof(std::uint32_t));
   current_ += sizeof(v);
@@ -102,5 +100,5 @@ void BinaryWriter::write_string_with_size(const char *s, std::size_t size) {
 std::size_t BinaryWriter::bytes_written() const {
   return current_ - begin_;
 }
-} // namespace common
-} // namespace anbox
+}  // namespace common
+}  // namespace anbox

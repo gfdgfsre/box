@@ -22,8 +22,8 @@
 #pragma GCC diagnostic ignored "-Wswitch-default"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_audio.h>
-#include <SDL2/SDL_syswm.h>
 #include <SDL2/SDL_scancode.h>
+#include <SDL2/SDL_syswm.h>
 #pragma GCC diagnostic pop
 
 #endif

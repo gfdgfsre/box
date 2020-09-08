@@ -23,11 +23,11 @@
 
 #include <system_error>
 
-#include <cerrno>
 #include <fcntl.h>
 #include <linux/loop.h>
 #include <sys/ioctl.h>
 #include <sys/stat.h>
+#include <cerrno>
 
 namespace anbox {
 namespace common {
@@ -35,8 +35,7 @@ std::unique_ptr<BinderDevice> BinderDevice::create(const std::string& path) {
   return std::unique_ptr<BinderDevice>(new BinderDevice(path));
 }
 
-BinderDevice::BinderDevice(const std::string& path) :
-    path_{path} {
+BinderDevice::BinderDevice(const std::string& path) : path_{path} {
   if (::chmod(path.c_str(), 0666) < 0)
     ERROR("Failed to change permissions of binder node %s: %s", path, std::strerror(errno));
 }
@@ -45,5 +44,5 @@ BinderDevice::~BinderDevice() {
   if (::unlink(path_.c_str()) < 0)
     ERROR("Failed to remove binder node %s: %s", path_, std::strerror(errno));
 }
-} // namespace common
-} // namespace anbox
+}  // namespace common
+}  // namespace anbox

@@ -35,39 +35,37 @@ class Manager : public DoNotCopyOrMove {
                       const graphics::Rect &launch_bounds = graphics::Rect::Invalid,
                       const wm::Stack::Id &stack = wm::Stack::Id::Default) = 0;
 
-  virtual core::Property<bool>& ready() = 0;
+  virtual core::Property<bool> &ready() = 0;
 };
 
 class RestrictedManager : public Manager {
  public:
   RestrictedManager(
       const std::shared_ptr<Manager> &other,
-      const wm::Stack::Id &launch_stack = wm::Stack::Id::Invalid) :
-    other_(other),
-    launch_stack_(launch_stack) {}
+      const wm::Stack::Id &launch_stack = wm::Stack::Id::Invalid) : other_(other),
+                                                                    launch_stack_(launch_stack) {}
 
   virtual ~RestrictedManager() {}
 
   void launch(const android::Intent &intent,
               const graphics::Rect &launch_bounds = graphics::Rect::Invalid,
               const wm::Stack::Id &stack = wm::Stack::Id::Default) override {
-
     auto selected_stack = stack;
     // If we have a static launch stack set use that one instead of
     // the one the caller gave us.
     if (launch_stack_ != wm::Stack::Id::Invalid)
       selected_stack = launch_stack_;
-    
+
     other_->launch(intent, launch_bounds, selected_stack);
   }
 
-  core::Property<bool>& ready() override { return other_->ready(); }
+  core::Property<bool> &ready() override { return other_->ready(); }
 
  private:
   std::shared_ptr<Manager> other_;
   wm::Stack::Id launch_stack_;
 };
-} // namespace application
-} // namespace anbox
+}  // namespace application
+}  // namespace anbox
 
 #endif

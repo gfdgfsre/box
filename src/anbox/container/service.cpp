@@ -16,7 +16,6 @@
  */
 
 #include "anbox/container/service.h"
-#include "anbox/system_configuration.h"
 #include "anbox/container/lxc_container.h"
 #include "anbox/container/management_api_message_processor.h"
 #include "anbox/container/management_api_skeleton.h"
@@ -27,6 +26,7 @@
 #include "anbox/qemu/null_message_processor.h"
 #include "anbox/rpc/channel.h"
 #include "anbox/rpc/pending_call_cache.h"
+#include "anbox/system_configuration.h"
 
 #include <boost/filesystem.hpp>
 
@@ -42,7 +42,7 @@ std::shared_ptr<Service> Service::create(const std::shared_ptr<Runtime> &rt, con
       [wp](std::shared_ptr<boost::asio::local::stream_protocol::socket> const &socket) {
         if (auto service = wp.lock())
           service->new_client(socket);
-  });
+      });
 
   const auto container_socket_path = SystemConfiguration::instance().container_socket_path();
   const auto socket_parent_path = fs::path(container_socket_path).parent_path();
@@ -73,7 +73,7 @@ Service::~Service() {
 int Service::next_id() { return next_connection_id_++; }
 
 void Service::new_client(std::shared_ptr<boost::asio::local::stream_protocol::socket> const
-        &socket) {
+                             &socket) {
   if (connections_->size() >= 1) {
     socket->close();
     return;

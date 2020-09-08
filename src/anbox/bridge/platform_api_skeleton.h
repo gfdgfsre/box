@@ -41,7 +41,7 @@ class ApplicationListUpdateEvent;
 }  // namespace protobuf
 namespace platform {
 class BasePlatform;
-} // namespace platform
+}  // namespace platform
 namespace rpc {
 class PendingCallCache;
 }  // namespace rpc
@@ -70,7 +70,7 @@ class PlatformApiSkeleton {
 
   void handle_boot_finished_event(
       const anbox::protobuf::bridge::BootFinishedEvent &event);
-  
+
   void handle_window_state_update_event(
       const anbox::protobuf::bridge::WindowStateUpdateEvent &event);
 

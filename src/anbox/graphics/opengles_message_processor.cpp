@@ -43,7 +43,7 @@ OpenGlesMessageProcessor::OpenGlesMessageProcessor(
   if (err) ERROR("%s", err.message());
 
   render_thread_.reset(RenderThread::create(renderer, stream_.get(), std::ref(global_lock)));
-  if (!render_thread_->start()){
+  if (!render_thread_->start()) {
     BOOST_THROW_EXCEPTION(std::runtime_error("Failed to start renderer thread"));
   }
 }

@@ -18,29 +18,29 @@
 #ifndef ANBOX_AUDIO_SERVER_H_
 #define ANBOX_AUDIO_SERVER_H_
 
-#include "anbox/runtime.h"
 #include "anbox/audio/client_info.h"
-#include "anbox/network/socket_messenger.h"
 #include "anbox/network/socket_connection.h"
+#include "anbox/network/socket_messenger.h"
 #include "anbox/platform/base_platform.h"
+#include "anbox/runtime.h"
 
 #include <atomic>
 
 namespace anbox {
 namespace network {
 class PublishedSocketConnector;
-} // namespace network
+}  // namespace network
 namespace audio {
 class Server {
  public:
-  Server(const std::shared_ptr<Runtime>& rt, const std::shared_ptr<platform::BasePlatform> &platform);
+  Server(const std::shared_ptr<Runtime>& rt, const std::shared_ptr<platform::BasePlatform>& platform);
   ~Server();
 
   std::string socket_file() const { return socket_file_; }
 
  private:
   void create_connection_for(std::shared_ptr<boost::asio::basic_stream_socket<
-                             boost::asio::local::stream_protocol>> const& socket);
+                                 boost::asio::local::stream_protocol>> const& socket);
 
   int next_id();
 
@@ -50,7 +50,7 @@ class Server {
   std::shared_ptr<network::Connections<network::SocketConnection>> const connections_;
   std::atomic<int> next_id_;
 };
-} // namespace audio
-} // namespace anbox
+}  // namespace audio
+}  // namespace anbox
 
 #endif

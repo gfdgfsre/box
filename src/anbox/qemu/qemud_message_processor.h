@@ -44,7 +44,7 @@ class QemudMessageProcessor : public network::MessageProcessor {
 
   std::vector<std::uint8_t> buffer_;
 };
-}  // namespace graphics
+}  // namespace qemu
 }  // namespace anbox
 
 #endif

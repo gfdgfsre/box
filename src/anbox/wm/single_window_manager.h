@@ -27,10 +27,10 @@
 namespace anbox {
 namespace application {
 class Database;
-} // namespace application
+}  // namespace application
 namespace platform {
 class BasePlatform;
-} // namespace platform
+}  // namespace platform
 namespace wm {
 class Window;
 class SingleWindowManager : public Manager {

@@ -48,7 +48,7 @@ class Bus : public DoNotCopyOrMove {
  private:
   void worker_main();
 
-  sd_bus *bus_ = nullptr;
+  sd_bus* bus_ = nullptr;
   std::thread worker_thread_;
   std::atomic_bool running_{false};
 };

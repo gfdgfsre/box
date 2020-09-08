@@ -48,8 +48,8 @@ class AudioSink : public audio::Sink {
   graphics::Buffer read_buffer_;
   size_t read_buffer_left_ = 0;
 };
-} // namespace sdl
-} // namespace platform
-} // namespace anbox
+}  // namespace sdl
+}  // namespace platform
+}  // namespace anbox
 
 #endif

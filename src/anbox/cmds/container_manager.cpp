@@ -16,18 +16,18 @@
  */
 
 #include "anbox/cmds/container_manager.h"
-#include "anbox/container/service.h"
 #include "anbox/common/loop_device_allocator.h"
+#include "anbox/container/service.h"
 #include "anbox/logger.h"
 #include "anbox/runtime.h"
 #include "anbox/system_configuration.h"
 
-#include "core/posix/signal.h"
 #include "core/posix/exec.h"
+#include "core/posix/signal.h"
 
-#include <sys/mount.h>
-#include <linux/loop.h>
 #include <fcntl.h>
+#include <linux/loop.h>
+#include <sys/mount.h>
 
 namespace fs = boost::filesystem;
 
@@ -39,7 +39,6 @@ anbox::cmds::ContainerManager::ContainerManager()
     : CommandWithFlagsAndAction{
           cli::Name{"container-manager"}, cli::Usage{"container-manager"},
           cli::Description{"Start the container manager service"}, true} {
-
   flag(cli::make_flag(cli::Name{"android-image"},
                       cli::Description{"Path to the Android rootfs image file if not stored in the data path"},
                       android_img_path_));
@@ -92,15 +91,15 @@ anbox::cmds::ContainerManager::ContainerManager()
         trap->stop();
       });
 
-      if (!data_path_.empty()){
+      if (!data_path_.empty()) {
         SystemConfiguration::instance().set_data_path(data_path_);
       }
 
-      if (!fs::exists(data_path_)){
+      if (!fs::exists(data_path_)) {
         fs::create_directories(data_path_);
       }
 
-      if (!setup_mounts()){
+      if (!setup_mounts()) {
         return EXIT_FAILURE;
       }
 
@@ -111,7 +110,7 @@ anbox::cmds::ContainerManager::ContainerManager()
       config.container_network_address = container_network_address_;
       config.container_network_gateway = container_network_gateway_;
 
-      if (container_network_dns_servers_.length() > 0){
+      if (container_network_dns_servers_.length() > 0) {
         config.container_network_dns_servers = utils::string_split(container_network_dns_servers_, ',');
       }
 
@@ -122,7 +121,7 @@ anbox::cmds::ContainerManager::ContainerManager()
       rt->stop();
 
       return EXIT_SUCCESS;
-    } catch (std::exception &err) {
+    } catch (std::exception& err) {
       ERROR("%s", err.what());
       return EXIT_FAILURE;
     }
@@ -133,7 +132,7 @@ anbox::cmds::ContainerManager::~ContainerManager() {}
 
 bool anbox::cmds::ContainerManager::setup_mounts() {
   fs::path android_img_path = android_img_path_;
-  if (android_img_path.empty()){
+  if (android_img_path.empty()) {
     android_img_path = SystemConfiguration::instance().data_dir() / "android.img";
   }
 
@@ -148,7 +147,7 @@ bool anbox::cmds::ContainerManager::setup_mounts() {
     return false;
   }
 
-  if (!fs::exists(android_rootfs_dir)){
+  if (!fs::exists(android_rootfs_dir)) {
     fs::create_directory(android_rootfs_dir);
   }
 
@@ -157,8 +156,8 @@ bool anbox::cmds::ContainerManager::setup_mounts() {
   // is available we do the mount instead via squashfuse which will
   // work entirely in userspace.
   if (!fs::exists("/dev/loop-control") && !enable_squashfuse_) {
-      WARNING("/dev/loop-control not found. Falling back to squashfuse.");
-      enable_squashfuse_ = true;
+    WARNING("/dev/loop-control not found. Falling back to squashfuse.");
+    enable_squashfuse_ = true;
   }
   if (!enable_squashfuse_) {
     std::shared_ptr<common::LoopDevice> loop_device;
@@ -186,11 +185,13 @@ bool anbox::cmds::ContainerManager::setup_mounts() {
     mounts_.push_back(m);
   } else if (fs::exists("/dev/fuse") && !utils::find_program_on_path("squashfuse").empty()) {
     std::vector<std::string> args = {
-      "-t", "fuse.squashfuse",
-      // Allow other users than root to access the rootfs
-      "-o", "allow_other",
-      android_img_path.string(),
-      android_rootfs_dir,
+        "-t",
+        "fuse.squashfuse",
+        // Allow other users than root to access the rootfs
+        "-o",
+        "allow_other",
+        android_img_path.string(),
+        android_rootfs_dir,
     };
 
     // Easiest is here to go with the standard mount program as that
@@ -225,8 +226,7 @@ bool anbox::cmds::ContainerManager::setup_mounts() {
     final_android_rootfs_dir = SystemConfiguration::instance().combined_rootfs_dir();
   }
 
-
-  for (const auto &dir_name : std::vector<std::string>{"cache", "data"}) {
+  for (const auto& dir_name : std::vector<std::string>{"cache", "data"}) {
     auto target_dir_path = fs::path(final_android_rootfs_dir) / dir_name;
     auto src_dir_path = SystemConfiguration::instance().data_dir() / dir_name;
 

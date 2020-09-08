@@ -32,7 +32,9 @@ namespace anbox {
 namespace graphics {
 namespace emugl {
 struct GLLibrary {
-  enum class Type { EGL, GLESv1, GLESv2 };
+  enum class Type { EGL,
+                    GLESv1,
+                    GLESv2 };
   Type type;
   boost::filesystem::path path;
 };

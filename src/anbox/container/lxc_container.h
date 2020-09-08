@@ -29,7 +29,7 @@
 namespace anbox {
 namespace common {
 class BinderDevice;
-} // namespace common
+}  // namespace common
 namespace container {
 class LxcContainer : public Container {
  public:
@@ -49,8 +49,8 @@ class LxcContainer : public Container {
   void set_config_item(const std::string &key, const std::string &value);
   void setup_id_map();
   void setup_network();
-  void add_device(const std::string& device, const DeviceSpecification& spec);
-  bool create_binder_devices(unsigned int device_count, std::vector<std::unique_ptr<common::BinderDevice>>& devices);
+  void add_device(const std::string &device, const DeviceSpecification &spec);
+  bool create_binder_devices(unsigned int device_count, std::vector<std::unique_ptr<common::BinderDevice>> &devices);
 
   State state_;
   lxc_container *container_;

@@ -37,7 +37,7 @@ class BinderDevice {
 
   const std::string path_;
 };
-} // namespace common
-} // namespace anbox
+}  // namespace common
+}  // namespace anbox
 
 #endif

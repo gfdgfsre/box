@@ -40,7 +40,7 @@ class LoopDevice {
   Fd fd_;
   boost::filesystem::path path_;
 };
-} // namespace common
-} // namespace anbox
+}  // namespace common
+}  // namespace anbox
 
 #endif

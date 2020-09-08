@@ -30,8 +30,7 @@ LocalSocketMessenger::LocalSocketMessenger(
 
 LocalSocketMessenger::LocalSocketMessenger(const std::string &path,
                                            const std::shared_ptr<Runtime> &rt)
-    : socket_(std::make_shared<boost::asio::local::stream_protocol::socket>( rt->service())) {
-
+    : socket_(std::make_shared<boost::asio::local::stream_protocol::socket>(rt->service())) {
   boost::system::error_code err;
   socket_->connect(boost::asio::local::stream_protocol::endpoint(path), err);
   if (err) {

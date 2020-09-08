@@ -34,7 +34,7 @@ class SensorsMessageProcessor : public QemudMessageProcessor {
  private:
   void list_sensors();
 };
-}  // namespace graphics
+}  // namespace qemu
 }  // namespace anbox
 
 #endif

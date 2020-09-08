@@ -23,7 +23,7 @@
 
 namespace {
 static constexpr const long header_size{4};
-} // namespace
+}  // namespace
 
 namespace anbox {
 namespace qemu {

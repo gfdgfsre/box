@@ -16,9 +16,9 @@
  */
 
 #include "anbox/graphics/single_window_composer_strategy.h"
-#include "anbox/wm/manager.h"
-#include "anbox/utils.h"
 #include "anbox/logger.h"
+#include "anbox/utils.h"
+#include "anbox/wm/manager.h"
 
 namespace {
 const constexpr char *sprite_name{"Sprite"};

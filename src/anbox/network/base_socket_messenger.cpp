@@ -33,7 +33,7 @@ namespace ba = boost::asio;
 namespace {
 /// Buffers need to be big enough to support messages
 unsigned int const serialization_buffer_size = 2048;
-}
+}  // namespace
 
 namespace anbox {
 namespace network {

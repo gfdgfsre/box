@@ -290,6 +290,6 @@ const std::array<SDL_Scancode, 249> KeycodeConverter::code_map = {{
                              */
     SDL_SCANCODE_UNKNOWN         /*  KEY_MICMUTE     248 Mute / unmute the microphone */
 }};
-} // namespace sdl
-} // namespace platform
-} // namespace anbox
+}  // namespace sdl
+}  // namespace platform
+}  // namespace anbox

@@ -34,7 +34,7 @@ class BootPropertiesMessageProcessor : public QemudMessageProcessor {
  private:
   void list_properties();
 };
-}  // namespace graphics
+}  // namespace qemu
 }  // namespace anbox
 
 #endif

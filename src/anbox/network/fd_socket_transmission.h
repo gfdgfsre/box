@@ -42,6 +42,6 @@ bool socket_error_is_transient(int error_code);
 void send_fds(Fd const& socket, std::vector<Fd> const& fd);
 void receive_data(Fd const& socket, void* buffer, size_t bytes_requested,
                   std::vector<Fd>& fds);
-}
+}  // namespace anbox
 
 #endif

@@ -39,7 +39,7 @@ class ConnectionContext {
   std::function<void()> const connect_handler;
   Connector const* const connector;
 };
-}  // namespace anbox
 }  // namespace network
+}  // namespace anbox
 
 #endif

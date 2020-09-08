@@ -21,22 +21,22 @@ namespace anbox {
 namespace wm {
 std::ostream &operator<<(std::ostream &out, const Stack::Id &stack) {
   switch (stack) {
-  case anbox::wm::Stack::Id::Default:
-    out << "default";
-    break;
-  case anbox::wm::Stack::Id::Fullscreen:
-    out << "fullscreen";
-    break;
-  case anbox::wm::Stack::Id::Freeform:
-    out << "freeform";
-    break;
-  default:
-    break;
+    case anbox::wm::Stack::Id::Default:
+      out << "default";
+      break;
+    case anbox::wm::Stack::Id::Fullscreen:
+      out << "fullscreen";
+      break;
+    case anbox::wm::Stack::Id::Freeform:
+      out << "freeform";
+      break;
+    default:
+      break;
   }
   return out;
 }
 
-std::istream& operator>>(std::istream& in, Stack::Id &stack) {
+std::istream &operator>>(std::istream &in, Stack::Id &stack) {
   std::string s;
   in >> s;
   if (s == "default")

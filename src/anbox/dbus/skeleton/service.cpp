@@ -15,19 +15,19 @@
  *
  */
 
-#include "anbox/dbus/interface.h"
 #include "anbox/dbus/skeleton/service.h"
+#include "anbox/dbus/interface.h"
 #include "anbox/dbus/skeleton/application_manager.h"
 #include "anbox/logger.h"
 
 namespace anbox {
 namespace dbus {
 namespace skeleton {
-std::shared_ptr<Service> Service::create_for_bus(const BusPtr& bus, const std::shared_ptr<anbox::application::Manager> &impl) {
+std::shared_ptr<Service> Service::create_for_bus(const BusPtr& bus, const std::shared_ptr<anbox::application::Manager>& impl) {
   return std::shared_ptr<Service>(new Service(bus, impl));
 }
 
-Service::Service(const BusPtr& bus, const std::shared_ptr<anbox::application::Manager> &impl)
+Service::Service(const BusPtr& bus, const std::shared_ptr<anbox::application::Manager>& impl)
     : bus_{bus} {
   if (!bus_)
     throw std::invalid_argument("Missing bus object");

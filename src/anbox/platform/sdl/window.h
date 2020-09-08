@@ -18,8 +18,8 @@
 #ifndef ANBOX_PLATFORM_SDL_WINDOW_H_
 #define ANBOX_PLATFORM_SDL_WINDOW_H_
 
-#include "anbox/wm/window.h"
 #include "anbox/platform/sdl/sdl_wrapper.h"
+#include "anbox/wm/window.h"
 
 #include <EGL/egl.h>
 
@@ -74,8 +74,8 @@ class Window : public std::enable_shared_from_this<Window>, public wm::Window {
   EGLNativeWindowType native_window_;
   SDL_Window *window_;
 };
-} // namespace sdl
-} // namespace platform
-} // namespace anbox
+}  // namespace sdl
+}  // namespace platform
+}  // namespace anbox
 
 #endif

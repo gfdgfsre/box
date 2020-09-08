@@ -18,11 +18,11 @@
 #ifndef ANBOX_PLATFORM_SDL_PLATFORM_H_
 #define ANBOX_PLATFORM_SDL_PLATFORM_H_
 
-#include "anbox/platform/sdl/window.h"
-#include "anbox/platform/sdl/sdl_wrapper.h"
-#include "anbox/platform/base_platform.h"
 #include "anbox/graphics/emugl/DisplayManager.h"
 #include "anbox/input/device.h"
+#include "anbox/platform/base_platform.h"
+#include "anbox/platform/sdl/sdl_wrapper.h"
+#include "anbox/platform/sdl/window.h"
 
 #include <map>
 #include <thread>
@@ -37,13 +37,13 @@ class Manager;
 
 namespace wm {
 class Manager;
-} // namespace wm
+}  // namespace wm
 
 namespace platform {
 namespace sdl {
 class Platform : public std::enable_shared_from_this<Platform>,
-                       public platform::BasePlatform,
-                       public Window::Observer {
+                 public platform::BasePlatform,
+                 public Window::Observer {
  public:
   Platform(const std::shared_ptr<input::Manager> &input_manager,
            const Configuration &config);
@@ -112,8 +112,8 @@ class Platform : public std::enable_shared_from_this<Platform>,
   void push_finger_up(int finger_id, std::vector<input::Event> &touch_events);
   void push_finger_motion(int x, int y, int finger_id, std::vector<input::Event> &touch_events);
 };
-} // namespace sdl
-} // namespace platform
-} // namespace anbox
+}  // namespace sdl
+}  // namespace platform
+}  // namespace anbox
 
 #endif

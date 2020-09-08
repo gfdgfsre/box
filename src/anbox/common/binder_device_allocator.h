@@ -28,7 +28,7 @@ class BinderDeviceAllocator {
   static bool is_supported();
   static std::unique_ptr<BinderDevice> new_device();
 };
-} // namespace common
-} // namespace anbox
+}  // namespace common
+}  // namespace anbox
 
 #endif

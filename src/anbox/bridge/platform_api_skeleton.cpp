@@ -17,14 +17,14 @@
 
 #include "anbox/bridge/platform_api_skeleton.h"
 #include "anbox/application/database.h"
+#include "anbox/logger.h"
 #include "anbox/platform/base_platform.h"
 #include "anbox/wm/manager.h"
 #include "anbox/wm/window_state.h"
-#include "anbox/logger.h"
 
 #if defined(Status)
 #undef Status
-#endif // defined(Status)
+#endif  // defined(Status)
 
 #include "anbox_bridge.pb.h"
 
@@ -45,7 +45,6 @@ PlatformApiSkeleton::PlatformApiSkeleton(
       app_db_(app_db) {}
 
 PlatformApiSkeleton::~PlatformApiSkeleton() {}
-
 
 void PlatformApiSkeleton::set_clipboard_data(anbox::protobuf::bridge::ClipboardData const *request,
                                              anbox::protobuf::rpc::Void *response,
@@ -70,15 +69,15 @@ void PlatformApiSkeleton::get_clipboard_data(anbox::protobuf::rpc::Void const *r
   done->Run();
 }
 
-void PlatformApiSkeleton::handle_boot_finished_event(const anbox::protobuf::bridge::BootFinishedEvent&) {
+void PlatformApiSkeleton::handle_boot_finished_event(const anbox::protobuf::bridge::BootFinishedEvent &) {
   if (boot_finished_handler_)
     boot_finished_handler_();
 }
 
 void PlatformApiSkeleton::handle_window_state_update_event(const anbox::protobuf::bridge::WindowStateUpdateEvent &event) {
   auto convert_window_state = [](
-      const ::anbox::protobuf::bridge::WindowStateUpdateEvent_WindowState
-          &window) {
+                                  const ::anbox::protobuf::bridge::WindowStateUpdateEvent_WindowState
+                                      &window) {
     return wm::WindowState(
         wm::Display::Id(window.display_id()), window.has_surface(),
         graphics::Rect(window.frame_left(), window.frame_top(),

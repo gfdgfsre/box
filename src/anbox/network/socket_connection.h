@@ -59,7 +59,7 @@ class SocketConnection {
   std::array<std::uint8_t, 8192> buffer_;
   std::string name_;
 };
-}  // namespace anbox
 }  // namespace network
+}  // namespace anbox
 
 #endif

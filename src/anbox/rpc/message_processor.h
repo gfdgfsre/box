@@ -35,7 +35,6 @@ class Invocation;
 }  // namespace protobuf
 namespace rpc {
 class Invocation {
-  
  public:
   Invocation(anbox::protobuf::rpc::Invocation const& invocation)
       : invocation_(invocation) {}

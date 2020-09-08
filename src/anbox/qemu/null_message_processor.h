@@ -29,7 +29,7 @@ class NullMessageProcessor : public network::MessageProcessor {
 
   bool process_data(const std::vector<std::uint8_t> &data) override;
 };
-}  // namespace graphics
+}  // namespace qemu
 }  // namespace anbox
 
 #endif

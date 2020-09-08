@@ -22,10 +22,10 @@
 #include "anbox/graphics/emugl/TimeUtils.h"
 #include "anbox/logger.h"
 
-#include "thirdparty/android-emugl/shared/OpenglCodecCommon/ChecksumCalculatorThreadInfo.h"
 #include "thirdparty/android-emugl/host/include/OpenGLESDispatch/EGLDispatch.h"
 #include "thirdparty/android-emugl/host/include/OpenGLESDispatch/GLESv1Dispatch.h"
 #include "thirdparty/android-emugl/host/include/OpenGLESDispatch/GLESv2Dispatch.h"
+#include "thirdparty/android-emugl/shared/OpenglCodecCommon/ChecksumCalculatorThreadInfo.h"
 
 #define STREAM_BUFFER_SIZE 4 * 1024 * 1024
 
@@ -84,7 +84,6 @@ intptr_t RenderThread::main() {
       }
 
     } while (progress);
-
   }
 
   threadInfo.m_gl2Dec.freeShader();

@@ -57,7 +57,7 @@ class Channel {
   protobuf::rpc::Invocation invocation_for(
       std::string const &method_name,
       google::protobuf::MessageLite const *request);
-  
+
   void send_message(const std::uint8_t &type, google::protobuf::MessageLite const &message);
 
   std::uint32_t next_id();

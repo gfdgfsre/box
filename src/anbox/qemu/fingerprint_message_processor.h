@@ -34,7 +34,7 @@ class FingerprintMessageProcessor : public QemudMessageProcessor {
  private:
   void listen();
 };
-}  // namespace graphics
+}  // namespace qemu
 }  // namespace anbox
 
 #endif

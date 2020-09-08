@@ -14,8 +14,8 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-#include "anbox/platform/sdlmir_display_connection.h"
 #include "anbox/logger.h"
+#include "anbox/platform/sdlmir_display_connection.h"
 
 #include <boost/throw_exception.hpp>
 
@@ -40,7 +40,7 @@ static const MirDisplayOutput *find_active_output(
 
   return output;
 }
-}
+}  // namespace
 
 namespace anbox {
 namespace sdl {

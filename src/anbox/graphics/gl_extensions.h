@@ -18,8 +18,8 @@
 #ifndef ANBOX_GRAPHICS_GL_EXTENSIONS_H_
 #define ANBOX_GRAPHICS_GL_EXTENSIONS_H_
 
-#include <stdexcept>
 #include <string.h>
+#include <stdexcept>
 
 namespace anbox {
 namespace graphics {
@@ -39,7 +39,7 @@ class GLExtensions {
     while ((ext_ptr = strstr(ext_ptr, ext)) != nullptr) {
       if (ext_ptr[len] == ' ' || ext_ptr[len] == '\0')
         break;
-      
+
       ext_ptr += len;
     }
 

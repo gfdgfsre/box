@@ -35,7 +35,7 @@ class MessageSender {
   MessageSender(MessageSender const&) = delete;
   MessageSender& operator=(MessageSender const&) = delete;
 };
-}  // namespace anbox
 }  // namespace network
+}  // namespace anbox
 
 #endif

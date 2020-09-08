@@ -18,17 +18,17 @@
 #include <signal.h>
 #include <sys/prctl.h>
 
-#include "anbox/system_configuration.h"
 #include "anbox/daemon.h"
 #include "anbox/logger.h"
+#include "anbox/system_configuration.h"
 
+#include "anbox/cmds/check_features.h"
 #include "anbox/cmds/container_manager.h"
+#include "anbox/cmds/launch.h"
 #include "anbox/cmds/session_manager.h"
 #include "anbox/cmds/system_info.h"
-#include "anbox/cmds/launch.h"
 #include "anbox/cmds/version.h"
 #include "anbox/cmds/wait_ready.h"
-#include "anbox/cmds/check_features.h"
 
 #include <boost/filesystem.hpp>
 
@@ -39,12 +39,12 @@ Daemon::Daemon()
     : cmd{cli::Name{"anbox"}, cli::Usage{"anbox"},
           cli::Description{"The Android in a Box runtime"}} {
   cmd.command(std::make_shared<cmds::Version>())
-     .command(std::make_shared<cmds::SessionManager>())
-     .command(std::make_shared<cmds::Launch>())
-     .command(std::make_shared<cmds::ContainerManager>())
-     .command(std::make_shared<cmds::SystemInfo>())
-     .command(std::make_shared<cmds::WaitReady>())
-     .command(std::make_shared<cmds::CheckFeatures>());
+      .command(std::make_shared<cmds::SessionManager>())
+      .command(std::make_shared<cmds::Launch>())
+      .command(std::make_shared<cmds::ContainerManager>())
+      .command(std::make_shared<cmds::SystemInfo>())
+      .command(std::make_shared<cmds::WaitReady>())
+      .command(std::make_shared<cmds::CheckFeatures>());
 
   Log().Init(anbox::Logger::Severity::kWarning);
 

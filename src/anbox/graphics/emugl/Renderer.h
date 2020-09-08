@@ -18,10 +18,10 @@
 
 #include "anbox/graphics/emugl/ColorBuffer.h"
 #include "anbox/graphics/emugl/RenderContext.h"
+#include "anbox/graphics/emugl/Renderable.h"
 #include "anbox/graphics/emugl/RendererConfig.h"
 #include "anbox/graphics/emugl/TextureDraw.h"
 #include "anbox/graphics/emugl/WindowSurface.h"
-#include "anbox/graphics/emugl/Renderable.h"
 
 #include "anbox/graphics/primitives.h"
 #include "anbox/graphics/program_family.h"

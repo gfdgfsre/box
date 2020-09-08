@@ -23,12 +23,12 @@
 #include "anbox/graphics/layer_composer.h"
 #include "anbox/logger.h"
 
-#include "thirdparty/android-emugl/shared/OpenglCodecCommon/ChecksumCalculatorThreadInfo.h"
 #include "thirdparty/android-emugl/host/include/OpenGLESDispatch/EGLDispatch.h"
+#include "thirdparty/android-emugl/shared/OpenglCodecCommon/ChecksumCalculatorThreadInfo.h"
 
 #include <map>
-#include <string>
 #include <sstream>
+#include <string>
 
 static const GLint rendererVersion = 1;
 static std::shared_ptr<anbox::graphics::LayerComposer> composer;
@@ -55,10 +55,10 @@ static EGLint rcGetEGLVersion(EGLint *major, EGLint *minor) {
   return EGL_TRUE;
 }
 
-static std::string filter_extensions(const std::string& extensions, const std::vector<std::string>& whitelist) {
+static std::string filter_extensions(const std::string &extensions, const std::vector<std::string> &whitelist) {
   std::stringstream approved_extensions;
   auto extension_list = anbox::utils::string_split(extensions, ' ');
-  for (const auto& ext : extension_list) {
+  for (const auto &ext : extension_list) {
     if (std::find(whitelist.begin(), whitelist.end(), ext) == whitelist.end())
       continue;
 
@@ -70,7 +70,7 @@ static std::string filter_extensions(const std::string& extensions, const std::v
   return approved_extensions.str();
 }
 
-static EGLint rcQueryEGLString(EGLenum name, void* buffer, EGLint bufferSize) {
+static EGLint rcQueryEGLString(EGLenum name, void *buffer, EGLint bufferSize) {
   if (!renderer)
     return 0;
 
@@ -82,8 +82,8 @@ static EGLint rcQueryEGLString(EGLenum name, void* buffer, EGLint bufferSize) {
     // We need to drop a few extensions from the list reported by the driver
     // as not all are well enough support by our EGL implementation.
     std::vector<std::string> whitelisted_extensions = {
-      "EGL_KHR_image_base",
-      "EGL_KHR_gl_texture_2D_image",
+        "EGL_KHR_image_base",
+        "EGL_KHR_gl_texture_2D_image",
     };
     result = filter_extensions(result, whitelisted_extensions);
   }
@@ -93,20 +93,20 @@ static EGLint rcQueryEGLString(EGLenum name, void* buffer, EGLint bufferSize) {
     return -len;
   }
 
-  strcpy(static_cast<char*>(buffer), result.c_str());
+  strcpy(static_cast<char *>(buffer), result.c_str());
   return len;
 }
 
-static EGLint rcGetGLString(EGLenum name, void* buffer, EGLint bufferSize) {
-  RenderThreadInfo* tInfo = RenderThreadInfo::get();
+static EGLint rcGetGLString(EGLenum name, void *buffer, EGLint bufferSize) {
+  RenderThreadInfo *tInfo = RenderThreadInfo::get();
   std::string result;
 
   if (tInfo && tInfo->currContext) {
-    const char* str = nullptr;
+    const char *str = nullptr;
     if (tInfo->currContext->isGL2())
-      str = reinterpret_cast<const char*>(s_gles2.glGetString(name));
+      str = reinterpret_cast<const char *>(s_gles2.glGetString(name));
     else
-      str = reinterpret_cast<const char*>(s_gles1.glGetString(name));
+      str = reinterpret_cast<const char *>(s_gles1.glGetString(name));
 
     if (str)
       result += str;
@@ -124,23 +124,23 @@ static EGLint rcGetGLString(EGLenum name, void* buffer, EGLint bufferSize) {
     // We need to drop a few extensions from the list reported by the driver
     // as not all are well enough support by our GL implementation.
     std::vector<std::string> whitelisted_extensions = {
-      "GL_OES_EGL_image",
-      "GL_OES_EGL_image_external",
-      "GL_OES_depth24",
-      "GL_OES_depth32",
-      "GL_OES_element_index_uint",
-      "GL_OES_texture_float",
-      "GL_OES_texture_float_linear",
-      "GL_OES_compressed_paletted_texture",
-      "GL_OES_compressed_ETC1_RGB8_texture",
-      "GL_OES_depth_texture",
-      "GL_OES_texture_half_float",
-      "GL_OES_texture_half_float_linear",
-      "GL_OES_packed_depth_stencil",
-      "GL_OES_vertex_half_float",
-      "GL_OES_standard_derivatives",
-      "GL_OES_texture_npot",
-      "GL_OES_rgb8_rgba8",
+        "GL_OES_EGL_image",
+        "GL_OES_EGL_image_external",
+        "GL_OES_depth24",
+        "GL_OES_depth32",
+        "GL_OES_element_index_uint",
+        "GL_OES_texture_float",
+        "GL_OES_texture_float_linear",
+        "GL_OES_compressed_paletted_texture",
+        "GL_OES_compressed_ETC1_RGB8_texture",
+        "GL_OES_depth_texture",
+        "GL_OES_texture_half_float",
+        "GL_OES_texture_half_float_linear",
+        "GL_OES_packed_depth_stencil",
+        "GL_OES_vertex_half_float",
+        "GL_OES_standard_derivatives",
+        "GL_OES_texture_npot",
+        "GL_OES_rgb8_rgba8",
     };
 
     result = filter_extensions(result, whitelisted_extensions);
@@ -151,7 +151,7 @@ static EGLint rcGetGLString(EGLenum name, void* buffer, EGLint bufferSize) {
   if (!buffer || nextBufferSize > bufferSize)
     return -nextBufferSize;
 
-  snprintf(static_cast<char*>(buffer), nextBufferSize, "%s", result.c_str());
+  snprintf(static_cast<char *>(buffer), nextBufferSize, "%s", result.c_str());
   return nextBufferSize;
 }
 
@@ -324,7 +324,7 @@ static void rcBindRenderbuffer(uint32_t colorBuffer) {
   renderer->bindColorBufferToRenderbuffer(colorBuffer);
 }
 
-static EGLint rcColorBufferCacheFlush(uint32_t, EGLint, 
+static EGLint rcColorBufferCacheFlush(uint32_t, EGLint,
                                       int) {
   // XXX: TBD - should be implemented
   return 0;

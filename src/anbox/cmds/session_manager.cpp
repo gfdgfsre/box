@@ -21,8 +21,8 @@
 
 #include "core/posix/signal.h"
 
-#include "anbox/application/launcher_storage.h"
 #include "anbox/application/database.h"
+#include "anbox/application/launcher_storage.h"
 #include "anbox/audio/server.h"
 #include "anbox/bridge/android_api_stub.h"
 #include "anbox/bridge/platform_api_skeleton.h"
@@ -31,18 +31,18 @@
 
 #include "anbox/cmds/session_manager.h"
 #include "anbox/common/dispatcher.h"
-#include "anbox/system_configuration.h"
 #include "anbox/container/client.h"
 #include "anbox/dbus/bus.h"
 #include "anbox/dbus/skeleton/service.h"
 #include "anbox/input/manager.h"
 #include "anbox/logger.h"
 #include "anbox/network/published_socket_connector.h"
+#include "anbox/platform/base_platform.h"
 #include "anbox/qemu/pipe_connection_creator.h"
 #include "anbox/rpc/channel.h"
 #include "anbox/rpc/connection_creator.h"
 #include "anbox/runtime.h"
-#include "anbox/platform/base_platform.h"
+#include "anbox/system_configuration.h"
 #include "anbox/wm/multi_window_manager.h"
 #include "anbox/wm/single_window_manager.h"
 
@@ -70,11 +70,10 @@ class NullConnectionCreator : public anbox::network::ConnectionCreator<
     socket->close();
   }
 };
-}
+}  // namespace
 
 void anbox::cmds::SessionManager::launch_appmgr_if_needed(
-  const std::shared_ptr<bridge::AndroidApiStub> &android_api_stub) {
-
+    const std::shared_ptr<bridge::AndroidApiStub> &android_api_stub) {
   if (!single_window_)
     return;
 
@@ -159,17 +158,17 @@ anbox::cmds::SessionManager::SessionManager()
     auto android_api_stub = std::make_shared<bridge::AndroidApiStub>();
 
     auto display_frame = graphics::Rect::Invalid;
-    if (single_window_){
+    if (single_window_) {
       display_frame = window_size_;
     }
 
     const auto should_enable_touch_emulation = utils::get_env_value("ANBOX_ENABLE_TOUCH_EMULATION", "true");
-    if (should_enable_touch_emulation == "false" || no_touch_emulation_){
+    if (should_enable_touch_emulation == "false" || no_touch_emulation_) {
       no_touch_emulation_ = true;
     }
 
     const auto should_force_server_side_decoration = utils::get_env_value("ANBOX_FORCE_SERVER_SIDE_DECORATION", "false");
-    if (should_force_server_side_decoration == "true"){
+    if (should_force_server_side_decoration == "true") {
       server_side_decoration_ = true;
     }
 
@@ -182,7 +181,7 @@ anbox::cmds::SessionManager::SessionManager()
     auto platform = platform::create(utils::get_env_value("ANBOX_PLATFORM", "sdl"),
                                      input_manager,
                                      platform_config);
-    if (!platform){
+    if (!platform) {
       return EXIT_FAILURE;
     }
 
@@ -199,14 +198,13 @@ anbox::cmds::SessionManager::SessionManager()
 
     const auto should_force_software_rendering = utils::get_env_value("ANBOX_FORCE_SOFTWARE_RENDERING", "false");
     auto gl_driver = graphics::GLRendererServer::Config::Driver::Host;
-    if (should_force_software_rendering == "true" || use_software_rendering_){
+    if (should_force_software_rendering == "true" || use_software_rendering_) {
       gl_driver = graphics::GLRendererServer::Config::Driver::Software;
     }
 
-    graphics::GLRendererServer::Config renderer_config {
-      gl_driver,
-      single_window_
-    };
+    graphics::GLRendererServer::Config renderer_config{
+        gl_driver,
+        single_window_};
     auto gl_server = std::make_shared<graphics::GLRendererServer>(renderer_config, window_manager);
 
     platform->set_window_manager(window_manager);
@@ -219,7 +217,7 @@ anbox::cmds::SessionManager::SessionManager()
       // only launch applications in freeform mode as otherwise the window tracking
       // doesn't work.
       app_manager = std::make_shared<application::RestrictedManager>(
-            android_api_stub, wm::Stack::Id::Freeform);
+          android_api_stub, wm::Stack::Id::Freeform);
     }
 
     auto audio_server = std::make_shared<audio::Server>(rt, platform);
@@ -249,10 +247,10 @@ anbox::cmds::SessionManager::SessionManager()
 
               auto server = std::make_shared<bridge::PlatformApiSkeleton>(
                   pending_calls, platform, window_manager, app_db);
-              
+
               server->register_boot_finished_handler([&]() {
                 DEBUG("Android successfully booted");
-                
+
                 android_api_stub->ready().set(true);
                 appmgr_start_timer.expires_from_now(default_appmgr_startup_delay);
                 appmgr_start_timer.async_wait([&](const boost::system::error_code &err) {
@@ -276,19 +274,19 @@ anbox::cmds::SessionManager::SessionManager()
     container_conf.extra_properties.push_back("ro.boot.fake_battery=1");
 
     if (server_side_decoration_)
-        container_conf.extra_properties.push_back("ro.anbox.no_decorations=1");
+      container_conf.extra_properties.push_back("ro.anbox.no_decorations=1");
 
     if (!standalone_) {
       container_conf.bind_mounts = {
-        {qemu_pipe_connector->socket_file(), "/dev/qemu_pipe"},
-        {bridge_connector->socket_file(), "/dev/anbox_bridge"},
-        {audio_server->socket_file(), "/dev/anbox_audio"},
-        {SystemConfiguration::instance().input_device_dir(), "/dev/input"},
+          {qemu_pipe_connector->socket_file(), "/dev/qemu_pipe"},
+          {bridge_connector->socket_file(), "/dev/anbox_bridge"},
+          {audio_server->socket_file(), "/dev/anbox_audio"},
+          {SystemConfiguration::instance().input_device_dir(), "/dev/input"},
 
       };
 
       container_conf.devices = {
-        {"/dev/fuse", {0666}},
+          {"/dev/fuse", {0666}},
       };
 
       dispatcher->dispatch([&]() {
@@ -298,7 +296,7 @@ anbox::cmds::SessionManager::SessionManager()
 
     // dbus manage session
     auto bus_type = anbox::dbus::Bus::Type::Session;
-    if (use_system_dbus_){
+    if (use_system_dbus_) {
       bus_type = anbox::dbus::Bus::Type::System;
     }
     auto bus = std::make_shared<anbox::dbus::Bus>(bus_type);

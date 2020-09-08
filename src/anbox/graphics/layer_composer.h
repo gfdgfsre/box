@@ -20,8 +20,8 @@
 
 #include "anbox/graphics/renderer.h"
 
-#include <memory>
 #include <map>
+#include <memory>
 
 namespace anbox {
 namespace wm {
