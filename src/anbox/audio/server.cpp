@@ -47,13 +47,15 @@ class AudioForwarder : public anbox::network::MessageProcessor {
 
 namespace anbox {
 namespace audio {
-Server::Server(const std::shared_ptr<Runtime> &rt, const std::shared_ptr<platform::BasePlatform> &platform) : platform_(platform),
-                                                                                                              socket_file_(utils::string_format("%s/anbox_audio", SystemConfiguration::instance().socket_dir())),
-                                                                                                              connector_(std::make_shared<network::PublishedSocketConnector>(
-                                                                                                                  socket_file_, rt,
-                                                                                                                  std::make_shared<network::DelegateConnectionCreator<boost::asio::local::stream_protocol>>(std::bind(&Server::create_connection_for, this, _1)))),
-                                                                                                              connections_(std::make_shared<network::Connections<network::SocketConnection>>()),
-                                                                                                              next_id_(0) {
+Server::Server(const std::shared_ptr<Runtime> &rt, 
+  const std::shared_ptr<platform::BasePlatform> &platform) 
+: platform_(platform),
+  socket_file_(utils::string_format("%s/anbox_audio", SystemConfiguration::instance().socket_dir())),
+  connector_(std::make_shared<network::PublishedSocketConnector>(socket_file_, rt,
+    std::make_shared<network::DelegateConnectionCreator<boost::asio::local::stream_protocol>>(
+      std::bind(&Server::create_connection_for, this, _1)))),
+      connections_(std::make_shared<network::Connections<network::SocketConnection>>()),
+  next_id_(0) {
   // FIXME: currently creating the socket creates it with the rights of
   // the user we're running as. As this one is mapped into the container
   ::chmod(socket_file_.c_str(), 0777);
