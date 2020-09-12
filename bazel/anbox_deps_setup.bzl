@@ -278,3 +278,11 @@ def anbox_deps_setup():
         url = "https://github.com/g-truc/glm/archive/0.9.9.8.tar.gz",
         sha256 = "7d508ab72cb5d43227a3711420f06ff99b0a0cb63ee2f93631b162bfe1fe9592",
     )
+
+
+    http_archive(
+        name = "rules_foreign_cc",
+        strip_prefix = "rules_foreign_cc-0.0.1",
+        urls = ["https://github.com/skykying/rules_foreign_cc/archive/v0.0.1.tar.gz"],
+        sha256 = "1837d5e7866db049879fae72893fbcda40da653fbe520d430b4828201f33edf6",
+    )
