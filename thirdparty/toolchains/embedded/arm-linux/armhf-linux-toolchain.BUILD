@@ -22,6 +22,13 @@ filegroup(
 )
 
 filegroup(
+    name = "cpp",
+    srcs = [
+        "bin/arm-linux-gnueabihf-cpp",
+    ],
+)
+
+filegroup(
     name = "nm",
     srcs = [
         "bin/arm-linux-gnueabihf-nm",
@@ -73,6 +80,7 @@ filegroup(
         ":as",
         ":gcc",
         ":ld",
+        ":cpp",
         ":nm",
         ":objcopy",
         ":objdump",

@@ -22,6 +22,13 @@ filegroup(
 )
 
 filegroup(
+    name = "cpp",
+    srcs = [
+        "bin/aarch64-linux-gnu-cpp",
+    ],
+)
+
+filegroup(
     name = "nm",
     srcs = [
         "bin/aarch64-linux-gnu-nm",
@@ -73,6 +80,7 @@ filegroup(
         ":as",
         ":gcc",
         ":ld",
+        ":cpp",
         ":nm",
         ":objcopy",
         ":objdump",
