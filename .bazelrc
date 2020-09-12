@@ -65,9 +65,9 @@ build:prof --linkopt=-lprofiler
 build:prof --cxxopt="-DENABLE_PERF=1"
 
 # Build xbox with C++ 17 features.
-build:c++17 --cxxopt=-std=c++1z
+#build:c++17 --cxxopt=-std=c++1z
 # build:c++17 --cxxopt=-stdlib=libc++
-build:c++1z --config=c++17
+#build:c++1z --config=c++17
 
 # Enable C++14 (aka c++1y) by default
 build --cxxopt="-std=c++14"
