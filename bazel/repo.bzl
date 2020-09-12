@@ -73,11 +73,11 @@ def _apply_delete(ctx, paths):
     cmd = _wrap_bash_cmd(ctx, ["rm", "-rf"] + [ctx.path(path) for path in paths])
     _execute_and_check_ret_code(ctx, cmd)
 
-def _tf_http_archive(ctx):
+def _xbox_http_archive(ctx):
     if ("mirror.tensorflow.org" not in ctx.attr.urls[0] and
         (len(ctx.attr.urls) < 2 and
          ctx.attr.name not in _SINGLE_URL_WHITELIST.to_list())):
-        fail("tf_http_archive(urls) must have redundant URLs. The " +
+        fail("xbox_http_archive(urls) must have redundant URLs. The " +
              "mirror.tensorflow.org URL must be present and it must come first. " +
              "Even if you don't have permission to mirror the file, please " +
              "put the correctly formatted mirror URL there anyway, because " +
@@ -128,7 +128,7 @@ def _tf_http_archive(ctx):
         for internal_src, external_dest in ctx.attr.additional_build_files.items():
             ctx.symlink(Label(internal_src), ctx.path(external_dest))
 
-tf_http_archive = repository_rule(
+xbox_http_archive = repository_rule(
     attrs = {
         "sha256": attr.string(mandatory = True),
         "urls": attr.string_list(
@@ -147,7 +147,7 @@ tf_http_archive = repository_rule(
     environ = [
         "TF_SYSTEM_LIBS",
     ],
-    implementation = _tf_http_archive,
+    implementation = _xbox_http_archive,
 )
 
 """Downloads and creates Bazel repos for dependencies.
