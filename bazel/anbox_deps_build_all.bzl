@@ -47,7 +47,7 @@ def anbox_deps_build_all():
 
   tf_http_archive(
         name = "arm_compiler",
-        build_file = clean_dep("//:arm_compiler.BUILD"),
+        build_file = clean_dep("//thirdparty/toolchains/cpus/arm:arm_compiler.BUILD"),
         sha256 = "b9e7d50ffd9996ed18900d041d362c99473b382c0ae049b2fce3290632d2656f",
         strip_prefix = "rpi-newer-crosstools-eb68350c5c8ec1663b7fe52c742ac4271e3217c5/x64-gcc-6.5.0/arm-rpi-linux-gnueabihf/",
         urls = [
@@ -61,7 +61,7 @@ def anbox_deps_build_all():
         # See https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-a/downloads
         # The archive contains GCC version 9.2.1
         name = "aarch64_compiler",
-        build_file = "//:arm_compiler.BUILD",
+        build_file = clean_dep("//thirdparty/toolchains/cpus/arm:arm_compiler.BUILD"),
         sha256 = "8dfe681531f0bd04fb9c53cf3c0a3368c616aa85d48938eebe2b516376e06a66",
         strip_prefix = "gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu",
         urls = [
