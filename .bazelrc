@@ -20,3 +20,55 @@ build:elinux_aarch64 --config=elinux
 build:elinux_aarch64 --cpu=aarch64
 build:elinux_armhf --config=elinux
 build:elinux_armhf --cpu=armhf
+
+
+# +------------------------------------------------------------+
+# | Common Options                                             |
+# +------------------------------------------------------------+
+# Force bazel output to use colors (good for jenkins) and print useful errors.
+common --color=yes
+
+# +------------------------------------------------------------+
+# | Build Configurations                                       |
+# +------------------------------------------------------------+
+# Make Bazel print out all options from rc files.
+# build --announce_rc
+build --show_timestamps
+
+# Work around the sandbox issue.
+build --spawn_strategy=standalone
+
+# Enable colorful output of GCC
+build --cxxopt="-fdiagnostics-color=always"
+
+# Do not show warnings from external dependencies.
+# build --output_filter="^//"
+
+build --per_file_copt=external/upb/.*@-Wno-sign-compare
+build --copt="-Werror=sign-compare"
+build --per_file_copt=^modules/.*\.cc,^cyber/.*\.cc,@"-Werror=return-type"
+build --copt="-Werror=unused-variable"
+build --copt="-Werror=unused-but-set-variable"
+build --copt="-Werror=switch"
+build --cxxopt="-Werror=reorder"
+
+
+build --config=optimize
+# Instruction set optimizations
+build:optimize --copt=-march=native
+build:optimize --host_copt=-march=native
+build:optimize --define with_default_optimizations=true
+
+
+# Build with profiling
+build:prof --linkopt=-lprofiler
+build:prof --cxxopt="-DENABLE_PERF=1"
+
+# Build xbox with C++ 17 features.
+build:c++17 --cxxopt=-std=c++1z
+# build:c++17 --cxxopt=-stdlib=libc++
+build:c++1z --config=c++17
+
+# Enable C++14 (aka c++1y) by default
+build --cxxopt="-std=c++14"
+build --host_cxxopt="-std=c++14"
