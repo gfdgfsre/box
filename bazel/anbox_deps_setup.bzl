@@ -2,6 +2,9 @@ load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository", "new_git_r
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
 load("//bazel:repo.bzl", "xbox_http_archive")
 
+def clean_dep(dep):
+    return str(Label(dep))
+    
 def urlsplit(url):
     """ Splits a URL like "https://example.com/a/b?c=d&e#f" into a tuple:
         ("https", ["example", "com"], ["a", "b"], ["c=d", "e"], "f")
