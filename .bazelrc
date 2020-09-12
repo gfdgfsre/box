@@ -13,3 +13,10 @@ build:linux --force_pic
 build:macos --force_pic
 build:clang-cl --compiler=clang-cl
 build:msvc --compiler=msvc-cl
+
+build:elinux --crosstool_top=@local_config_embedded_arm//:toolchain
+build:elinux --host_crosstool_top=@bazel_tools//tools/cpp:toolchain
+build:elinux_aarch64 --config=elinux
+build:elinux_aarch64 --cpu=aarch64
+build:elinux_armhf --config=elinux
+build:elinux_armhf --cpu=armhf
