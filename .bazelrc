@@ -53,11 +53,11 @@ build --copt="-Werror=switch"
 build --cxxopt="-Werror=reorder"
 
 
-build --config=optimize
+#build --config=optimize
 # Instruction set optimizations
-build:optimize --copt=-march=native
-build:optimize --host_copt=-march=native
-build:optimize --define with_default_optimizations=true
+#build:optimize --copt=-march=native
+#build:optimize --host_copt=-march=native
+#build:optimize --define with_default_optimizations=true
 
 
 # Build with profiling
