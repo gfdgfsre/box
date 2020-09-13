@@ -72,3 +72,12 @@ build:prof --cxxopt="-DENABLE_PERF=1"
 # Enable C++14 (aka c++1y) by default
 build --cxxopt="-std=c++14"
 build --host_cxxopt="-std=c++14"
+
+
+# Define the toolchain
+build:br-toolchain --crosstool_top=@bazel_br_toolchain//toolchain:br
+build:br-toolchain --host_crosstool_top=@bazel_br_toolchain//toolchain:br
+build:br-toolchain --cpu=x86_64
+
+# Set the toolchain as default (optional, you can omit and use --config buildroot-toolchain instead)
+build --config br-toolchain
