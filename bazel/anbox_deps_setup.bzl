@@ -4,7 +4,7 @@ load("//bazel:repo.bzl", "xbox_http_archive")
 
 def clean_dep(dep):
     return str(Label(dep))
-    
+
 def urlsplit(url):
     """ Splits a URL like "https://example.com/a/b?c=d&e#f" into a tuple:
         ("https", ["example", "com"], ["a", "b"], ["c=d", "e"], "f")
@@ -338,3 +338,13 @@ def anbox_deps_setup():
             "https://developer.arm.com/-/media/Files/downloads/gnu-a/8.3-2019.03/binrel/gcc-arm-8.3-2019.03-x86_64-arm-linux-gnueabihf.tar.xz",
         ],
     )
+
+    http_archive(
+        name = "bazel_br_toolchain",
+        urls = [
+            "https://github.com/skykying/bazel-br-toolchain/archive/v1.0.1.tar.gz",
+        ],
+        sha256 = "ae87985f72c0115f86aee2a80757cf67f85bbcbb4eaf3cbaeba1828179d29adf",
+        strip_prefix = "bazel-br-toolchain-1.0.1",
+    )
+

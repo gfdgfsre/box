@@ -11,6 +11,8 @@ load("@rules_foreign_cc//:workspace_definitions.bzl", "rules_foreign_cc_dependen
 load("//thirdparty/opencl_headers:workspace.bzl", opencl_headers = "repo")
 load("//thirdparty/toolchains/cpus/arm:arm_compiler_configure.bzl", "arm_compiler_configure")
 load("//thirdparty/toolchains/embedded/arm-linux:arm_linux_toolchain_configure.bzl", "arm_linux_toolchain_configure")
+load("@bazel_br_toolchain//:deps.bzl", "bazel_br_toolchain_deps")
+
 
 # Sanitize a dependency so that it works correctly from code that includes
 # TensorFlow as a submodule.
@@ -27,6 +29,7 @@ def anbox_deps_build_all():
   rules_proto_grpc_toolchains()
   opencl_headers()
   rules_foreign_cc_dependencies()
+  bazel_br_toolchain_deps()
 
   # Point //external/local_config_arm_compiler to //external/arm_compiler
   arm_compiler_configure(
