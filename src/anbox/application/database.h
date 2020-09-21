@@ -26,6 +26,7 @@
 
 namespace anbox {
 namespace application {
+  
 class LauncherStorage;
 class Database {
  public:

@@ -28,8 +28,10 @@
 
 namespace anbox {
 namespace common {
+
 class BinderDevice;
 }  // namespace common
+
 namespace container {
 class LxcContainer : public Container {
  public:

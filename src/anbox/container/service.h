@@ -47,8 +47,7 @@ class Service : public std::enable_shared_from_this<Service> {
   Service(const std::shared_ptr<Runtime> &rt, const Configuration &config);
 
   int next_id();
-  void new_client(std::shared_ptr<
-                  boost::asio::local::stream_protocol::socket> const &socket);
+  void new_client(std::shared_ptr<boost::asio::local::stream_protocol::socket> const &socket);
 
   std::shared_ptr<common::Dispatcher> dispatcher_;
   std::shared_ptr<network::PublishedSocketConnector> connector_;

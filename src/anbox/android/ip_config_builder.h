@@ -26,6 +26,7 @@
 
 namespace anbox {
 namespace android {
+
 class IpConfigBuilder {
  public:
   enum class Version : std::uint32_t {
@@ -62,6 +63,7 @@ class IpConfigBuilder {
   std::vector<std::string> dns_servers_;
   std::uint32_t id_;
 };
+
 }  // namespace android
 }  // namespace anbox
 

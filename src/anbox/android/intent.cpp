@@ -21,6 +21,7 @@
 
 namespace anbox {
 namespace android {
+  
 bool Intent::valid() const {
   // At the moment we only support component+package for intents
   // (see android/service/android_api_skeleton.cpp for more details)
