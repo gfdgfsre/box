@@ -64,20 +64,6 @@ cc_library(
     ],
 )
 
-cc_binary(
-    name = "xbox_stub",
-    srcs = glob([
-        "src/stub.cpp",
-    ]),
-    copts = COPTS,
-    deps = [
-#        "@boost//:asio",
-        "@com_github_grpc_grpc//:grpc++",
-        "@com_google_protobuf//:protobuf",
-    ],
-)
-
-
 genrule(
     name = "xbox_pkg",
     srcs = [

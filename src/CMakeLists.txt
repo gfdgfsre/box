@@ -128,6 +128,9 @@ set(SOURCES
     anbox/common/binder_device_allocator.cpp
     anbox/common/binder_device_allocator.h
 
+    anbox/config/anbox_sys_config.h
+    anbox/config/anbox_sys_config.cpp
+
     anbox/container/client.cpp
     anbox/container/client.h
     anbox/container/configuration.h
@@ -377,7 +380,7 @@ target_link_libraries(anbox-core
   anbox-protobuf
   xdg)
 
-add_executable(anbox main.cpp ${BACKWARD_ENABLE})
+add_executable(anbox anbox/main.cpp ${BACKWARD_ENABLE})
 target_link_libraries(anbox anbox-core)
 add_backward(anbox)
 

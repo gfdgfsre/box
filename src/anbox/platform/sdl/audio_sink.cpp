@@ -62,8 +62,9 @@ bool AudioSink::connect_audio() {
 }
 
 void AudioSink::disconnect_audio() {
-  if (device_id_ == 0)
+  if (device_id_ == 0){
     return;
+  }
 
   SDL_CloseAudioDevice(device_id_);
   device_id_ = 0;

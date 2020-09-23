@@ -15,25 +15,10 @@
  *
  */
 
-#ifndef ANBOX_WM_DISPLAY_H_
-#define ANBOX_WM_DISPLAY_H_
+#include "anbox/daemon.h"
+#include "anbox/utils.h"
 
-#include <cstdint>
-
-namespace anbox {
-namespace wm {
-class Display {
- public:
-  typedef std::int32_t Id;
-
-  static Id Invalid;
-  static Id Default;
-
-  Display() = delete;
-  Display(const Display&) = delete;
-};
-
-}  // namespace wm
-}  // namespace anbox
-
-#endif
+int main(int argc, char **argv) {
+  anbox::Daemon daemon;
+  return daemon.Run(anbox::utils::collect_arguments(argc, argv));
+}

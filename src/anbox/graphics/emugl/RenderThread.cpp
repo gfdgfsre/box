@@ -63,15 +63,13 @@ intptr_t RenderThread::main() {
 
       std::unique_lock<std::mutex> l(m_lock);
 
-      size_t last =
-          threadInfo.m_glDec.decode(readBuf.buf(), readBuf.validData(), m_stream);
+      size_t last = threadInfo.m_glDec.decode(readBuf.buf(), readBuf.validData(), m_stream);
       if (last > 0) {
         progress = true;
         readBuf.consume(last);
       }
 
-      last =
-          threadInfo.m_gl2Dec.decode(readBuf.buf(), readBuf.validData(), m_stream);
+      last = threadInfo.m_gl2Dec.decode(readBuf.buf(), readBuf.validData(), m_stream);
       if (last > 0) {
         progress = true;
         readBuf.consume(last);
@@ -91,8 +89,9 @@ intptr_t RenderThread::main() {
 
   // Release references to the current thread's context/surfaces if any
   renderer_->bindContext(0, 0, 0);
-  if (threadInfo.currContext || threadInfo.currDrawSurf || threadInfo.currReadSurf)
+  if (threadInfo.currContext || threadInfo.currDrawSurf || threadInfo.currReadSurf){
     ERROR("RenderThread exiting with current context/surfaces");
+  }
 
   renderer_->drainWindowSurface();
   renderer_->drainRenderContext();

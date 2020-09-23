@@ -35,5 +35,6 @@ void LayerComposer::submit_layers(const RenderableList &renderables) {
                     w.second);
   }
 }
+
 }  // namespace graphics
 }  // namespace anbox

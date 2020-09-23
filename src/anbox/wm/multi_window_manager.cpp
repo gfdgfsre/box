@@ -48,7 +48,9 @@ void MultiWindowManager::apply_window_state_update(const WindowState::List &upda
     if (window.stack() != Stack::Id::Freeform) continue;
 
     // And also those which don't have a surface mapped at the moment
-    if (!window.has_surface()) continue;
+    if (!window.has_surface()){
+      continue;
+    } 
 
     // If we know that task already we first collect all window updates
     // for it so we can apply all of them together.
@@ -56,10 +58,12 @@ void MultiWindowManager::apply_window_state_update(const WindowState::List &upda
     if (w != windows_.end()) {
       auto t = task_updates.find(window.task());
 
-      if (t == task_updates.end())
+      if (t == task_updates.end()){
         task_updates.insert({window.task(), {window}});
-      else
+      } else {
         task_updates[window.task()].push_back(window);
+      }
+
       continue;
     }
 

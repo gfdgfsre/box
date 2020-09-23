@@ -455,6 +455,7 @@ void Renderer::drainWindowSurface() {
     HandleType windowHandle = *it;
     if (m_windows.find(windowHandle) != m_windows.end()) {
       HandleType oldColorBufferHandle = m_windows[windowHandle].second;
+      
       if (oldColorBufferHandle) {
         ColorBufferMap::iterator cit(m_colorbuffers.find(oldColorBufferHandle));
         if (cit != m_colorbuffers.end()) {

@@ -31,7 +31,6 @@ cc_library(
     ],
 )
 
-
 # android application support
 cc_library(
     name = "anbox_application_header",
@@ -61,7 +60,7 @@ cc_library(
     ],
 )
 
-# andio support
+# audio support
 cc_library(
     name = "anbox_audio_header",
     hdrs = [

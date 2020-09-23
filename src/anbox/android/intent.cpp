@@ -31,20 +31,15 @@ bool Intent::valid() const {
 std::ostream &operator<<(std::ostream &out, const Intent &intent) {
   out << "[";
   if (!intent.action.empty())
-    out << " "
-        << "action=" << intent.action << " ";
+    out << " " << "action=" << intent.action << " ";
   if (!intent.uri.empty())
-    out << " "
-        << "uri=" << intent.uri << " ";
+    out << " " << "uri=" << intent.uri << " ";
   if (!intent.type.empty())
-    out << " "
-        << "type=" << intent.type << " ";
+    out << " " << "type=" << intent.type << " ";
   if (intent.flags > 0)
-    out << " "
-        << "flags=" << intent.flags << " ";
+    out << " " << "flags=" << intent.flags << " ";
   if (!intent.package.empty())
-    out << " "
-        << "package=" << intent.package << " ";
+    out << " " << "package=" << intent.package << " ";
   if (!intent.component.empty())
     out << "component=" << intent.component << " ";
   if (intent.categories.size() > 0) {

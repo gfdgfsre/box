@@ -28,6 +28,7 @@
 
 namespace anbox {
 namespace wm {
+  
 class WindowState {
  public:
   typedef std::vector<WindowState> List;
