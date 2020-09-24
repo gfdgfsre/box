@@ -29,8 +29,7 @@ class LocalSocketMessenger
     : public BaseSocketMessenger<boost::asio::local::stream_protocol> {
  public:
   LocalSocketMessenger(
-      std::shared_ptr<boost::asio::local::stream_protocol::socket> const
-          &socket);
+      std::shared_ptr<boost::asio::local::stream_protocol::socket> const &socket);
   LocalSocketMessenger(const std::string &path,
                        const std::shared_ptr<Runtime> &rt);
   ~LocalSocketMessenger();

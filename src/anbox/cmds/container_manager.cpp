@@ -260,12 +260,14 @@ bool anbox::cmds::ContainerManager::setup_mounts() {
 
 bool anbox::cmds::ContainerManager::setup_rootfs_overlay() {
   const auto combined_rootfs_path = SystemConfiguration::instance().combined_rootfs_dir();
-  if (!fs::exists(combined_rootfs_path))
+  if (!fs::exists(combined_rootfs_path)){
     fs::create_directories(combined_rootfs_path);
+  }
 
   const auto overlay_path = SystemConfiguration::instance().overlay_dir();
-  if (!fs::exists(overlay_path))
+  if (!fs::exists(overlay_path)){
     fs::create_directories(overlay_path);
+  }
 
   const auto rootfs_path = SystemConfiguration::instance().rootfs_dir();
   const auto overlay_config = utils::string_format("lowerdir=%s:%s", overlay_path, rootfs_path);

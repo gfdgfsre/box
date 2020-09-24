@@ -133,16 +133,19 @@ anbox::cmds::SessionManager::SessionManager()
       return EXIT_FAILURE;
     }
 
+    // check android drivers is loaded
     if ((!fs::exists("/dev/binder") && !fs::exists(BINDERFS_PATH)) || !fs::exists("/dev/ashmem")) {
       ERROR("Failed to start as either binder or ashmem kernel drivers are not loaded");
       return EXIT_FAILURE;
     }
 
+    // check the contianer communicaton channel is setuped
     utils::ensure_paths({
         SystemConfiguration::instance().socket_dir(),
         SystemConfiguration::instance().input_device_dir(),
     });
 
+    // setup the runtime and dispatcher
     auto rt = Runtime::create();
     auto dispatcher = anbox::common::create_dispatcher_for_runtime(rt);
 
@@ -154,14 +157,17 @@ anbox::cmds::SessionManager::SessionManager()
       });
     }
 
+    // setup input and android stub manager
     auto input_manager = std::make_shared<input::Manager>(rt);
     auto android_api_stub = std::make_shared<bridge::AndroidApiStub>();
 
+    // setup display windows
     auto display_frame = graphics::Rect::Invalid;
     if (single_window_) {
       display_frame = window_size_;
     }
 
+    // setup system configures
     const auto should_enable_touch_emulation = utils::get_env_value("ANBOX_ENABLE_TOUCH_EMULATION", "true");
     if (should_enable_touch_emulation == "false" || no_touch_emulation_) {
       no_touch_emulation_ = true;
@@ -178,6 +184,7 @@ anbox::cmds::SessionManager::SessionManager()
     platform_config.display_frame = display_frame;
     platform_config.server_side_decoration = server_side_decoration_;
 
+    // setup display service platform
     auto platform = platform::create(utils::get_env_value("ANBOX_PLATFORM", "sdl"),
                                      input_manager,
                                      platform_config);
@@ -187,6 +194,7 @@ anbox::cmds::SessionManager::SessionManager()
 
     auto app_db = std::make_shared<application::Database>();
 
+    // setup display windows manager
     std::shared_ptr<wm::Manager> window_manager;
     bool using_single_window = false;
     if (platform->supports_multi_window() && !single_window_)
@@ -196,17 +204,20 @@ anbox::cmds::SessionManager::SessionManager()
       using_single_window = true;
     }
 
+    // setup display opengl service
     const auto should_force_software_rendering = utils::get_env_value("ANBOX_FORCE_SOFTWARE_RENDERING", "false");
     auto gl_driver = graphics::GLRendererServer::Config::Driver::Host;
     if (should_force_software_rendering == "true" || use_software_rendering_) {
       gl_driver = graphics::GLRendererServer::Config::Driver::Software;
     }
 
+    // setup the opengl service with config and window manager
     graphics::GLRendererServer::Config renderer_config{
         gl_driver,
         single_window_};
     auto gl_server = std::make_shared<graphics::GLRendererServer>(renderer_config, window_manager);
 
+    // platform setup window manager, opengl service
     platform->set_window_manager(window_manager);
     platform->set_renderer(gl_server->renderer());
     window_manager->setup();
@@ -220,6 +231,7 @@ anbox::cmds::SessionManager::SessionManager()
           android_api_stub, wm::Stack::Id::Freeform);
     }
 
+    // setup the backend audio service and container communication channel socket
     auto audio_server = std::make_shared<audio::Server>(rt, platform);
 
     const auto socket_path = SystemConfiguration::instance().socket_dir();
@@ -273,8 +285,9 @@ anbox::cmds::SessionManager::SessionManager()
     // See https://github.com/anbox/anbox/issues/780 for further details.
     container_conf.extra_properties.push_back("ro.boot.fake_battery=1");
 
-    if (server_side_decoration_)
+    if (server_side_decoration_){
       container_conf.extra_properties.push_back("ro.anbox.no_decorations=1");
+    }
 
     if (!standalone_) {
       container_conf.bind_mounts = {
@@ -282,7 +295,6 @@ anbox::cmds::SessionManager::SessionManager()
           {bridge_connector->socket_file(), "/dev/anbox_bridge"},
           {audio_server->socket_file(), "/dev/anbox_audio"},
           {SystemConfiguration::instance().input_device_dir(), "/dev/input"},
-
       };
 
       container_conf.devices = {

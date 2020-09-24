@@ -31,7 +31,8 @@ namespace network {
 class PublishedSocketConnector : public DoNotCopyOrMove, public Connector {
  public:
   explicit PublishedSocketConnector(
-      const std::string& socket_file, const std::shared_ptr<Runtime>& rt,
+      const std::string& socket_file, 
+      const std::shared_ptr<Runtime>& rt,
       const std::shared_ptr<ConnectionCreator<
           boost::asio::local::stream_protocol>>& connection_creator);
   ~PublishedSocketConnector() noexcept;
@@ -46,8 +47,7 @@ class PublishedSocketConnector : public DoNotCopyOrMove, public Connector {
 
   const std::string socket_file_;
   std::shared_ptr<Runtime> runtime_;
-  std::shared_ptr<ConnectionCreator<boost::asio::local::stream_protocol>>
-      connection_creator_;
+  std::shared_ptr<ConnectionCreator<boost::asio::local::stream_protocol>> connection_creator_;
   boost::asio::local::stream_protocol::acceptor acceptor_;
 };
 }  // namespace network
