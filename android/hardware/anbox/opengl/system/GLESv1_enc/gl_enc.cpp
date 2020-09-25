@@ -26,18 +26,18 @@ void glAlphaFunc_enc(void *self , GLenum func, GLclampf ref)
 	ChecksumCalculator *checksumCalculator = ctx->m_checksumCalculator;
 	bool useChecksum = checksumCalculator->getVersion() > 0;
 
-	 unsigned char *ptr;
-	 unsigned char *buf;
-	 const size_t sizeWithoutChecksum = 8 + 4 + 4;
-	 const size_t checksumSize = checksumCalculator->checksumByteSize();
-	 const size_t totalSize = sizeWithoutChecksum + checksumSize;
+	unsigned char *ptr;
+	unsigned char *buf;
+	const size_t sizeWithoutChecksum = 8 + 4 + 4;
+	const size_t checksumSize = checksumCalculator->checksumByteSize();
+	const size_t totalSize = sizeWithoutChecksum + checksumSize;
 	buf = stream->alloc(totalSize);
 	ptr = buf;
 	int tmp = OP_glAlphaFunc;memcpy(ptr, &tmp, 4); ptr += 4;
 	memcpy(ptr, &totalSize, 4);  ptr += 4;
 
-		memcpy(ptr, &func, 4); ptr += 4;
-		memcpy(ptr, &ref, 4); ptr += 4;
+	memcpy(ptr, &func, 4); ptr += 4;
+	memcpy(ptr, &ref, 4); ptr += 4;
 
 	if (useChecksum) checksumCalculator->addBuffer(buf, ptr-buf);
 	if (useChecksum) checksumCalculator->writeChecksum(ptr, checksumSize); ptr += checksumSize;
@@ -52,20 +52,21 @@ void glClearColor_enc(void *self , GLclampf red, GLclampf green, GLclampf blue, 
 	ChecksumCalculator *checksumCalculator = ctx->m_checksumCalculator;
 	bool useChecksum = checksumCalculator->getVersion() > 0;
 
-	 unsigned char *ptr;
-	 unsigned char *buf;
-	 const size_t sizeWithoutChecksum = 8 + 4 + 4 + 4 + 4;
-	 const size_t checksumSize = checksumCalculator->checksumByteSize();
-	 const size_t totalSize = sizeWithoutChecksum + checksumSize;
+	unsigned char *ptr;
+	unsigned char *buf;
+	const size_t sizeWithoutChecksum = 8 + 4 + 4 + 4 + 4;
+	const size_t checksumSize = checksumCalculator->checksumByteSize();
+	const size_t totalSize = sizeWithoutChecksum + checksumSize;
 	buf = stream->alloc(totalSize);
 	ptr = buf;
-	int tmp = OP_glClearColor;memcpy(ptr, &tmp, 4); ptr += 4;
+	int tmp = OP_glClearColor;
+	memcpy(ptr, &tmp, 4); ptr += 4;
 	memcpy(ptr, &totalSize, 4);  ptr += 4;
 
-		memcpy(ptr, &red, 4); ptr += 4;
-		memcpy(ptr, &green, 4); ptr += 4;
-		memcpy(ptr, &blue, 4); ptr += 4;
-		memcpy(ptr, &alpha, 4); ptr += 4;
+	memcpy(ptr, &red, 4); ptr += 4;
+	memcpy(ptr, &green, 4); ptr += 4;
+	memcpy(ptr, &blue, 4); ptr += 4;
+	memcpy(ptr, &alpha, 4); ptr += 4;
 
 	if (useChecksum) checksumCalculator->addBuffer(buf, ptr-buf);
 	if (useChecksum) checksumCalculator->writeChecksum(ptr, checksumSize); ptr += checksumSize;
@@ -80,17 +81,17 @@ void glClearDepthf_enc(void *self , GLclampf depth)
 	ChecksumCalculator *checksumCalculator = ctx->m_checksumCalculator;
 	bool useChecksum = checksumCalculator->getVersion() > 0;
 
-	 unsigned char *ptr;
-	 unsigned char *buf;
-	 const size_t sizeWithoutChecksum = 8 + 4;
-	 const size_t checksumSize = checksumCalculator->checksumByteSize();
-	 const size_t totalSize = sizeWithoutChecksum + checksumSize;
+	unsigned char *ptr;
+	unsigned char *buf;
+	const size_t sizeWithoutChecksum = 8 + 4;
+	const size_t checksumSize = checksumCalculator->checksumByteSize();
+	const size_t totalSize = sizeWithoutChecksum + checksumSize;
 	buf = stream->alloc(totalSize);
 	ptr = buf;
-	int tmp = OP_glClearDepthf;memcpy(ptr, &tmp, 4); ptr += 4;
+	int tmp = OP_glClearDepthf;
+	memcpy(ptr, &tmp, 4); ptr += 4;
 	memcpy(ptr, &totalSize, 4);  ptr += 4;
-
-		memcpy(ptr, &depth, 4); ptr += 4;
+	memcpy(ptr, &depth, 4); ptr += 4;
 
 	if (useChecksum) checksumCalculator->addBuffer(buf, ptr-buf);
 	if (useChecksum) checksumCalculator->writeChecksum(ptr, checksumSize); ptr += checksumSize;
@@ -272,17 +273,18 @@ void glGetClipPlanef_enc(void *self , GLenum pname, GLfloat* eqn)
 	bool useChecksum = checksumCalculator->getVersion() > 0;
 
 	const unsigned int __size_eqn =  (4 * sizeof(GLfloat));
-	 unsigned char *ptr;
-	 unsigned char *buf;
-	 const size_t sizeWithoutChecksum = 8 + 4 + __size_eqn + 1*4;
-	 const size_t checksumSize = checksumCalculator->checksumByteSize();
-	 const size_t totalSize = sizeWithoutChecksum + checksumSize;
+	unsigned char *ptr;
+	unsigned char *buf;
+	const size_t sizeWithoutChecksum = 8 + 4 + __size_eqn + 1*4;
+	const size_t checksumSize = checksumCalculator->checksumByteSize();
+	const size_t totalSize = sizeWithoutChecksum + checksumSize;
 	buf = stream->alloc(totalSize);
 	ptr = buf;
-	int tmp = OP_glGetClipPlanef;memcpy(ptr, &tmp, 4); ptr += 4;
+	int tmp = OP_glGetClipPlanef;
+	memcpy(ptr, &tmp, 4); ptr += 4;
 	memcpy(ptr, &totalSize, 4);  ptr += 4;
 
-		memcpy(ptr, &pname, 4); ptr += 4;
+	memcpy(ptr, &pname, 4); ptr += 4;
 	*(unsigned int *)(ptr) = __size_eqn; ptr += 4;
 
 	if (useChecksum) checksumCalculator->addBuffer(buf, ptr-buf);

@@ -410,10 +410,10 @@ void rcDestroyContext_enc(void *self , uint32_t context)
 	 const size_t totalSize = sizeWithoutChecksum + checksumSize;
 	buf = stream->alloc(totalSize);
 	ptr = buf;
-	int tmp = OP_rcDestroyContext;memcpy(ptr, &tmp, 4); ptr += 4;
+	int tmp = OP_rcDestroyContext;
+	memcpy(ptr, &tmp, 4); ptr += 4;
 	memcpy(ptr, &totalSize, 4);  ptr += 4;
-
-		memcpy(ptr, &context, 4); ptr += 4;
+	memcpy(ptr, &context, 4); ptr += 4;
 
 	if (useChecksum) checksumCalculator->addBuffer(buf, ptr-buf);
 	if (useChecksum) checksumCalculator->writeChecksum(ptr, checksumSize); ptr += checksumSize;
@@ -435,12 +435,13 @@ uint32_t rcCreateWindowSurface_enc(void *self , uint32_t config, uint32_t width,
 	 const size_t totalSize = sizeWithoutChecksum + checksumSize;
 	buf = stream->alloc(totalSize);
 	ptr = buf;
-	int tmp = OP_rcCreateWindowSurface;memcpy(ptr, &tmp, 4); ptr += 4;
+	int tmp = OP_rcCreateWindowSurface;
+	memcpy(ptr, &tmp, 4); ptr += 4;
 	memcpy(ptr, &totalSize, 4);  ptr += 4;
 
-		memcpy(ptr, &config, 4); ptr += 4;
-		memcpy(ptr, &width, 4); ptr += 4;
-		memcpy(ptr, &height, 4); ptr += 4;
+	memcpy(ptr, &config, 4); ptr += 4;
+	memcpy(ptr, &width, 4); ptr += 4;
+	memcpy(ptr, &height, 4); ptr += 4;
 
 	if (useChecksum) checksumCalculator->addBuffer(buf, ptr-buf);
 	if (useChecksum) checksumCalculator->writeChecksum(ptr, checksumSize); ptr += checksumSize;

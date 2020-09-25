@@ -46,24 +46,24 @@ emulator_camera_src := \
 	EmulatedCameraHotplugThread.cpp \
 	EmulatedBaseCamera.cpp \
 	EmulatedCamera.cpp \
-		EmulatedCameraDevice.cpp \
-		EmulatedQemuCamera.cpp \
-		EmulatedQemuCameraDevice.cpp \
-		EmulatedFakeCamera.cpp \
-		EmulatedFakeCameraDevice.cpp \
-		Converters.cpp \
-		PreviewWindow.cpp \
-		CallbackNotifier.cpp \
-		QemuClient.cpp \
-		JpegCompressor.cpp \
+	EmulatedCameraDevice.cpp \
+	EmulatedQemuCamera.cpp \
+	EmulatedQemuCameraDevice.cpp \
+	EmulatedFakeCamera.cpp \
+	EmulatedFakeCameraDevice.cpp \
+	Converters.cpp \
+	PreviewWindow.cpp \
+	CallbackNotifier.cpp \
+	QemuClient.cpp \
+	JpegCompressor.cpp \
 	EmulatedCamera2.cpp \
-		EmulatedFakeCamera2.cpp \
-		EmulatedQemuCamera2.cpp \
-		fake-pipeline2/Scene.cpp \
-		fake-pipeline2/Sensor.cpp \
-		fake-pipeline2/JpegCompressor.cpp \
+	EmulatedFakeCamera2.cpp \
+	EmulatedQemuCamera2.cpp \
+	fake-pipeline2/Scene.cpp \
+	fake-pipeline2/Sensor.cpp \
+	fake-pipeline2/JpegCompressor.cpp \
 	EmulatedCamera3.cpp \
-		EmulatedFakeCamera3.cpp
+	EmulatedFakeCamera3.cpp
 
 # Emulated camera - goldfish / vbox_x86 build###################################
 

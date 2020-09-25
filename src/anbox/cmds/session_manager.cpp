@@ -266,11 +266,13 @@ anbox::cmds::SessionManager::SessionManager()
                 android_api_stub->ready().set(true);
                 appmgr_start_timer.expires_from_now(default_appmgr_startup_delay);
                 appmgr_start_timer.async_wait([&](const boost::system::error_code &err) {
-                  if (err != boost::system::errc::success)
+                  if (err != boost::system::errc::success){
                     return;
+                  }
                   launch_appmgr_if_needed(android_api_stub);
                 });
               });
+
               return std::make_shared<bridge::PlatformMessageProcessor>(
                   sender, server, pending_calls);
             }));
