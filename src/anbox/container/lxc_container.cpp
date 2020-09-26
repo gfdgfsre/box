@@ -104,7 +104,8 @@ LxcContainer::LxcContainer(bool privileged,
       container_network_address_(container_network_address),
       container_network_gateway_(container_network_gateway),
       container_network_dns_servers_(container_network_dns_servers),
-      creds_(creds) {
+      creds_(creds) 
+{
   utils::ensure_paths({
       SystemConfiguration::instance().container_config_dir(),
       SystemConfiguration::instance().container_state_dir(),
@@ -112,10 +113,12 @@ LxcContainer::LxcContainer(bool privileged,
   });
 }
 
-LxcContainer::~LxcContainer() {
+LxcContainer::~LxcContainer() 
+{
   stop();
-  if (container_)
+  if (container_){
     lxc_container_put(container_);
+  }
 }
 
 std::vector<std::string> get_id_map(uid_t uid, gid_t gid) {
@@ -141,10 +144,12 @@ std::vector<std::string> get_id_map(uid_t uid, gid_t gid) {
   return config;
 }
 
-void LxcContainer::setup_id_map() {
+void LxcContainer::setup_id_map() 
+{
   auto config = get_id_map(creds_.uid(), creds_.gid());
-  for (std::string val : config)
+  for (std::string val : config){
     set_config_item(lxc_config_idmap_key, val);
+  }
 }
 
 void LxcContainer::setup_network() {
@@ -294,7 +299,9 @@ void LxcContainer::add_device(const std::string &device, const DeviceSpecificati
   set_config_item("lxc.mount.entry", entry);
 }
 
-bool LxcContainer::create_binder_devices(unsigned int device_count, std::vector<std::unique_ptr<common::BinderDevice>> &devices) {
+bool LxcContainer::create_binder_devices(unsigned int device_count, 
+    std::vector<std::unique_ptr<common::BinderDevice>> &devices) 
+{
   // We will always allocate a static set of binders devices even if the container
   // doesn't use all of them
   for (unsigned int n = 0; n < device_count; n++) {
@@ -309,7 +316,8 @@ bool LxcContainer::create_binder_devices(unsigned int device_count, std::vector<
   return true;
 }
 
-void LxcContainer::start(const Configuration &configuration) {
+void LxcContainer::start(const Configuration &configuration) 
+{
   if (getuid() != 0)
     throw std::runtime_error("You have to start the container as root");
 
@@ -392,8 +400,9 @@ void LxcContainer::start(const Configuration &configuration) {
   set_config_item(lxc_config_apparmor_profile_key, "unconfined");
 #endif
 
-  if (!privileged_)
+  if (!privileged_){
     setup_id_map();
+  }
 
   auto bind_mounts = configuration.bind_mounts;
   auto devices = configuration.devices;
@@ -491,12 +500,15 @@ void LxcContainer::start(const Configuration &configuration) {
   DEBUG("Container successfully started");
 }
 
-void LxcContainer::stop() {
-  if (!container_ || !container_->is_running(container_))
+void LxcContainer::stop() 
+{
+  if (!container_ || !container_->is_running(container_)){
     return;
+  }
 
-  if (!container_->stop(container_))
+  if (!container_->stop(container_)){
     throw std::runtime_error("Failed to stop container");
+  }
 
   state_ = Container::State::inactive;
   binder_devices_.clear();
@@ -505,13 +517,18 @@ void LxcContainer::stop() {
 }
 
 void LxcContainer::set_config_item(const std::string &key,
-                                   const std::string &value) {
+                                   const std::string &value) 
+{
   if (!container_->set_config_item(container_, key.c_str(), value.c_str())) {
     const auto msg = utils::string_format("Failed to set config item %s", key);
     throw std::runtime_error(msg);
   }
 }
 
-Container::State LxcContainer::state() { return state_; }
+Container::State LxcContainer::state() 
+{ 
+  return state_; 
+}
+
 }  // namespace container
 }  // namespace anbox

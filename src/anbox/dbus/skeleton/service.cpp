@@ -28,22 +28,27 @@ std::shared_ptr<Service> Service::create_for_bus(const BusPtr& bus, const std::s
 }
 
 Service::Service(const BusPtr& bus, const std::shared_ptr<anbox::application::Manager>& impl)
-    : bus_{bus} {
-  if (!bus_)
+    : bus_{bus} 
+{
+  if (!bus_){
     throw std::invalid_argument("Missing bus object");
+  }
 
-  const auto r = sd_bus_request_name(bus_->raw(),
-                                     interface::Service::name(),
-                                     0);
-  if (r < 0)
+  const auto r = sd_bus_request_name(bus_->raw(), interface::Service::name(), 0);
+  if (r < 0) {
     throw std::runtime_error("Failed to request DBus service name");
+  }
 
   DEBUG("Successfully acquired DBus service name");
 
   application_manager_ = std::make_shared<ApplicationManager>(bus, impl);
 }
 
-Service::~Service() {}
+Service::~Service() 
+{
+
+}
+
 }  // namespace skeleton
 }  // namespace dbus
 }  // namespace anbox

@@ -35,11 +35,15 @@ namespace rpc {
 class Invocation;
 }  // namespace rpc
 }  // namespace protobuf
+
+
 namespace network {
 class MessageSender;
 }  // namespace network
+
 namespace rpc {
 class PendingCallCache;
+
 class Channel {
  public:
   Channel(const std::shared_ptr<PendingCallCache> &pending_calls,

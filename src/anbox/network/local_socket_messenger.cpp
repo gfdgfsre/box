@@ -22,17 +22,24 @@
 
 #include <boost/system/error_code.hpp>
 
+namespace asio = boost::asio;
+namespace system = boost::system;
+
 namespace anbox {
 namespace network {
 LocalSocketMessenger::LocalSocketMessenger(
-    std::shared_ptr<boost::asio::local::stream_protocol::socket> const &socket)
-    : BaseSocketMessenger(socket) {}
+    std::shared_ptr<asio::local::stream_protocol::socket> const &socket)
+    : BaseSocketMessenger(socket) 
+{
+  
+}
 
 LocalSocketMessenger::LocalSocketMessenger(const std::string &path,
                                            const std::shared_ptr<Runtime> &rt)
-    : socket_(std::make_shared<boost::asio::local::stream_protocol::socket>(rt->service())) {
-  boost::system::error_code err;
-  socket_->connect(boost::asio::local::stream_protocol::endpoint(path), err);
+    : socket_(std::make_shared<asio::local::stream_protocol::socket>(rt->service())) 
+{
+  system::error_code err;
+  socket_->connect(asio::local::stream_protocol::endpoint(path), err);
   if (err) {
     const auto msg = utils::string_format("Failed to connect to socket %s: %s",
                                           path, err.message());
@@ -42,6 +49,11 @@ LocalSocketMessenger::LocalSocketMessenger(const std::string &path,
   setup(socket_);
 }
 
-LocalSocketMessenger::~LocalSocketMessenger() {}
+LocalSocketMessenger::~LocalSocketMessenger() 
+{
+
+}
+
+
 }  // namespace network
 }  // namespace anbox

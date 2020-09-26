@@ -23,14 +23,17 @@
 
 #include <boost/asio.hpp>
 
+namespace asio = boost::asio;
+
 namespace anbox {
 namespace network {
-class TcpSocketMessenger : public BaseSocketMessenger<boost::asio::ip::tcp> {
+class TcpSocketMessenger : public BaseSocketMessenger<asio::ip::tcp> {
  public:
-  TcpSocketMessenger(const boost::asio::ip::address_v4 &addr,
-                     unsigned short port, const std::shared_ptr<Runtime> &rt);
-  TcpSocketMessenger(
-      std::shared_ptr<boost::asio::ip::tcp::socket> const &socket);
+  TcpSocketMessenger(const asio::ip::address_v4 &addr,
+                     unsigned short port, 
+                     const std::shared_ptr<Runtime> &rt);
+
+  TcpSocketMessenger(std::shared_ptr<asio::ip::tcp::socket> const &socket);
   ~TcpSocketMessenger();
 
   unsigned short local_port() const override;
@@ -38,6 +41,7 @@ class TcpSocketMessenger : public BaseSocketMessenger<boost::asio::ip::tcp> {
  private:
   unsigned short local_port_;
 };
+
 }  // namespace network
 }  // namespace anbox
 

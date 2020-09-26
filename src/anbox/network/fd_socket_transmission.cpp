@@ -28,15 +28,25 @@
 
 namespace anbox {
 socket_error::socket_error(std::string const& message)
-    : std::system_error(errno, std::system_category(), message) {}
+    : std::system_error(errno, std::system_category(), message) 
+{
+  
+}
 
 socket_disconnected_error::socket_disconnected_error(std::string const& message)
-    : std::system_error(errno, std::system_category(), message) {}
+    : std::system_error(errno, std::system_category(), message) 
+{
+
+}
 
 fd_reception_error::fd_reception_error(std::string const& message)
-    : std::runtime_error(message) {}
+    : std::runtime_error(message) 
+{
 
-void send_fds(Fd const& socket, std::vector<Fd> const& fds) {
+}
+
+void send_fds(Fd const& socket, std::vector<Fd> const& fds) 
+{
   if (fds.size() > 0) {
     // We send dummy data
     struct iovec iov;
@@ -46,8 +56,7 @@ void send_fds(Fd const& socket, std::vector<Fd> const& fds) {
 
     // Allocate space for control message
     static auto const builtin_n_fds = 5;
-    static auto const builtin_cmsg_space =
-        CMSG_SPACE(builtin_n_fds * sizeof(int));
+    static auto const builtin_cmsg_space = CMSG_SPACE(builtin_n_fds * sizeof(int));
     auto const fds_bytes = fds.size() * sizeof(int);
     VariableLengthArray<builtin_cmsg_space> control{CMSG_SPACE(fds_bytes)};
     // Silence valgrind uninitialized memory complaint
@@ -71,7 +80,9 @@ void send_fds(Fd const& socket, std::vector<Fd> const& fds) {
 
     int* const data = reinterpret_cast<int*>(CMSG_DATA(message));
     int i = 0;
-    for (auto& fd : fds) data[i++] = fd;
+    for (auto& fd : fds) {
+      data[i++] = fd;
+    }
 
     auto const sent = sendmsg(socket, &header, MSG_NOSIGNAL);
     if (sent < 0)
@@ -83,7 +94,8 @@ void send_fds(Fd const& socket, std::vector<Fd> const& fds) {
 bool socket_error_is_transient(int error_code) { return (error_code == EINTR); }
 
 void receive_data(Fd const& socket, void* buffer, size_t bytes_requested,
-                  std::vector<Fd>& fds) {
+                  std::vector<Fd>& fds) 
+{
   if (bytes_requested == 0)
     BOOST_THROW_EXCEPTION(std::logic_error("Attempted to receive 0 bytes"));
 
@@ -97,8 +109,7 @@ void receive_data(Fd const& socket, void* buffer, size_t bytes_requested,
 
     // Allocate space for control message
     static auto const builtin_n_fds = 5;
-    static auto const builtin_cmsg_space =
-        CMSG_SPACE(builtin_n_fds * sizeof(int));
+    static auto const builtin_cmsg_space = CMSG_SPACE(builtin_n_fds * sizeof(int));
     auto const fds_bytes = (fds.size() - fds_read) * sizeof(int);
     VariableLengthArray<builtin_cmsg_space> control{CMSG_SPACE(fds_bytes)};
 
@@ -171,8 +182,9 @@ void receive_data(Fd const& socket, void* buffer, size_t bytes_requested,
   }
 
   if (fds_read < fds.size()) {
-    for (auto fd : fds)
+    for (auto fd : fds){
       if (fd >= 0) ::close(fd);
+    }
     fds.clear();
     BOOST_THROW_EXCEPTION(
         std::runtime_error("Received fewer fds than expected"));

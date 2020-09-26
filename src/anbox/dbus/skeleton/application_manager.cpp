@@ -170,7 +170,8 @@ ApplicationManager::~ApplicationManager() {}
 
 void ApplicationManager::launch(const android::Intent &intent,
                                 const graphics::Rect &launch_bounds,
-                                const wm::Stack::Id &stack) {
+                                const wm::Stack::Id &stack) 
+{
   if (!impl_->ready())
     throw std::runtime_error("Anbox not yet ready to launch applications");
 
@@ -181,6 +182,7 @@ void ApplicationManager::launch(const android::Intent &intent,
 core::Property<bool> &ApplicationManager::ready() {
   return impl_->ready();
 }
+
 }  // namespace skeleton
 }  // namespace dbus
 }  // namespace anbox

@@ -49,10 +49,12 @@ void invoke(Self* self, Bridge* rpc,
             void (BridgeX::*function)(ParameterMessage const* request,
                                       ResultMessage* response,
                                       ::google::protobuf::Closure* done),
-            Invocation const& invocation) {
+            Invocation const& invocation)
+{
   ParameterMessage parameter_message;
-  if (!parameter_message.ParseFromString(invocation.parameters()))
+  if (!parameter_message.ParseFromString(invocation.parameters())){
     throw std::runtime_error("Failed to parse message parameters!");
+  }
   ResultMessage result_message;
 
   try {
@@ -64,8 +66,7 @@ void invoke(Self* self, Bridge* rpc,
 
     (rpc->*function)(&parameter_message, &result_message, callback.get());
   } catch (std::exception const& x) {
-    result_message.set_error(std::string("Error processing request: ") +
-                             x.what());
+    result_message.set_error(std::string("Error processing request: ") + x.what());
     self->send_response(invocation.id(), &result_message);
   }
 }

@@ -25,14 +25,15 @@
 #include <boost/asio.hpp>
 #include <mutex>
 
+namespace asio = boost::asio;
+namespace system = boost::system;
+
 namespace anbox {
 namespace network {
 template <typename stream_protocol>
 class BaseSocketMessenger : public SocketMessenger {
  public:
-  BaseSocketMessenger(
-      std::shared_ptr<boost::asio::basic_stream_socket<stream_protocol>> const&
-          socket);
+  BaseSocketMessenger(std::shared_ptr<asio::basic_stream_socket<stream_protocol>> const& socket);
 
   virtual ~BaseSocketMessenger();
 
@@ -45,10 +46,9 @@ class BaseSocketMessenger : public SocketMessenger {
   ssize_t send_raw(char const* data, size_t length) override;
 
   void async_receive_msg(AnboxReadHandler const& handle,
-                         boost::asio::mutable_buffers_1 const& buffer) override;
+                         asio::mutable_buffers_1 const& buffer) override;
 
-  boost::system::error_code receive_msg(
-      boost::asio::mutable_buffers_1 const& buffer) override;
+  system::error_code receive_msg(asio::mutable_buffers_1 const& buffer) override;
 
   size_t available_bytes() override;
 
@@ -59,11 +59,10 @@ class BaseSocketMessenger : public SocketMessenger {
  protected:
   BaseSocketMessenger();
 
-  void setup(std::shared_ptr<
-             boost::asio::basic_stream_socket<stream_protocol>> const& s);
+  void setup(std::shared_ptr<asio::basic_stream_socket<stream_protocol>> const& s);
 
  private:
-  std::shared_ptr<boost::asio::basic_stream_socket<stream_protocol>> socket;
+  std::shared_ptr<asio::basic_stream_socket<stream_protocol>> socket;
   anbox::Fd socket_fd;
   std::mutex message_lock;
 };

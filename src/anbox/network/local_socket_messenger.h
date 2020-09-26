@@ -23,20 +23,23 @@
 
 #include <boost/asio/local/stream_protocol.hpp>
 
+namespace asio = boost::asio;
+
 namespace anbox {
 namespace network {
 class LocalSocketMessenger
-    : public BaseSocketMessenger<boost::asio::local::stream_protocol> {
+    : public BaseSocketMessenger<asio::local::stream_protocol> {
  public:
   LocalSocketMessenger(
-      std::shared_ptr<boost::asio::local::stream_protocol::socket> const &socket);
+      std::shared_ptr<asio::local::stream_protocol::socket> const &socket);
   LocalSocketMessenger(const std::string &path,
                        const std::shared_ptr<Runtime> &rt);
   ~LocalSocketMessenger();
 
  private:
-  std::shared_ptr<boost::asio::local::stream_protocol::socket> socket_;
+  std::shared_ptr<asio::local::stream_protocol::socket> socket_;
 };
+
 }  // namespace network
 }  // namespace anbox
 

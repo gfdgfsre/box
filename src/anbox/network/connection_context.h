@@ -29,16 +29,19 @@ class Connector;
 class ConnectionContext {
  public:
   ConnectionContext(Connector const* connector) : ConnectionContext([]() {}, connector) {}
-  ConnectionContext(std::function<void()> const connect_handler,
-                    Connector const* connector);
+  ConnectionContext(std::function<void()> const connect_handler, Connector const* connector);
 
   int fd_for_new_client(std::function<void()> const& connect_handler) const;
-  void handle_client_connect() const { connect_handler(); }
+  void handle_client_connect() const 
+  { 
+  	connect_handler(); 
+  }
 
  private:
   std::function<void()> const connect_handler;
   Connector const* const connector;
 };
+
 }  // namespace network
 }  // namespace anbox
 

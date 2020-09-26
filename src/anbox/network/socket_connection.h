@@ -28,6 +28,8 @@
 
 #include <sys/types.h>
 
+namespace system = boost::system;
+
 namespace anbox {
 namespace network {
 class SocketConnection {
@@ -48,8 +50,7 @@ class SocketConnection {
   void read_next_message();
 
  private:
-  void on_read_size(const boost::system::error_code& ec,
-                    std::size_t bytes_read);
+  void on_read_size(const system::error_code& ec, std::size_t bytes_read);
 
   std::shared_ptr<MessageReceiver> const message_receiver_;
   std::shared_ptr<MessageSender> const message_sender_;

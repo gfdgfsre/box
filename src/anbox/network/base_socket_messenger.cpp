@@ -27,8 +27,8 @@
 
 #include <stdexcept>
 
-namespace bs = boost::system;
-namespace ba = boost::asio;
+namespace system = boost::system;
+namespace asio = boost::asio;
 
 namespace {
 /// Buffers need to be big enough to support messages
@@ -42,7 +42,7 @@ BaseSocketMessenger<stream_protocol>::BaseSocketMessenger() {}
 
 template <typename stream_protocol>
 BaseSocketMessenger<stream_protocol>::BaseSocketMessenger(
-    std::shared_ptr<ba::basic_stream_socket<stream_protocol>> const& socket) {
+    std::shared_ptr<asio::basic_stream_socket<stream_protocol>> const& socket) {
   setup(socket);
 }
 
@@ -51,11 +51,11 @@ BaseSocketMessenger<stream_protocol>::~BaseSocketMessenger() {}
 
 template <typename stream_protocol>
 void BaseSocketMessenger<stream_protocol>::setup(
-    std::shared_ptr<ba::basic_stream_socket<stream_protocol>> const& s) {
+    std::shared_ptr<asio::basic_stream_socket<stream_protocol>> const& s) {
   socket = s;
   socket_fd = anbox::Fd{IntOwnedFd{socket->native_handle()}};
   socket->non_blocking(true);
-  boost::asio::socket_base::send_buffer_size option(64 * 1024);
+  asio::socket_base::send_buffer_size option(64 * 1024);
   socket->set_option(option);
 }
 
@@ -92,10 +92,10 @@ void BaseSocketMessenger<stream_protocol>::send(char const* data,
   for (;;) {
     try {
       std::unique_lock<std::mutex> lg(message_lock);
-      ba::write(*socket, ba::buffer(whole_message.data(), whole_message.size()),
-                boost::asio::transfer_all());
+      asio::write(*socket, asio::buffer(whole_message.data(), whole_message.size()),
+                asio::transfer_all());
     } catch (const boost::system::system_error& err) {
-      if (err.code() == boost::asio::error::try_again) continue;
+      if (err.code() == asio::error::try_again) continue;
       throw;
     }
     break;
@@ -104,19 +104,19 @@ void BaseSocketMessenger<stream_protocol>::send(char const* data,
 
 template <typename stream_protocol>
 void BaseSocketMessenger<stream_protocol>::async_receive_msg(
-    AnboxReadHandler const& handler, ba::mutable_buffers_1 const& buffer) {
+    AnboxReadHandler const& handler, asio::mutable_buffers_1 const& buffer) {
   socket->async_read_some(buffer, handler);
 }
 
 template <typename stream_protocol>
-bs::error_code BaseSocketMessenger<stream_protocol>::receive_msg(
-    ba::mutable_buffers_1 const& buffer) {
-  bs::error_code e;
+system::error_code BaseSocketMessenger<stream_protocol>::receive_msg(
+    asio::mutable_buffers_1 const& buffer) {
+  system::error_code e;
   size_t nread = 0;
 
-  while (nread < ba::buffer_size(buffer)) {
-    nread += boost::asio::read(*socket, ba::mutable_buffers_1{buffer + nread}, e);
-    if (e && e != ba::error::would_block) break;
+  while (nread < asio::buffer_size(buffer)) {
+    nread += asio::read(*socket, asio::mutable_buffers_1{buffer + nread}, e);
+    if (e && e != asio::error::would_block) break;
   }
 
   return e;
@@ -124,7 +124,7 @@ bs::error_code BaseSocketMessenger<stream_protocol>::receive_msg(
 
 template <typename stream_protocol>
 size_t BaseSocketMessenger<stream_protocol>::available_bytes() {
-  boost::asio::socket_base::bytes_readable command{true};
+  asio::socket_base::bytes_readable command{true};
   socket->io_control(command);
   return command.get();
 }
@@ -149,7 +149,7 @@ void BaseSocketMessenger<stream_protocol>::close() {
   socket->close();
 }
 
-template class BaseSocketMessenger<boost::asio::local::stream_protocol>;
-template class BaseSocketMessenger<boost::asio::ip::tcp>;
+template class BaseSocketMessenger<asio::local::stream_protocol>;
+template class BaseSocketMessenger<asio::ip::tcp>;
 }  // namespace network
 }  // namespace anbox

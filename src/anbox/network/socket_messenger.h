@@ -27,13 +27,15 @@
 
 namespace anbox {
 namespace network {
-class SocketMessenger : public MessageSender, public MessageReceiver {
+class SocketMessenger : public MessageSender, public MessageReceiver 
+{
  public:
   virtual Credentials creds() const = 0;
   virtual unsigned short local_port() const = 0;
   virtual void set_no_delay() = 0;
   virtual void close() = 0;
 };
+
 }  // namespace network
 }  // namespace anbox
 

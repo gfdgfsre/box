@@ -54,11 +54,19 @@ class PendingCallCache {
   bool empty() const;
 
  private:
-  struct PendingCall {
-    PendingCall(google::protobuf::MessageLite *response, google::protobuf::Closure *target)
-        : response(response), complete(target) {}
+  struct PendingCall 
+  {
+    PendingCall(google::protobuf::MessageLite *response, 
+                google::protobuf::Closure *target)
+        : response(response), complete(target) 
+    {
 
-    PendingCall() : response(0), complete() {}
+    }
+
+    PendingCall() : response(0), complete() 
+    {
+
+    }
 
     google::protobuf::MessageLite *response;
     google::protobuf::Closure *complete;

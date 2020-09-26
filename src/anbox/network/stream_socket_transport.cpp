@@ -30,39 +30,49 @@
 #include <boost/exception/errinfo_errno.hpp>
 #include <boost/throw_exception.hpp>
 
+namespace asio = boost::asio;
+namespace system = boost::system;
+
 namespace anbox {
 namespace network {
 
 StreamSocketTransport::StreamSocketTransport(const std::string& socket_path,
                                              const std::shared_ptr<Runtime>& rt)
-    : socket_(std::make_shared<boost::asio::local::stream_protocol::socket>(
+    : socket_(std::make_shared<asio::local::stream_protocol::socket>(
           rt->service())),
 {
-  socket_.connect(boost::asio::local::stream_protocol::endpoint(socket_path));
+  socket_.connect(asio::local::stream_protocol::endpoint(socket_path));
   read_next_message();
 }
 
-void StreamSocketTransport::register_observer(
-    std::shared_ptr<Observer> const& observer) {
+void StreamSocketTransport::register_observer(std::shared_ptr<Observer> const& observer) 
+{
   this->observer_ = observer;
 }
 
-void StreamSocketTransport::unregister_observer(
-    std::shared_ptr<Observer> const& observer) {
+void StreamSocketTransport::unregister_observer(std::shared_ptr<Observer> const& observer) 
+{
   if (this->observer_ != observer) return;
 
   this->observer_.reset();
 }
 
-void StreamSocketTransport::send_message(std::vector<uint8_t> const& buffer) {}
+void StreamSocketTransport::send_message(std::vector<uint8_t> const& buffer) 
+{
 
-void StreamSocketTransport::read_next_message() {
+}
+
+void StreamSocketTransport::read_next_message() 
+{
   auto callback = std::bind(&StreamSocketTransport::on_read_size, this,
                             std::placeholders::_1, std::placeholders::_2);
 }
 
-void StreamSocketTransport::on_read_size(const boost::system::error_code& ec,
-                                         std::size_t bytes_read) {}
+void StreamSocketTransport::on_read_size(const system::error_code& ec,
+                                         std::size_t bytes_read) 
+{
+
+}
 
 }  // namespace network
 }  // namespace anbox

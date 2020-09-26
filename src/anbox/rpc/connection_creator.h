@@ -29,22 +29,21 @@
 #include "anbox/network/socket_messenger.h"
 #include "anbox/runtime.h"
 
+namespace asio = boost::asio;
+
 namespace anbox {
 namespace rpc {
-class ConnectionCreator
-    : public network::ConnectionCreator<boost::asio::local::stream_protocol> {
+class ConnectionCreator : public network::ConnectionCreator<asio::local::stream_protocol> {
  public:
   typedef std::function<std::shared_ptr<network::MessageProcessor>(
       const std::shared_ptr<network::MessageSender> &)>
       MessageProcessorFactory;
 
-  ConnectionCreator(const std::shared_ptr<Runtime> &rt,
-                    const MessageProcessorFactory &factory);
+  ConnectionCreator(const std::shared_ptr<Runtime> &rt, const MessageProcessorFactory &factory);
   ~ConnectionCreator() noexcept;
 
   void create_connection_for(
-      std::shared_ptr<boost::asio::basic_stream_socket<
-          boost::asio::local::stream_protocol>> const &socket) override;
+      std::shared_ptr<asio::basic_stream_socket<asio::local::stream_protocol>> const &socket) override;
 
  private:
   int next_id();

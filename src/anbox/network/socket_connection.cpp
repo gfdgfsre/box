@@ -30,8 +30,8 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 
-namespace ba = boost::asio;
-namespace bs = boost::system;
+namespace asio = boost::asio;
+namespace system = boost::system;
 
 namespace anbox {
 namespace network {
@@ -44,20 +44,29 @@ SocketConnection::SocketConnection(
       message_sender_(message_sender),
       id_(id_),
       connections_(connections),
-      processor_(processor) {}
+      processor_(processor) 
+{
 
-SocketConnection::~SocketConnection() noexcept {}
+}
 
-void SocketConnection::send(char const* data, size_t length) {
+SocketConnection::~SocketConnection() noexcept 
+{
+  
+}
+
+void SocketConnection::send(char const* data, size_t length) 
+{
   message_sender_->send(data, length);
 }
 
-void SocketConnection::read_next_message() {
+void SocketConnection::read_next_message() 
+{
   auto callback = std::bind(&SocketConnection::on_read_size, this, std::placeholders::_1, std::placeholders::_2);
-  message_receiver_->async_receive_msg(callback, ba::buffer(buffer_));
+  message_receiver_->async_receive_msg(callback, asio::buffer(buffer_));
 }
 
-void SocketConnection::on_read_size(const boost::system::error_code& error, std::size_t bytes_read) {
+void SocketConnection::on_read_size(const system::error_code& error, std::size_t bytes_read) 
+{
   if (error) {
     connections_->remove(id());
     return;
@@ -66,10 +75,13 @@ void SocketConnection::on_read_size(const boost::system::error_code& error, std:
   std::vector<std::uint8_t> data(bytes_read);
   std::copy(buffer_.data(), buffer_.data() + bytes_read, data.data());
 
-  if (processor_->process_data(data))
+  if (processor_->process_data(data)){
     read_next_message();
-  else
+  } else {
     connections_->remove(id());
+  }
+
 }
+
 }  // namespace network
 }  // namespace anbox

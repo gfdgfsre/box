@@ -26,10 +26,13 @@
 
 #include <atomic>
 
+namespace asio = boost::asio;
+
 namespace anbox {
 namespace network {
 class PublishedSocketConnector;
 }  // namespace network
+
 namespace audio {
 class Server {
  public:
@@ -39,8 +42,8 @@ class Server {
   std::string socket_file() const { return socket_file_; }
 
  private:
-  void create_connection_for(std::shared_ptr<boost::asio::basic_stream_socket<
-                                 boost::asio::local::stream_protocol>> const& socket);
+  void create_connection_for(std::shared_ptr<asio::basic_stream_socket<
+                                 asio::local::stream_protocol>> const& socket);
 
   int next_id();
 

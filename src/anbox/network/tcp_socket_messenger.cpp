@@ -17,24 +17,37 @@
 
 #include "anbox/network/tcp_socket_messenger.h"
 
+namespace asio = boost::asio;
+
 namespace anbox {
 namespace network {
-TcpSocketMessenger::TcpSocketMessenger(const boost::asio::ip::address_v4 &addr,
+TcpSocketMessenger::TcpSocketMessenger(const asio::ip::address_v4 &addr,
                                        unsigned short port,
-                                       const std::shared_ptr<Runtime> &rt) {
-  boost::asio::ip::tcp::endpoint endpoint(addr, port);
-  auto socket = std::make_shared<boost::asio::ip::tcp::socket>(rt->service());
+                                       const std::shared_ptr<Runtime> &rt) 
+{
+  asio::ip::tcp::endpoint endpoint(addr, port);
+  auto socket = std::make_shared<asio::ip::tcp::socket>(rt->service());
   socket->connect(endpoint);
   setup(socket);
   local_port_ = socket->local_endpoint().port();
 }
 
 TcpSocketMessenger::TcpSocketMessenger(
-    std::shared_ptr<boost::asio::ip::tcp::socket> const &socket)
-    : BaseSocketMessenger(socket) {}
+    std::shared_ptr<asio::ip::tcp::socket> const &socket)
+    : BaseSocketMessenger(socket) 
+{
 
-TcpSocketMessenger::~TcpSocketMessenger() {}
+}
 
-unsigned short TcpSocketMessenger::local_port() const { return local_port_; }
+TcpSocketMessenger::~TcpSocketMessenger() 
+{
+
+}
+
+unsigned short TcpSocketMessenger::local_port() const 
+{ 
+	return local_port_; 
+}
+
 }  // namespace network
 }  // namespace anbox

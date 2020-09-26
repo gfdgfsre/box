@@ -31,6 +31,7 @@
 #include <boost/filesystem.hpp>
 
 namespace fs = boost::filesystem;
+namespace asio = boost::asio;
 
 namespace anbox {
 namespace container {
@@ -38,16 +39,17 @@ std::shared_ptr<Service> Service::create(const std::shared_ptr<Runtime> &rt, con
   auto sp = std::shared_ptr<Service>(new Service(rt, config));
 
   auto wp = std::weak_ptr<Service>(sp);
-  auto delegate_connector = std::make_shared<network::DelegateConnectionCreator<boost::asio::local::stream_protocol>>(
-      [wp](std::shared_ptr<boost::asio::local::stream_protocol::socket> const &socket) {
+  auto delegate_connector = std::make_shared<network::DelegateConnectionCreator<asio::local::stream_protocol>>(
+      [wp](std::shared_ptr<asio::local::stream_protocol::socket> const &socket) {
         if (auto service = wp.lock())
           service->new_client(socket);
       });
 
   const auto container_socket_path = SystemConfiguration::instance().container_socket_path();
   const auto socket_parent_path = fs::path(container_socket_path).parent_path();
-  if (!fs::exists(socket_parent_path))
+  if (!fs::exists(socket_parent_path)){
     fs::create_directories(socket_parent_path);
+  }
 
   sp->connector_ = std::make_shared<network::PublishedSocketConnector>(container_socket_path, rt, delegate_connector);
 
@@ -63,16 +65,22 @@ Service::Service(const std::shared_ptr<Runtime> &rt, const Configuration &config
     : dispatcher_(anbox::common::create_dispatcher_for_runtime(rt)),
       next_connection_id_(0),
       connections_(std::make_shared<network::Connections<network::SocketConnection>>()),
-      config_(config) {
+      config_(config) 
+{
+
 }
 
-Service::~Service() {
+Service::~Service() 
+{
   connections_->clear();
 }
 
-int Service::next_id() { return next_connection_id_++; }
+int Service::next_id() 
+{ 
+  return next_connection_id_++; 
+}
 
-void Service::new_client(std::shared_ptr<boost::asio::local::stream_protocol::socket> const
+void Service::new_client(std::shared_ptr<asio::local::stream_protocol::socket> const
                              &socket) {
   if (connections_->size() >= 1) {
     socket->close();
@@ -102,5 +110,6 @@ void Service::new_client(std::shared_ptr<boost::asio::local::stream_protocol::so
   connections_->add(connection);
   connection->read_next_message();
 }
+
 }  // namespace container
 }  // namespace anbox

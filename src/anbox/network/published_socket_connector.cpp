@@ -20,12 +20,15 @@
 #include "anbox/network/connection_context.h"
 #include "anbox/network/socket_helper.h"
 
+namespace asio = boost::asio;
+namespace system = boost::system;
+
 namespace anbox {
 namespace network {
 PublishedSocketConnector::PublishedSocketConnector(
     const std::string& socket_file, const std::shared_ptr<Runtime>& rt,
     const std::shared_ptr<ConnectionCreator<
-        boost::asio::local::stream_protocol>>& connection_creator)
+        asio::local::stream_protocol>>& connection_creator)
     : socket_file_(remove_socket_if_stale(socket_file)),
       runtime_(rt),
       connection_creator_(connection_creator),
@@ -36,21 +39,23 @@ PublishedSocketConnector::PublishedSocketConnector(
 PublishedSocketConnector::~PublishedSocketConnector() noexcept {}
 
 void PublishedSocketConnector::start_accept() {
-  auto socket = std::make_shared<boost::asio::local::stream_protocol::socket>(runtime_->service());
+  auto socket = std::make_shared<asio::local::stream_protocol::socket>(runtime_->service());
 
   acceptor_.async_accept(*socket,
-                         [this, socket](boost::system::error_code const& err) {
+                         [this, socket](system::error_code const& err) {
                            on_new_connection(socket, err);
                          });
 }
 
-void PublishedSocketConnector::on_new_connection(std::shared_ptr<boost::asio::local::stream_protocol::socket> const& socket,
-                                                 boost::system::error_code const& err) {
-  if (!err)
+void PublishedSocketConnector::on_new_connection(std::shared_ptr<asio::local::stream_protocol::socket> const& socket,
+                                                 system::error_code const& err) {
+  if (!err){
     connection_creator_->create_connection_for(socket);
+  }
 
-  if (err.value() == boost::asio::error::operation_aborted)
+  if (err.value() == asio::error::operation_aborted){
     return;
+  }
 
   start_accept();
 }

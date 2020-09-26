@@ -26,6 +26,9 @@
 #include "anbox/network/connection_creator.h"
 #include "anbox/network/connector.h"
 
+namespace asio = boost::asio;
+namespace system = boost::system;
+
 namespace anbox {
 namespace network {
 class PublishedSocketConnector : public DoNotCopyOrMove, public Connector {
@@ -34,7 +37,7 @@ class PublishedSocketConnector : public DoNotCopyOrMove, public Connector {
       const std::string& socket_file, 
       const std::shared_ptr<Runtime>& rt,
       const std::shared_ptr<ConnectionCreator<
-          boost::asio::local::stream_protocol>>& connection_creator);
+          asio::local::stream_protocol>>& connection_creator);
   ~PublishedSocketConnector() noexcept;
 
   std::string socket_file() const { return socket_file_; }
@@ -42,13 +45,13 @@ class PublishedSocketConnector : public DoNotCopyOrMove, public Connector {
  private:
   void start_accept();
   void on_new_connection(
-      std::shared_ptr<boost::asio::local::stream_protocol::socket> const& socket,
-      boost::system::error_code const& err);
+      std::shared_ptr<asio::local::stream_protocol::socket> const& socket,
+      system::error_code const& err);
 
   const std::string socket_file_;
   std::shared_ptr<Runtime> runtime_;
-  std::shared_ptr<ConnectionCreator<boost::asio::local::stream_protocol>> connection_creator_;
-  boost::asio::local::stream_protocol::acceptor acceptor_;
+  std::shared_ptr<ConnectionCreator<asio::local::stream_protocol>> connection_creator_;
+  asio::local::stream_protocol::acceptor acceptor_;
 };
 }  // namespace network
 }  // namespace anbox

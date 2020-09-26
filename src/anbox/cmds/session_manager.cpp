@@ -53,6 +53,7 @@
 #pragma GCC diagnostic pop
 
 namespace fs = boost::filesystem;
+namespace asio = boost::asio;
 
 namespace {
 constexpr const char *default_appmgr_package{"org.anbox.appmgr"};
@@ -61,10 +62,10 @@ const boost::posix_time::milliseconds default_appmgr_startup_delay{50};
 const anbox::graphics::Rect default_single_window_size{0, 0, 1024, 768};
 
 class NullConnectionCreator : public anbox::network::ConnectionCreator<
-                                  boost::asio::local::stream_protocol> {
+                                  asio::local::stream_protocol> {
  public:
   void create_connection_for(
-      std::shared_ptr<boost::asio::local::stream_protocol::socket> const
+      std::shared_ptr<asio::local::stream_protocol::socket> const
           &socket) override {
     WARNING("Not implemented");
     socket->close();
@@ -243,7 +244,7 @@ anbox::cmds::SessionManager::SessionManager()
             utils::string_format("%s/qemu_pipe", socket_path), rt,
             std::make_shared<qemu::PipeConnectionCreator>(gl_server->renderer(), rt));
 
-    boost::asio::deadline_timer appmgr_start_timer(rt->service());
+    asio::deadline_timer appmgr_start_timer(rt->service());
 
     auto bridge_connector = std::make_shared<network::PublishedSocketConnector>(
         utils::string_format("%s/anbox_bridge", socket_path), rt,

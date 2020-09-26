@@ -25,19 +25,21 @@
 
 #include "anbox/common/fd.h"
 
+namespace asio = boost::asio;
+namespace system = boost::system;
+
 namespace anbox {
 namespace network {
 class MessageReceiver {
  public:
   // receive message from the socket. 'handler' will be called when 'buffer' has
   // been filled with exactly 'size'
-  typedef std::function<void(boost::system::error_code const&, size_t)>
-      AnboxReadHandler;
-  virtual void async_receive_msg(
-      AnboxReadHandler const& handler,
-      boost::asio::mutable_buffers_1 const& buffer) = 0;
-  virtual boost::system::error_code receive_msg(
-      boost::asio::mutable_buffers_1 const& buffer) = 0;
+  typedef std::function<void(system::error_code const&, size_t)>  AnboxReadHandler;
+
+  virtual void async_receive_msg(AnboxReadHandler const& handler,
+                                  asio::mutable_buffers_1 const& buffer) = 0;
+
+  virtual system::error_code receive_msg(asio::mutable_buffers_1 const& buffer) = 0;
   virtual size_t available_bytes() = 0;
 
  protected:
@@ -46,6 +48,7 @@ class MessageReceiver {
   MessageReceiver(MessageReceiver const&) = delete;
   MessageReceiver& operator=(MessageReceiver const&) = delete;
 };
+
 }  // namespace network
 }  // namespace anbox
 

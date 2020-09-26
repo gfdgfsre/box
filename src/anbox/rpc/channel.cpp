@@ -54,7 +54,8 @@ void Channel::send_event(google::protobuf::MessageLite const &event) {
 
 protobuf::rpc::Invocation Channel::invocation_for(
     std::string const &method_name,
-    google::protobuf::MessageLite const *request) {
+    google::protobuf::MessageLite const *request) 
+{
   anbox::VariableLengthArray<2048> buffer{
       static_cast<size_t>(request->ByteSize())};
 
@@ -71,7 +72,8 @@ protobuf::rpc::Invocation Channel::invocation_for(
 }
 
 void Channel::send_message(const std::uint8_t &type,
-                           google::protobuf::MessageLite const &message) {
+                           google::protobuf::MessageLite const &message) 
+{
   const size_t size = message.ByteSize();
   const unsigned char header_bytes[header_size] = {
       static_cast<unsigned char>((size >> 16) & 0xff),
@@ -95,11 +97,16 @@ void Channel::send_message(const std::uint8_t &type,
   }
 }
 
-void Channel::notify_disconnected() { pending_calls_->force_completion(); }
+void Channel::notify_disconnected() 
+{ 
+  pending_calls_->force_completion(); 
+}
 
-std::uint32_t Channel::next_id() {
+std::uint32_t Channel::next_id() 
+{
   static std::uint32_t next_message_id = 0;
   return next_message_id++;
 }
+
 }  // namespace rpc
 }  // namespace anbox

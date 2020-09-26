@@ -130,6 +130,7 @@ void ApplicationManager::launch(const android::Intent &intent,
 core::Property<bool> &ApplicationManager::ready() {
   return ready_;
 }
+
 }  // namespace stub
 }  // namespace dbus
 }  // namespace anbox

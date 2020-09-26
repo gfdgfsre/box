@@ -53,6 +53,7 @@ class Bus : public DoNotCopyOrMove {
   std::atomic_bool running_{false};
 };
 using BusPtr = std::shared_ptr<Bus>;
+
 }  // namespace dbus
 }  // namespace anbox
 

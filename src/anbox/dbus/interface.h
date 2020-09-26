@@ -21,10 +21,12 @@
 namespace anbox {
 namespace dbus {
 namespace interface {
+
 struct Service {
   static inline const char* name() { return "org.anbox"; }
   static inline const char* path() { return "/org/anbox"; }
 };
+
 struct ApplicationManager {
   static inline const char* name() { return "org.anbox.ApplicationManager"; }
   struct Methods {
@@ -38,6 +40,7 @@ struct ApplicationManager {
     };
   };
 };
+
 }  // namespace interface
 }  // namespace dbus
 }  // namespace anbox

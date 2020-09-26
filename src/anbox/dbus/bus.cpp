@@ -33,8 +33,9 @@ Bus::Bus(Type type) {
       throw std::invalid_argument("Invalid bus type");
   }
 
-  if (ret < 0 || !bus_)
+  if (ret < 0 || !bus_){
     throw std::runtime_error("Failed to connect to DBus");
+  }
 }
 
 Bus::~Bus() {
@@ -67,7 +68,8 @@ void Bus::stop() {
     worker_thread_.join();
 }
 
-void Bus::worker_main() {
+void Bus::worker_main() 
+{
   while (running_) {
     auto ret = sd_bus_process(bus_, nullptr);
     if (ret < 0)
@@ -80,5 +82,6 @@ void Bus::worker_main() {
       break;
   }
 }
+
 }  // namespace dbus
 }  // namespace anbox
