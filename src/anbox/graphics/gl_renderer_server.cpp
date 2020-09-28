@@ -70,10 +70,11 @@ namespace graphics {
 GLRendererServer::GLRendererServer(const Config &config, const std::shared_ptr<wm::Manager> &wm)
     : renderer_(std::make_shared<::Renderer>()) {
   std::shared_ptr<LayerComposer::Strategy> composer_strategy;
-  if (config.single_window)
+  if (config.single_window){
     composer_strategy = std::make_shared<SingleWindowComposerStrategy>(wm);
-  else
+  } else {
     composer_strategy = std::make_shared<MultiWindowComposerStrategy>(wm);
+  }
 
   composer_ = std::make_shared<LayerComposer>(renderer_, composer_strategy);
 

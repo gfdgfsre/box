@@ -13,7 +13,7 @@ fi
 
 if [ -z "$1" ]; then
     echo "Usage:"
-    echo "./mount-android.sh [Android image]"
+    echo "./fs.sh [Android image]"
     exit 1
 fi
 

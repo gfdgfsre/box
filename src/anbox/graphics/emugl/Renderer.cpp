@@ -298,8 +298,7 @@ struct RendererWindow {
   glm::mat4 display_transform = glm::mat4(1.0f);
 };
 
-RendererWindow *Renderer::createNativeWindow(
-    EGLNativeWindowType native_window) {
+RendererWindow *Renderer::createNativeWindow(EGLNativeWindowType native_window) {
   m_lock.lock();
 
   auto window = new RendererWindow;

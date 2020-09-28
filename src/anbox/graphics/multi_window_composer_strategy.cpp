@@ -35,7 +35,9 @@ std::map<std::shared_ptr<wm::Window>, RenderableList> MultiWindowComposerStrateg
       continue;
 
     auto w = wm_->find_window_for_task(task_id);
-    if (!w) continue;
+    if (!w){
+      continue;
+    }
 
     if (win_layers.find(w) == win_layers.end()) {
       win_layers.insert({w, {renderable}});

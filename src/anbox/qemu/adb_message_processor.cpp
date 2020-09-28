@@ -184,15 +184,15 @@ void AdbMessageProcessor::on_host_read_size(const boost::system::error_code &err
 
 bool AdbMessageProcessor::process_data(const std::vector<std::uint8_t> &data) {
   if (state_ == proxying_data) {
-    host_messenger_->send(reinterpret_cast<const char *>(data.data()),
-                          data.size());
+    host_messenger_->send(reinterpret_cast<const char *>(data.data()), data.size());
     return true;
   }
 
-  for (const auto &byte : data) buffer_.push_back(byte);
+  for (const auto &byte : data){
+     buffer_.push_back(byte);
+  }
 
-  if (expected_command_.size() > 0 &&
-      buffer_.size() >= expected_command_.size()) {
+  if (expected_command_.size() > 0 && buffer_.size() >= expected_command_.size()) {
     if (::memcmp(buffer_.data(), expected_command_.data(), data.size()) != 0) {
       // We got not the command we expected and will terminate here
       return false;
