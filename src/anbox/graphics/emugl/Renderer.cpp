@@ -904,8 +904,9 @@ void Renderer::draw(RendererWindow *window, const Renderable &renderable,
   s_gles2.glUniformMatrix4fv(prog.transform_uniform, 1, GL_FALSE,
                              glm::value_ptr(renderable.transformation()));
 
-  if (prog.alpha_uniform >= 0)
+  if (prog.alpha_uniform >= 0){
     s_gles2.glUniform1f(prog.alpha_uniform, renderable.alpha());
+  }
 
   s_gles2.glEnableVertexAttribArray(prog.position_attr);
   s_gles2.glEnableVertexAttribArray(prog.texcoord_attr);
@@ -942,8 +943,9 @@ bool Renderer::draw(EGLNativeWindowType native_window,
   auto w = m_nativeWindows.find(native_window);
   if (w == m_nativeWindows.end()) return false;
 
-  if (!bindWindow_locked(w->second))
+  if (!bindWindow_locked(w->second)){
     return false;
+  }
 
   setupViewport(w->second, window_frame);
   s_gles2.glViewport(0, 0, window_frame.width(), window_frame.height());
@@ -951,8 +953,9 @@ bool Renderer::draw(EGLNativeWindowType native_window,
   s_gles2.glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
   s_gles2.glClear(GL_COLOR_BUFFER_BIT);
 
-  for (const auto &r : renderables)
+  for (const auto &r : renderables){
     draw(w->second, r, r.alpha() < 1.0f ? m_alphaProgram : m_defaultProgram);
+  }
 
   s_egl.eglSwapBuffers(m_eglDisplay, w->second->surface);
 

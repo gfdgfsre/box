@@ -27,8 +27,7 @@ public:
     CameraFrontendHandler(CameraManagerPtr cameraManager,
                           const std::string& devName,
                           domid_t domId, uint16_t devId) :
-        FrontendHandlerBase("CameraFrontend", devName,
-                            domId, devId),
+        FrontendHandlerBase("CameraFrontend", devName, domId, devId),
         mLog("CameraFrontend"),
         mCameraManager(cameraManager) {}
 

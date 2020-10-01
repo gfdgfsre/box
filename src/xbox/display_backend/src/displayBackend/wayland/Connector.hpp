@@ -26,10 +26,12 @@
 
 #include "Compositor.hpp"
 #include "ConnectorBase.hpp"
+
 #ifdef WITH_IVI_EXTENSION
 #include "IviApplication.hpp"
 #include "IviSurface.hpp"
 #endif
+
 #include "Shell.hpp"
 #include "ShellSurface.hpp"
 

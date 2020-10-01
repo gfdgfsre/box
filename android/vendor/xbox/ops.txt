@@ -1,0 +1,2 @@
+git clone https://github.com/xen-troops/optee_os.git
+git clone https://github.com/xen-troops/uWebSockets.git --branch android-9.0.0_r3-master

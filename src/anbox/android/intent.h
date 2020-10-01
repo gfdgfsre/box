@@ -27,6 +27,7 @@ struct Intent {
   std::string action;
   std::string uri;
   std::string type;
+  
   int flags = 0;
   std::string package;
   std::string component;

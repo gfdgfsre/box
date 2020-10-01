@@ -31,14 +31,18 @@
 #include "Compositor.hpp"
 #include "Connector.hpp"
 #include "DisplayItf.hpp"
+
 #ifdef WITH_IVI_EXTENSION
 #include "IviApplication.hpp"
 #endif
+
 #ifdef WITH_INPUT
 #include "Seat.hpp"
 #endif
+
 #include "SharedMemory.hpp"
 #include "Shell.hpp"
+
 #ifdef WITH_ZCOPY
 #include "WaylandZCopy.hpp"
 #endif

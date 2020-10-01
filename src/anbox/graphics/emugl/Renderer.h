@@ -247,8 +247,7 @@ class Renderer : public anbox::graphics::Renderer {
 
   void setupViewport(RendererWindow* window, const anbox::graphics::Rect& rect);
   struct Program;
-  void draw(RendererWindow* window, const Renderable& renderable,
-            const Program& prog);
+  void draw(RendererWindow* window, const Renderable& renderable, const Program& prog);
   void tessellate(std::vector<anbox::graphics::Primitive>& primitives,
                   const anbox::graphics::Rect& buf_size,
                   const Renderable& renderable);
