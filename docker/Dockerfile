@@ -31,6 +31,7 @@ RUN apt-get update && \
   libsdl2-image-dev \
   libsystemd-dev \
   lxc-dev \
+  libglib2.0-dev \
   pkg-config \
   protobuf-compiler && \
   apt-get clean && \
