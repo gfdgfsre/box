@@ -1,14 +1,14 @@
 package( default_visibility = ["//visibility:public"], )
 
-load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
 
 filegroup(
-    name = "sdl2_headers",
+    name = "wayland_headers",
     visibility = ["//visibility:public"],
 )
 
 cc_library(
-    name = "sdl2",
-    linkopts = ["-lsdl2"],
+    name = "wayland",
+    linkopts = ["-lwayland"],
     visibility = ["//visibility:public"],
 )
