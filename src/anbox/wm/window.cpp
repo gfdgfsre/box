@@ -33,7 +33,9 @@ void Window::update_state(const WindowState::List &states) {
 }
 
 void Window::update_frame(const graphics::Rect &frame) {
-  if (frame == frame_) return;
+  if (frame == frame_){
+   return;
+ }
 
   frame_ = frame;
 }
@@ -47,15 +49,17 @@ EGLNativeWindowType Window::native_handle() const { return 0; }
 std::string Window::title() const { return title_; }
 
 bool Window::attach() {
-  if (!renderer_)
+  if (!renderer_){
     return false;
+  }
   attached_ = renderer_->createNativeWindow(native_handle());
   return attached_;
 }
 
 void Window::release() {
-  if (!renderer_ || !attached_)
+  if (!renderer_ || !attached_){
     return;
+  }
   renderer_->destroyNativeWindow(native_handle());
 }
 }  // namespace wm

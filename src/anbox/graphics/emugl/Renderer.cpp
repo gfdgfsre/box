@@ -530,8 +530,9 @@ bool Renderer::flushWindowSurfaceColorBuffer(HandleType p_surface) {
   }
 
   auto surface = (*w).second.first;
-  if (!surface)
+  if (!surface) {
     return false;
+  }
 
   surface->flushColorBuffer();
 
@@ -690,10 +691,11 @@ bool Renderer::bindContext(HandleType p_context, HandleType p_drawSurface,
   tinfo->currDrawSurf = draw;
   tinfo->currReadSurf = read;
   if (ctx) {
-    if (ctx->isGL2())
+    if (ctx->isGL2()) {
       tinfo->m_gl2Dec.setContextData(&ctx->decoderContextData());
-    else
+    } else {
       tinfo->m_glDec.setContextData(&ctx->decoderContextData());
+    }
   } else {
     tinfo->m_glDec.setContextData(NULL);
     tinfo->m_gl2Dec.setContextData(NULL);

@@ -27,12 +27,14 @@ std::map<std::shared_ptr<wm::Window>, RenderableList> MultiWindowComposerStrateg
   WindowRenderableList win_layers;
   for (const auto &renderable : renderables) {
     // Ignore all surfaces which are not meant for a task
-    if (!utils::string_starts_with(renderable.name(), "org.anbox.surface."))
+    if (!utils::string_starts_with(renderable.name(), "org.anbox.surface.")){
       continue;
+    }
 
     wm::Task::Id task_id = 0;
-    if (sscanf(renderable.name().c_str(), "org.anbox.surface.%d", &task_id) != 1 || !task_id)
+    if (sscanf(renderable.name().c_str(), "org.anbox.surface.%d", &task_id) != 1 || !task_id){
       continue;
+    }
 
     auto w = wm_->find_window_for_task(task_id);
     if (!w){
@@ -57,8 +59,9 @@ std::map<std::shared_ptr<wm::Window>, RenderableList> MultiWindowComposerStrateg
       const auto layer_area = r.screen_position().width() * r.screen_position().height();
       // We always prioritize layers which are lower in the list we got
       // from SurfaceFlinger as they are already ordered.
-      if (layer_area < max_layer_area)
+      if (layer_area < max_layer_area){
         continue;
+      }
 
       max_layer_area = layer_area;
       new_window_frame = r.screen_position();

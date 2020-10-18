@@ -41,8 +41,9 @@ void AudioSink::on_data_requested(void *user_data, std::uint8_t *buffer, int siz
 }
 
 bool AudioSink::connect_audio() {
-  if (device_id_ > 0)
+  if (device_id_ > 0){
     return true;
+  }
 
   SDL_memset(&spec_, 0, sizeof(spec_));
   spec_.freq = 44100;
@@ -53,8 +54,9 @@ bool AudioSink::connect_audio() {
   spec_.userdata = this;
 
   device_id_ = SDL_OpenAudioDevice(nullptr, 0, &spec_, nullptr, 0);
-  if (!device_id_)
+  if (!device_id_){
     return false;
+  }
 
   SDL_PauseAudioDevice(device_id_, 0);
 
@@ -87,10 +89,12 @@ void AudioSink::read_data(std::uint8_t *buffer, int size) {
 
     bool blocking = (count == 0);
     auto result = -EIO;
-    if (blocking)
+    if (blocking){
       result = queue_.pop_locked(&read_buffer_, l);
-    else
+    }
+    else{
       result = queue_.try_pop_locked(&read_buffer_);
+    }
 
     if (result == 0) {
       read_buffer_left_ = read_buffer_.size();

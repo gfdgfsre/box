@@ -112,7 +112,9 @@ void MultiWindowManager::apply_window_state_update(const WindowState::List &upda
 std::shared_ptr<Window> MultiWindowManager::find_window_for_task(const Task::Id &task) {
   std::lock_guard<std::mutex> l(mutex_);
   for (const auto &w : windows_) {
-    if (w.second->task() == task) return w.second;
+    if (w.second->task() == task) {
+      return w.second;
+    }
   }
   return nullptr;
 }

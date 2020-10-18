@@ -348,3 +348,10 @@ def anbox_deps_setup():
         strip_prefix = "bazel-br-toolchain-1.0.1",
     )
 
+    http_archive(
+        name = "fmtlib_fmt",
+        build_file = clean_dep("//thirdparty/fmt/fmt.BUILD"),
+        urls = ["https://github.com/fmtlib/fmt/archive/7.0.3.tar.gz"],
+        sha256 = "b4b51bc16288e2281cddc59c28f0b4f84fed58d016fb038273a09f05f8473297",
+        strip_prefix = "fmt-7.0.3",
+    )

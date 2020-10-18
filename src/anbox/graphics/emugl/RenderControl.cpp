@@ -270,8 +270,9 @@ static void rcOpenColorBuffer(uint32_t colorbuffer) {
 }
 
 static void rcCloseColorBuffer(uint32_t colorbuffer) {
-  if (!renderer)
+  if (!renderer){
     return;
+  }
 
   renderer->closeColorBuffer(colorbuffer);
 }

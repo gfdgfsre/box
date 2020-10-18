@@ -54,8 +54,9 @@ intptr_t RenderThread::main() {
 
   while (true) {
     int stat = readBuf.getData(m_stream);
-    if (stat <= 0)
+    if (stat <= 0){
       break;
+    }
 
     bool progress;
     do {
