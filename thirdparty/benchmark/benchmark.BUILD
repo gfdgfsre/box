@@ -10,7 +10,7 @@ cc_library(
         ".",
     ],
     linkopts = [
-        "-L/opt/apollo/sysroot/lib",
+        # "-L/opt/apollo/sysroot/lib",
         "-lbenchmark",
         "-pthread",
     ],
@@ -20,7 +20,7 @@ cc_library(
 cc_library(
     name = "benchmark_main",
     linkopts = [
-        "-L/opt/apollo/sysroot/lib",
+        # "-L/opt/apollo/sysroot/lib",
         "-lbenchmark_main",
     ],
     visibility = ["//visibility:public"],

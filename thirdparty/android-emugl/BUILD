@@ -50,14 +50,12 @@ cc_library(
     "shared/emugl/common/lazy_instance.cpp",
     "shared/emugl/common/logging.cpp",
     "shared/emugl/common/message_channel.cpp",
-    "shared/emugl/common/mutex_unittest.cpp",
     "shared/emugl/common/pod_vector.cpp",
     "shared/emugl/common/shared_library.cpp",
     "shared/emugl/common/smart_ptr.cpp",
     "shared/emugl/common/sockets.cpp",
     "shared/emugl/common/thread_pthread.cpp",
     "shared/emugl/common/thread_store.cpp",
-    "shared/emugl/common/thread_unittest.cpp",
   ],
   hdrs = glob([
   	"shared/emugl/common/*.h"

@@ -31,12 +31,12 @@ cc_library(
 	        "include/core/*.h",
 	        "include/core/posix/*.h",
 	        "include/core/posix/linux/**/**/*.h",
-	        "include/core/testing/*.h",
 	        ],
     ),
     copts = COPTS,
     linkstatic = 1,
     includes = ["include"],
+    linkopts = [],
     strip_include_prefix = "include",
     deps = [
     	"@boost//:asio",
@@ -56,10 +56,10 @@ cc_library(
 	        "include/core/*.h",
 	        "include/core/posix/*.h",
 	        "include/core/posix/linux/**/**/*.h",
-	        "include/core/testing/*.h",
   	]),
-  copts = COPTS,
   strip_include_prefix = "include",
+  copts = COPTS,
+  linkopts = [],
   deps = [
   ],
 )

@@ -5,10 +5,10 @@ load("//bazel:anbox.bzl", "COPTS")
 
 cc_binary(
     name = "nsexec",
-    srcs = glob([
+    srcs = [
         "uidmapshift.c",
-    ]),
-    copts = COPTS,
+    ],
+    copts = [],
     linkopts = [],
     deps = [
     ],

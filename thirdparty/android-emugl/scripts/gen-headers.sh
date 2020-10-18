@@ -34,7 +34,7 @@ if [ ! -d "$QEMU_TOP_DIR/$SCRIPT_DIR" ]; then
 fi
 
 cd $QEMU_TOP_DIR
-GEN_ENTRIES=$SCRIPT_DIR/gen-entries.py
+GEN_ENTRIES=$SCRIPT_DIR/gen-emugl-entries.py
 if [ ! -f "$GEN_ENTRIES" ]; then
     panic "Missing script: $GEN_ENTRIES"
 fi
