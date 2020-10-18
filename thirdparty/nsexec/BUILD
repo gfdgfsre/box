@@ -9,6 +9,7 @@ cc_binary(
         "uidmapshift.c",
     ]),
     copts = COPTS,
+    linkopts = [],
     deps = [
     ],
 )

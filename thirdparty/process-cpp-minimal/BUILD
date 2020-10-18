@@ -6,7 +6,7 @@ load("//bazel:anbox.bzl", "COPTS")
 
 cc_library(
     name = "process-cpp",
-    srcs = glob([
+    srcs = [
     	  "src/core/posix/backtrace.h",
 		  "src/core/posix/backtrace.cpp",
 		  "src/core/posix/child_process.cpp",
@@ -25,7 +25,7 @@ cc_library(
 		  "src/core/posix/linux/proc/process/stat.cpp",
 		  "src/core/testing/cross_process_sync.cpp",
 		  "src/core/testing/fork_and_run.cpp",
-    ]),
+    ],
     hdrs = glob(
 	    include = [
 	        "include/core/*.h",

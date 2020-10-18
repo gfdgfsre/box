@@ -2,8 +2,6 @@ package(default_visibility = [//visibility:public])
 
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
 
-
-
 # android intent support
 cc_library(
     name = "anbox_android_header",
@@ -11,6 +9,9 @@ cc_library(
         "anbox/android/intent.h",
         "anbox/android/ip_config_builder.h",
     ],
+    strip_include_prefix = "anbox/android",
+    copts = [],
+    linkopts = [],
     deps = [
         "@boost//:asio",
     ],
@@ -25,6 +26,9 @@ cc_library(
     hdrs = [
         ":anbox_android_header",
     ],
+    strip_include_prefix = "anbox/android",
+    copts = [],
+    linkopts = [],
     deps = [
         "@boost//:asio",
         ":anbox_android_header"
@@ -39,11 +43,13 @@ cc_library(
         "anbox/application/launcher_storage.h",
         "anbox/application/manager.h"
     ],
+    strip_include_prefix = "anbox/application",
+    copts = [],
+    linkopts = [],
     deps = [
         "@boost//:asio",
     ],
 )
-
 
 cc_library(
     name = "anbox_application_lib",
@@ -54,6 +60,9 @@ cc_library(
     hdrs = [
         ":anbox_application_header",
     ],
+    strip_include_prefix = "anbox/application",
+    copts = [],
+    linkopts = [],
     deps = [
         "@boost//:asio",
         ":anbox_application_header"
@@ -69,6 +78,9 @@ cc_library(
         "anbox/audio/sink.h",
         "anbox/audio/source.h",
     ],
+    strip_include_prefix = "anbox/audio",
+    copts = [],
+    linkopts = [],
     deps = [
         "@boost//:asio",
     ],
@@ -83,6 +95,9 @@ cc_library(
     hdrs = [
         ":anbox_audio_header",
     ],
+    strip_include_prefix = "anbox/audio",
+    copts = [],
+    linkopts = [],
     deps = [
         "@boost//:asio",
         ":anbox_audio_header"

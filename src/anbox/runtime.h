@@ -40,8 +40,7 @@ class Runtime : public DoNotCopyOrMove,
 
   // create returns a Runtime instance with pool_size worker threads
   // executing the underlying service.
-  static std::shared_ptr<Runtime> create(
-      std::uint32_t pool_size = worker_threads);
+  static std::shared_ptr<Runtime> create(std::uint32_t pool_size = worker_threads);
 
   // Tears down the runtime, stopping all worker threads.
   ~Runtime() noexcept(true);

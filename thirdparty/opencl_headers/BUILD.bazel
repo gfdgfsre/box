@@ -25,4 +25,7 @@ cc_library(
         "CL/opencl.h",
     ],
     includes = ["."],
+
+    copts = [],
+    linkopts = [],
 )
